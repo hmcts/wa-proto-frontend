@@ -14,6 +14,7 @@ coverage/
 src/main/public/img/lib/*
 src/main/public/js/lib/**/*.js
 src/main/public/stylesheets/lib/*
+src/main/views/webpack/
 
 node-rpm-packaging/
 mochawesome-report/
