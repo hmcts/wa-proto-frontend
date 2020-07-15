@@ -1,0 +1,11 @@
+#!groovy
+
+@Library("Infrastructure")
+
+def type = "nodejs"
+def product = "ia"
+def component = "wa-proto-frontend"
+
+withPipeline(type, product, component) {
+  disableLegacyDeployment()
+}
