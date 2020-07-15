@@ -40,7 +40,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/', RouterFinder.findAll(path.join(__dirname, 'routes')));
-setupDev(app,developmentMode);
+setupDev(app,true);
 // returning "not found" page for requests with paths not resolved by the router
 app.use((req, res) => {
   res.status(404);
