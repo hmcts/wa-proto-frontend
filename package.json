@@ -16,6 +16,7 @@
     "test:routes": "jest -c jest.routes.config.js",
     "test:a11y": "exit 0",
     "test:smoke": "exit 0",
+    "test:functional": "exit 0",
     "sonar-scan": "sonar-scanner",
     "cichecks": "yarn && yarn build && yarn lint  && yarn test && yarn test:routes &&  yarn test:a11y"
   },
