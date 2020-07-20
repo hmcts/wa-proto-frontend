@@ -6,6 +6,13 @@ def type = "nodejs"
 def product = "ia"
 def component = "wa-proto-frontend"
 
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
+
 withPipeline(type, product, component) {
   disableLegacyDeployment()
+
+  after('build') {
+    yarnBuilder.yarn('build')
+  }
+
 }
