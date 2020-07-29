@@ -3,7 +3,14 @@ import * as os from 'os';
 
 import { infoRequestHandler } from '@hmcts/info-provider';
 
+import { Info } from '../models/info';
+
+const INFO: Info[] = [];
+
 const router = express.Router();
+
+const newInfo = new Info(Math.random().toString(), 'Hello');
+INFO.push(newInfo);
 
 router.get(
   '/info',
