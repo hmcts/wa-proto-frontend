@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { User } from '../modules/utils/user';
+import { User } from '../models/user';
 import Debug from "debug";
 const debug = Debug('app:home');
 
