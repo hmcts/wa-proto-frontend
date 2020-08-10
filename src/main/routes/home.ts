@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { User } from '../models/user';
-import Debug from "debug";
+import Debug from 'debug';
 const debug = Debug('app:home');
 
 const router = express.Router();
