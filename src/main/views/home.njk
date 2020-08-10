@@ -1,6 +1,51 @@
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+
 {% extends "template.njk" %}
 
+{% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "#",
+    containerClasses: "app-width-container",
+    serviceName: "Immigration & Asylum",
+    serviceUrl: "#",
+    navigation: [
+      {
+        href: "#1",
+        text: "My cases",
+        active: true
+      },
+      {
+        href: "#2",
+        text: "My casework"
+      },
+      {
+        href: "#3",
+        text: "All cases"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
 {% block content %}
-  <h1 class="govuk-heading-xl">WA prototype frontend version 1.0</h1>
+  <h1 class="govuk-heading-xl">WA prototype frontend version</h1>
   <h2>{{user.name}} {{user.lastname}}</h2>
+{% endblock %}
+
+{% block bodyEnd %}
+  <script src="/govuk-frontend/all.js"></script>
 {% endblock %}
