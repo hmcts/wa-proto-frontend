@@ -1,26 +1,56 @@
 const stages = [
   {
-    title: 'Start your appeal',
+    title: 'Appeal submitted',
     active: true,
     ticked: true,
   },
   {
-    title: 'Tell us more',
+    title: 'Awaiting respondent evidence',
+    active: true,
+    ticked: true,
+  },
+  {
+    title: 'Case building',
+    active: true,
+    ticked: true,
+  },
+  {
+    title: 'Case under review',
+    active: true,
+    ticked: true,
+  },
+  {
+    title: 'Respondent review',
     active: true,
     ticked: false,
   },
   {
-    title: 'Prepare for your hearing',
+    title: 'Submit hearing requirements',
     active: false,
     ticked: false,
   },
   {
-    title: 'Go to your hearing',
+    title: 'Listing',
     active: false,
     ticked: false,
   },
   {
-    title: 'Get your decision',
+    title: 'Prepare for hearing',
+    active: false,
+    ticked: false,
+  },
+  {
+    title: 'Final bundling',
+    active: false,
+    ticked: false,
+  },
+  {
+    title: 'Pre hearing',
+    active: false,
+    ticked: false,
+  },
+  {
+    title: 'Decision',
     active: false,
     ticked: false,
   },

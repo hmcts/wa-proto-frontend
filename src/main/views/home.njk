@@ -10,7 +10,6 @@
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 
-
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
 {% block header %}
@@ -48,39 +47,33 @@
 
 
 {% block content %}
-  <h1 class="govuk-heading-xl">WA prototype frontend version</h1>
-
-  <div id="appeal-details">
-    <h2 class="govuk-heading-m">
-      {{ appealData.yourDetails.personalDetails.givenNames }} {{ appealData.yourDetails.personalDetails.familyName }}
-    </h2>
-    <p class="govuk-body">Appeal reference: {{ appealData.yourDetails.homeOffice.formData.refNumber }}</p>
-  </div>
-  <div class="divider"></div>
-
-  {% set yourAppeal %}
-    <h2 class="govuk-heading-m">Your appeal progress</h2>
+  <h1 class="govuk-heading-xl">PA/00321/2018</h1>
+  
+  {% set overview %}
+    <h2 class="govuk-heading-l">Overview</h2>
+    <h2 class="govuk-heading-m">Current progress of the case</h2>
     {{ statusBar(stages) }}
 
-    <h2 class="govuk-heading-m">What happens next</h2>
-    <p>
-      A case worker will contact you by <b>14 October 2019</b> to tell you what to do next
-    </p>
-</br>
+    <h2 class="govuk-heading-m">Do this next</h2>
+    
+    <p class="govuk-body">Check the response uploaded by the respondent.</p>
+    <p class="govuk-body">If it complies with the Procedure Rules and Practice Directions, <a href="#" class="govuk-link">direct the appellant to review the Home Office response</a></p>
+    <p class="govuk-body">If it does not comply, direct the respondent to <a href="#" class="govuk-link">amend the appeal response</a></p>
 
-  {% endset -%}
+    </br>
+  {% endset %}
 
   {% set appealHistory %}
     Appeal
-  {% endset -%}
+  {% endset %}
 
   {{ govukTabs({
     items: [
       {
-        label: "Your appeal",
-        id: "yourAppeal",
+        label: "Overview",
+        id: "overview",
         panel: {
-          html: yourAppeal
+          html: overview
         }
       },
       {
