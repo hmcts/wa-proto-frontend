@@ -1,41 +1,52 @@
 {% extends "template.njk" %}
 
 {% from "govuk/components/tabs/macro.njk" import govukTabs %}
-{% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/status-bar.njk" import statusBar with context %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
 {% block content %}
   
 <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-grid-column-one-half">
         <h1 class="govuk-heading-xl">PA/00321/2018</h1>      
       </div>
 
-      <div class="govuk-grid-column-one-third">
-        {{ govukSelect({
-          id: "nextSteps",
-          name: "Next steps",
-          label: {
-            text: "Next steps",
-            classes: "ccd-dropdown-label"
-          },
-          items: [
-            {
-              value: "selectAction",
-              text: "Select action"
-            },
-            {
-              value: "editAppeal",
-              text: "Edit appeal"
-            }
-          ], 
-          classes: "ccd-dropdown"
-        }) }}
-      </div>
+      
+          <div class="govuk-grid-column-one-half">
+            <div class="govuk-grid-column-two-thirds">
+            {{ govukSelect({
+                id: "nextSteps",
+                name: "Next steps",
+                label: {
+                  text: "Next steps",
+                  classes: "ccd-dropdown-label"
+                },
+                items: [
+                  {
+                    value: "selectAction",
+                    text: "Select action"
+                  },
+                  {
+                    value: "editAppeal",
+                    text: "Edit appeal"
+                  }
+                ], 
+                classes: "ccd-dropdown"
+              }) }}
+            </div>
+            <div class="govuk-grid-column-one-third">
+            {{ govukButton({
+                text: "Go",
+                preventDoubleClick: true
+              }) }}
+            </div>
+          </div>
+        
+      
   </div>
   
   
