@@ -3,11 +3,41 @@
 {% from "govuk/components/tabs/macro.njk" import govukTabs %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "components/status-bar.njk" import statusBar with context %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">PA/00321/2018</h1>
+  
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">PA/00321/2018</h1>      
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        {{ govukSelect({
+          id: "nextSteps",
+          name: "Next steps",
+          label: {
+            text: "Next steps",
+            classes: "ccd-dropdown-label"
+          },
+          items: [
+            {
+              value: "selectAction",
+              text: "Select action"
+            },
+            {
+              value: "editAppeal",
+              text: "Edit appeal"
+            }
+          ], 
+          classes: "ccd-dropdown"
+        }) }}
+      </div>
+  </div>
+  
   
   {% set overview %}
     <h2 class="govuk-heading-l">Overview</h2>
@@ -23,26 +53,29 @@
     </br>
      <h2 class="govuk-heading-m">Case details</h2>
 
-    {{ govukTable({
-  rows: [
-    [
-      {
-        text: "Appeal reference"
-      },
-      {
-        text: "PA/00321/2018"
-      }
-    ], 
-    [
-      {
-        text: "Appellant"
-      },
-      {
-        text: "Elisabet Borgen"
-      }
-    ] 
-  ]
-}) }}
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Appeal reference", 
+              classes: ""
+            },
+            value: {
+              text: "PA/00321/2018"
+            }
+          },
+          {
+            key: {
+              text: "Appellant"
+            },
+            value: {
+              text: "Sarah Philips"
+            }
+          }
+
+        ]
+      }) }}
+
   {% endset %}
 
   {{ govukTabs({
@@ -105,5 +138,7 @@
       }
     ]
   }) }}
+
+
 
 {% endblock %}
