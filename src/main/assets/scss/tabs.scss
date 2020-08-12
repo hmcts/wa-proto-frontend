@@ -1,0 +1,20 @@
+%govuk-tabs__no-border-panel {
+  border: none;
+  border-top: none;
+}
+
+#overview {
+  @extend %govuk-tabs__no-border-panel;
+}
+
+#appeal {
+  @extend %govuk-tabs__no-border-panel;
+}
+
+#appellant {
+  @extend %govuk-tabs__no-border-panel;
+}
+
+#documents {
+  @extend %govuk-tabs__no-border-panel;
+}
