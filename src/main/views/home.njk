@@ -45,10 +45,6 @@
 }) }}
   {% endset %}
 
-  {% set appealHistory %}
-    Appeal
-  {% endset %}
-
   {{ govukTabs({
     items: [
       {
@@ -59,10 +55,17 @@
         }
       },
       {
-        label: "Appeal history",
-        id: "appealHistory",
+        label: "Appeal",
+        id: "appeal",
         panel: {
-          html: appealHistory
+          text: "Appeal"
+        }
+      },
+      {
+        label: "Appellant",
+        id: "appellant",
+        panel: {
+          text: "appellant"
         }
       },
       {
@@ -73,10 +76,31 @@
         }
       },
       {
-        label: "Instructions",
-        id: "instructions",
+        label: "Directions",
+        id: "directions",
         panel: {
-          text: "Instructions"
+          text: "directions"
+        }
+      },
+      {
+        label: "Applications",
+        id: "applications",
+        panel: {
+          text: "applications"
+        }
+      },
+      {
+        label: "Case notes",
+        id: "caseNotes",
+        panel: {
+          text: "case notes"
+        }
+      },
+      {
+        label: "Hearing",
+        id: "hearing",
+        panel: {
+          text: "hearing"
         }
       }
     ]
