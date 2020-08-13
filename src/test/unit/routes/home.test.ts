@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { app } from '../../main/app';
-import * as homeController from '../../main/controllers/home';
+import { app } from '../../../main/app';
+import * as homeController from '../../../main/controllers/home';
 
 
 describe('Home page', () => {
