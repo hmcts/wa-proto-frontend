@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block header %}
-  <a href="#" class="signOutButton">Sign Out</a>
+  <a href="#" class="sign-out-button">Sign Out</a>
   {{ govukHeader({
     homepageUrl: "#",
     containerClasses: "app-width-container",
@@ -20,22 +20,19 @@
     serviceUrl: "#",
     navigation: [
       {
-        href: "#1",
+        href: "#",
         text: "My cases",
         active: true
       },
       {
-        href: "#2",
+        href: "#",
         text: "My casework"
       },
       {
-        href: "#3",
+        href: "#",
         text: "All cases"
       }
-    ], 
-    navigationClasses: "example1",
-    containerClasses: "example2",
-    classes: "example3"
+    ]
   }) }}
 {% endblock %}
 
