@@ -1,17 +1,15 @@
 import * as express from 'express';
-const userStages = require('../data/appealStages');
 import Debug from 'debug';
-const debug = Debug('app:home');
+import { createHomePage } from '../controllers/home';
+
+const debug = Debug('app:route');
 
 const router = express.Router();
 
-
 /* GET home page. */
 router.get('/', (req, res) => {
-  debug('home router called...');
-  res.render('home', {
-    stages: userStages,
-  });
+  debug('home router...');
+  createHomePage(req, res);
 });
 
 module.exports = router;
