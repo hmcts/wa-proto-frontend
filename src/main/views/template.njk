@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block header %}
+  <a href="#" class="signOutButton">Sign Out</a>
   {{ govukHeader({
     homepageUrl: "#",
     containerClasses: "app-width-container",
@@ -31,9 +32,13 @@
         href: "#3",
         text: "All cases"
       }
-    ]
+    ], 
+    navigationClasses: "example1",
+    containerClasses: "example2",
+    classes: "example3"
   }) }}
 {% endblock %}
+
 
 {% block beforeContent %}
   {{ govukPhaseBanner({
