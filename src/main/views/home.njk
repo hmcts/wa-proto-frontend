@@ -13,11 +13,10 @@
 <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
         <h1 class="govuk-heading-xl">PA/00321/2018</h1>      
-      </div>
-
-      
-          <div class="govuk-grid-column-one-half">
-            <div class="govuk-grid-column-two-thirds">
+      </div>      
+        <div class="govuk-grid-column-one-half">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
             {{ govukSelect({
                 id: "nextSteps",
                 name: "Next steps",
@@ -38,15 +37,15 @@
                 classes: "ccd-dropdown"
               }) }}
             </div>
-            <div class="govuk-grid-column-one-third">
+            <div class="govuk-grid-column-one-quarter">
             {{ govukButton({
                 text: "Go",
-                preventDoubleClick: true
+                preventDoubleClick: true,
+                classes: "next-step-govuk-button"
               }) }}
             </div>
-          </div>
-        
-      
+          </div>          
+        </div>
   </div>
   
   

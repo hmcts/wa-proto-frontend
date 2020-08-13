@@ -10,12 +10,18 @@
   border-radius: 3px;
   border: solid 1px #122337;
   padding: 0px 0px 0 8px;
-  margin: 0 0 0px 0;
-  width: 60%
+  margin: 0 -60px 0px 0;
+  width: 60%;
+  float: right;
 }
 
 .ccd-dropdown-label {
   float: left;
-  margin-right: 20px;
-  margin-left: 3px;
+  margin-right: 0px;
+  margin-left: 97px;
 }
+
+.next-step-govuk-button {
+  float: right;
+}
+
