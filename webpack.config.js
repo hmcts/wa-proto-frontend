@@ -9,6 +9,7 @@ const HtmlWebpack = require(path.resolve(__dirname, 'webpack/htmlWebpack'));
 module.exports = {
   plugins: [...govukFrontend.plugins, ...app.plugins, ...scss.plugins, ...HtmlWebpack.plugins],
   entry: path.resolve(sourcePath, 'index.js'),
+  devtool: 'inline-source-map',
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   module: {
     rules: [...scss.rules],

@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "src/main/public/",
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
     "noImplicitAny": true,
     "moduleResolution": "node",
+    "sourceMap": true,
     "noUnusedLocals": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
