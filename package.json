@@ -18,7 +18,7 @@
     "test:functional": "exit 0",
     "test:all": "yarn test && yarn test:a11y",
     "sonar-scan": "sonar-scanner",
-    "cichecks": "yarn && yarn build && yarn lint  && yarn test && yarn test:routes &&  yarn test:a11y"
+    "cichecks": "yarn && yarn build && yarn lint  && yarn test &&  yarn test:a11y"
   },
   "husky": {
     "hooks": {
