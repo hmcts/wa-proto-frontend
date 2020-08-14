@@ -3,8 +3,8 @@ import { app } from '../../../main/app';
 import * as homeController from '../../../main/controllers/home';
 
 
-describe('Home page', () => {
-  it('should return home page', async () => {
+describe('Home page router', () => {
+  it('gets home page', async () => {
     const mock = jest.spyOn(homeController, 'createHomePage');
     
     const response = await request(app).get('/');
