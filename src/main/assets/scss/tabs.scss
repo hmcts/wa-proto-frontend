@@ -1,0 +1,24 @@
+%govuk-tabs__no-border-panel {
+  border: none;
+  border-top: none;
+}
+
+#overview {
+  @extend %govuk-tabs__no-border-panel;
+}
+
+#appeal {
+  @extend %govuk-tabs__no-border-panel;
+}
+
+#appellant {
+  @extend %govuk-tabs__no-border-panel;
+}
+
+#documents {
+  @extend %govuk-tabs__no-border-panel;
+}
+
+li.govuk-tabs__list-item {
+  padding: 10px 15px !important;
+}

@@ -1,51 +1,172 @@
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
-{% from "govuk/components/header/macro.njk" import govukHeader %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% from "govuk/components/footer/macro.njk" import govukFooter %}
-
 {% extends "template.njk" %}
+
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "components/status-bar.njk" import statusBar with context %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
-{% block header %}
-  {{ govukHeader({
-    homepageUrl: "#",
-    containerClasses: "app-width-container",
-    serviceName: "Immigration & Asylum",
-    serviceUrl: "#",
-    navigation: [
+{% block content %}
+  
+<div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h1 class="govuk-heading-xl">PA/00321/2018</h1>      
+      </div>      
+        <div class="govuk-grid-column-one-half">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+            {{ govukSelect({
+                id: "nextSteps",
+                name: "Next steps",
+                label: {
+                  text: "Next steps",
+                  classes: "ccd-dropdown-label"
+                },
+                items: [
+                  {
+                    value: "selectAction",
+                    text: "Select action"
+                  },
+                  {
+                    value: "editAppeal",
+                    text: "Edit appeal"
+                  }
+                ], 
+                classes: "ccd-dropdown"
+              }) }}
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+            {{ govukButton({
+                text: "Go",
+                preventDoubleClick: true,
+                classes: "next-step-govuk-button"
+              }) }}
+            </div>
+          </div>          
+        </div>
+  </div>
+  
+  
+  {% set overview %}
+    <h2 class="govuk-heading-l">Overview</h2>
+    <h2 class="govuk-heading-m">Current progress of the case</h2>
+    {{ statusBar(stages) }}
+
+    <h2 class="govuk-heading-m">Do this next</h2>
+    
+    <p class="govuk-body">Check the response uploaded by the respondent.</p>
+    <p class="govuk-body">If it complies with the Procedure Rules and Practice Directions, <a href="#" class="govuk-link">direct the appellant to review the Home Office response</a></p>
+    <p class="govuk-body">If it does not comply, direct the respondent to <a href="#" class="govuk-link">amend the appeal response</a></p>
+
+    </br>
+     <h2 class="govuk-heading-m">Case details</h2>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Appeal reference",
+              classes: "summary-key"
+            },
+            value: {
+              text: "PA/00321/2018"
+            }
+          },
+          {
+            key: {
+              text: "Appellant",
+              classes: "summary-key"
+            },
+            value: {
+              text: "Sarah Philips"
+            }
+          },
+          {
+            key: {
+              text: "Date of birth",
+              classes: "summary-key"
+            },
+            value: {
+              text: "05/05/1992"
+            }
+          },
+          {
+            key: {
+              text: "Nationalities",
+              classes: "summary-key"
+            },
+            value: {
+              text: "Swedish"
+            }
+          }
+        ] 
+      }) }}
+
+  {% endset %}
+
+  {{ govukTabs({
+    items: [
       {
-        href: "#1",
-        text: "My cases",
-        active: true
+        label: "Overview",
+        id: "overview",
+        panel: {
+          html: overview
+        }
       },
       {
-        href: "#2",
-        text: "My casework"
+        label: "Appeal",
+        id: "appeal",
+        panel: {
+          text: "Appeal"
+        }
       },
       {
-        href: "#3",
-        text: "All cases"
+        label: "Appellant",
+        id: "appellant",
+        panel: {
+          text: "appellant"
+        }
+      },
+      {
+        label: "Documents",
+        id: "documents",
+        panel: {
+          text: "documents"
+        }
+      },
+      {
+        label: "Directions",
+        id: "directions",
+        panel: {
+          text: "directions"
+        }
+      },
+      {
+        label: "Applications",
+        id: "applications",
+        panel: {
+          text: "applications"
+        }
+      },
+      {
+        label: "Case notes",
+        id: "caseNotes",
+        panel: {
+          text: "case notes"
+        }
+      },
+      {
+        label: "Hearing",
+        id: "hearing",
+        panel: {
+          text: "hearing"
+        }
       }
     ]
   }) }}
-{% endblock %}
 
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: "alpha"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-  }) }}
-{% endblock %}
 
-{% block content %}
-  <h1 class="govuk-heading-xl">WA prototype frontend version</h1>
-  <h2>{{user.name}} {{user.lastname}}</h2>
-{% endblock %}
 
-{% block bodyEnd %}
-  <script src="/govuk-frontend/all.js"></script>
 {% endblock %}

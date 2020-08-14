@@ -1,8 +1,51 @@
 {% extends "govuk/template.njk" %}
 
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
 {% block head %}
   {% include "webpack/css.njk" %}
 {% endblock %}
+
+{% block header %}
+  <a href="#" class="sign-out-button">Sign Out</a>
+  {{ govukHeader({
+    homepageUrl: "#",
+    containerClasses: "app-width-container",
+    serviceName: "Immigration & Asylum",
+    serviceUrl: "#",
+    navigation: [
+      {
+        href: "#",
+        text: "My cases",
+        active: true
+      },
+      {
+        href: "#",
+        text: "My casework"
+      },
+      {
+        href: "#",
+        text: "All cases"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
 
 {% block bodyEnd %}
   {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}

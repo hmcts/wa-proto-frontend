@@ -1,16 +1,15 @@
 import * as express from 'express';
-import { User } from '../models/user';
 import Debug from 'debug';
-const debug = Debug('app:home');
+import { createHomePage } from '../controllers/home';
+
+const debug = Debug('app:route');
 
 const router = express.Router();
 
-const user = new User('David', 'Crespo');
-
 /* GET home page. */
 router.get('/', (req, res) => {
-  debug('home router called...');
-  res.render('home', {user: user});
+  debug('home router...');
+  createHomePage(req, res);
 });
 
 module.exports = router;

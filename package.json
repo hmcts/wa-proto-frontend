@@ -7,18 +7,18 @@
   },
   "scripts": {
     "start": "NODE_ENV=production ./node_modules/.bin/ts-node -r tsconfig-paths/register src/main/server.ts",
-    "start:dev": "nodemon --config nodemon.json",
-    "lint": "sass-lint -v -q && eslint . --ext .js,.jsx,.ts,.tsx",
+    "start:dev": "yarn build && nodemon --config nodemon.json",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "yarn webpack --config webpack.config.js",
     "build:prod": " yarn webpack --mode production --config webpack.config.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:routes": "jest -c jest.routes.config.js",
     "test:a11y": "jest -c jest.a11y.config.js --maxWorkers 15",
     "test:smoke": "exit 0",
     "test:functional": "exit 0",
+    "test:all": "yarn test && yarn test:a11y",
     "sonar-scan": "sonar-scanner",
-    "cichecks": "yarn && yarn build && yarn lint  && yarn test && yarn test:routes &&  yarn test:a11y"
+    "cichecks": "yarn && yarn build && yarn lint  && yarn test &&  yarn test:a11y"
   },
   "husky": {
     "hooks": {
@@ -42,6 +42,7 @@
     "config": "^3.2.5",
     "cookie-parser": "^1.4.4",
     "csurf": "^1.11.0",
+    "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-nunjucks": "^2.2.3",
     "govuk-frontend": "^3.5.0",
@@ -73,7 +74,6 @@
     "chai-as-promised": "^7.1.1",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
-    "debug": "^4.1.1",
     "eslint": "^6.8.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.5",
@@ -84,7 +84,6 @@
     "nodemon": "^2.0.2",
     "pa11y": "^5.3.0",
     "request": "^2.88.0",
-    "sass-lint": "^1.13.1",
     "sass-loader": "^8.0.2",
     "sinon": "^8.1.1",
     "sinon-chai": "^3.4.0",
