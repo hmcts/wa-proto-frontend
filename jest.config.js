@@ -1,7 +1,7 @@
 module.exports = {
   roots: ['<rootDir>/src/test/unit'],
   "testRegex": "(/src/test/.*|\\.(test|spec))\\.(ts|js)$",
-   "moduleFileExtensions": [
+  "moduleFileExtensions": [
     "ts",
     "js"
   ],
@@ -10,4 +10,9 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  collectCoverageFrom: [
+    '!src/main/development.ts', 
+    '!src/main/apps.ts', 
+    '!webpack/app.js'
+  ],
 }
