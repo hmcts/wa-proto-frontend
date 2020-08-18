@@ -4,6 +4,8 @@ description: A Helm chart for wa-proto-frontend App
 name: wa-proto-frontend
 home: https://github.com/hmcts/wa-proto-frontend
 version: 0.0.10
+maintainers: 
+  - name: HMCTS WA team
 dependencies:
   - name: nodejs
     version: 2.0.1
