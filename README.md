@@ -1,4 +1,4 @@
-# ia-wa-proto-frontend
+# wa-proto-frontend
 
 ## Getting Started
 
