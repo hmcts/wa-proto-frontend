@@ -1,11 +1,11 @@
 import request from 'supertest';
 import { app } from '../../../main/app';
-import * as homeController from '../../../main/controllers/home';
+import * as controller from '../../../main/controllers/myCases';
 
 
-describe('Home page router', () => {
-  it('gets home page', async () => {
-    const mock = jest.spyOn(homeController, 'createHomePage');
+describe('myCases router', () => {
+  it('gets my-cases page', async () => {
+    const mock = jest.spyOn(controller, 'createMyCasesPage');
     
     const response = await request(app).get('/');
     
