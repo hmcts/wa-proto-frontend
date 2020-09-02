@@ -3,7 +3,7 @@ import { Page } from '../models/page';
 import Debug from 'debug';
 
 const stages = require('../data/stages');
-const debug = Debug('app:controller');
+const debug = Debug('app:controller:myCases');
 
 export function createMyCasesPage(req: Request, res: Response): void {
   debug('myCases controller...');

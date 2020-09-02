@@ -1,0 +1,39 @@
+{% extends "template.njk" %}
+
+{% from "components/status-bar.njk" import statusBar with context %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
+
+{% block header %}
+  <a href="#" class="sign-out-button">Sign Out</a>
+  {{ govukHeader({
+    homepageUrl: "/",
+    containerClasses: "app-width-container",
+    serviceName: "Immigration & Asylum",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "/",
+        text: "My cases"
+      },
+      {
+        href: "/my-case-work",
+        text: "My casework",
+        active: true
+      },
+      {
+        href: "#",
+        text: "All cases"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  
+<div class="govuk-grid-row">
+  <h1 class="govuk-heading-xl">Work in Progress</h1>      
+</div>
+  
+{% endblock %}
