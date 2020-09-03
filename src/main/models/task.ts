@@ -9,7 +9,7 @@ export class Task {
     this.caseRef = caseRef;
   }
 
-  get getCaseRef() {
+  get getCaseRef(): string {
     return this.caseRef;
   }
 
