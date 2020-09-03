@@ -53,8 +53,12 @@
   <b>{{ task.caseName }}</b>
 {% endset %}
 
-{% set taskDate %}
+{% set taskTodayDate %}
   <div class="task-date govuk-heading-s govuk-!-font-weight-regular">{{ task.date }}</div>
+{% endset %}
+
+{% set taskNoTodayDate %}
+  <div class="task-date--green govuk-heading-s govuk-!-font-weight-regular">04 May</div>
 {% endset %}
 
 {{ govukTable({
@@ -103,7 +107,49 @@
         text: task.taskName
       },
       {
-        html: taskDate,
+        html: taskTodayDate,
+        classes: "govuk-!-padding-bottom-0"
+      }
+    ],
+    [
+      {
+        html: caseRef
+      },
+      {
+        html: caseName
+      },
+      {
+        text: task.caseCategory
+      },
+      {
+        text: task.location
+      },
+      {
+        text: task.taskName
+      },
+      {
+        html: taskNoTodayDate,
+        classes: "govuk-!-padding-bottom-0"
+      }
+    ],
+    [
+      {
+        html: caseRef
+      },
+      {
+        html: caseName
+      },
+      {
+        text: task.caseCategory
+      },
+      {
+        text: task.location
+      },
+      {
+        text: task.taskName
+      },
+      {
+        html: taskNoTodayDate,
         classes: "govuk-!-padding-bottom-0"
       }
     ]

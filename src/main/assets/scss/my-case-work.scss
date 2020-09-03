@@ -2,7 +2,12 @@
   background-repeat: no-repeat;
   background-color: orange;
   background-position: center;
-  color: white  
+  color: white;
+  
+  &--green {
+    @extend .task-date;
+    background-color: green;
+  }
 }
 
 .my-task-header {
