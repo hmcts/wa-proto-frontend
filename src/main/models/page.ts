@@ -1,6 +1,6 @@
 import Debug from 'debug';
 
-const debug = Debug('app:model');
+const debug = Debug('app:model:page');
 
 export class Page {
   constructor(public pageName: string, public stages: Array<Record<string, string>>) {
