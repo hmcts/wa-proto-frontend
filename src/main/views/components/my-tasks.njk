@@ -20,30 +20,47 @@
 {% macro myTasks(tasks) %}
 
 {{ govukTable({
-  firstCellIsHeader: true,
   head: [
     {
       text: "Case reference",
+      attributes: {
+        "aria-sort": "ascending"
+      },
       classes: "my-task-header"
     },
     {
       text: "Case name",
-      classes: "my-task-header"
+      classes: "my-task-header",
+      attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Case category",
-      classes: "my-task-header"
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Location",
-      classes: "my-task-header"
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Task",
-      classes: "my-task-header"
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Date",
+      attributes: {
+        "aria-sort": "ascending"
+      },
       classes: "my-task-header"
     }
   ],

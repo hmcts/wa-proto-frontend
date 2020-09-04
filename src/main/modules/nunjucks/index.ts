@@ -18,8 +18,17 @@ export class Nunjucks {
       'node_modules',
       'govuk-frontend',
     );
+    const ministryMojFrontendPath = path.join(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      '..',
+      'node_modules',
+      '@ministryofjustice',
+    );
     nunjucks.configure(
-      [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath],
+      [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath, ministryMojFrontendPath],
       {
         autoescape: true,
         watch: this.developmentMode,

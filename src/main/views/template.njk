@@ -52,4 +52,11 @@
 {% block bodyEnd %}
   {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
   {% include "webpack/js.njk" %}
+  <script>
+  new MOJFrontend.ButtonMenu({
+    container: $('.my-task-header'),
+    mq: '(min-width: 45em)',
+    buttonText: 'Actions'
+  });
+  </script>
 {% endblock %}
