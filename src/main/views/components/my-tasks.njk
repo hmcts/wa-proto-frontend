@@ -1,26 +1,23 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% macro myTasks(task) %}
+{% macro formatTaskCaseRef(taskCaseRef) %}
+  <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
+{% endmacro %}
 
-{% set caseRef %}
-  <a href="#" class="govuk-link">{{ task.caseRef }}</a>
-{% endset %}
+{% macro formatTaskDueDate(taskDueDate) %}
+  {% if taskDueDate === 'Today' %}
+    <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+  {% endif %} 
+  {% if taskDueDate === '04 Dec' %}
+    <div class="task-date--future govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+  {% endif %} 
+  {% if taskDueDate === '+2 days' %}
+    <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+  {% endif %} 
+{% endmacro %}
 
-{% set caseName %}
-  <b>{{ task.caseName }}</b>
-{% endset %}
 
-{% set todayTaskDate %}
-  <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ task.date }}</div>
-{% endset %}
-
-{% set futureTaskDate %}
-  <div class="task-date--future govuk-heading-s govuk-!-font-weight-regular">04 Dec</div>
-{% endset %}
-
-{% set pastTaskDate %}
-  <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">+2 days</div>
-{% endset %}
+{% macro myTasks(tasks) %}
 
 {{ govukTable({
   firstCellIsHeader: true,
@@ -53,64 +50,67 @@
   rows: [
     [
       {
-        html: caseRef
+        html: formatTaskCaseRef(tasks[0].caseRef)
       },
       {
-        html: caseName
+        text: tasks[0].caseName,
+        classes: "govuk-!-font-weight-bold" 
       },
       {
-        text: task.caseCategory
+        text: tasks[0].caseCategory
       },
       {
-        text: task.location
+        text: tasks[0].location
       },
       {
-        text: task.taskName
+        text: tasks[0].taskName
       },
       {
-        html: todayTaskDate,
+        html: formatTaskDueDate(tasks[0].date),
         classes: "govuk-!-padding-bottom-0"
       }
     ],
     [
       {
-        html: caseRef
+        html: formatTaskCaseRef(tasks[1].caseRef)
       },
       {
-        html: caseName
+        text: tasks[1].caseName,
+        classes: "govuk-!-font-weight-bold" 
       },
       {
-        text: task.caseCategory
+        text: tasks[1].caseCategory
       },
       {
-        text: task.location
+        text: tasks[1].location
       },
       {
-        text: task.taskName
+        text: tasks[1].taskName
       },
       {
-        html: futureTaskDate,
+        html: formatTaskDueDate(tasks[1].date),
         classes: "govuk-!-padding-bottom-0"
       }
     ],
     [
       {
-        html: caseRef
+        html: formatTaskCaseRef(tasks[2].caseRef)
       },
       {
-        html: caseName
+        text: tasks[2].caseName,
+        classes: "govuk-!-font-weight-bold" 
       },
       {
-        text: task.caseCategory
+        text: tasks[2].caseCategory
       },
       {
-        text: task.location
+        text: tasks[2].location
       },
       {
-        text: task.taskName
+        text: tasks[2].taskName
       },
       {
-        html: pastTaskDate,
+        html: formatTaskDueDate(tasks[2].date),
         classes: "govuk-!-padding-bottom-0"
       }
     ]
