@@ -15,7 +15,7 @@ describe('myCaseWork controller', () => {
     createMyCaseWorkPage(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
-    expect(Task).toHaveBeenCalledTimes(1);
-    expect(res.render).toHaveBeenCalledWith('my-case-work', { 'task': {} });
+    expect(Task).toHaveBeenCalledTimes(3);
+    expect(res.render).toHaveBeenCalledWith('my-case-work', { 'tasks': [{}, {}, {}] });
   });
 });
