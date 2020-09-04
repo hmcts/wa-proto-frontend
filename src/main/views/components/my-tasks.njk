@@ -1,0 +1,121 @@
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% macro myTasks(task) %}
+
+{% set caseRef %}
+  <a href="#" class="govuk-link">{{ task.caseRef }}</a>
+{% endset %}
+
+{% set caseName %}
+  <b>{{ task.caseName }}</b>
+{% endset %}
+
+{% set todayTaskDate %}
+  <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ task.date }}</div>
+{% endset %}
+
+{% set futureTaskDate %}
+  <div class="task-date--future govuk-heading-s govuk-!-font-weight-regular">04 Dec</div>
+{% endset %}
+
+{% set pastTaskDate %}
+  <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">+2 days</div>
+{% endset %}
+
+{{ govukTable({
+  firstCellIsHeader: true,
+  head: [
+    {
+      text: "Case reference",
+      classes: "my-task-header"
+    },
+    {
+      text: "Case name",
+      classes: "my-task-header"
+    },
+    {
+      text: "Case category",
+      classes: "my-task-header"
+    },
+    {
+      text: "Location",
+      classes: "my-task-header"
+    },
+    {
+      text: "Task",
+      classes: "my-task-header"
+    },
+    {
+      text: "Date",
+      classes: "my-task-header"
+    }
+  ],
+  rows: [
+    [
+      {
+        html: caseRef
+      },
+      {
+        html: caseName
+      },
+      {
+        text: task.caseCategory
+      },
+      {
+        text: task.location
+      },
+      {
+        text: task.taskName
+      },
+      {
+        html: todayTaskDate,
+        classes: "govuk-!-padding-bottom-0"
+      }
+    ],
+    [
+      {
+        html: caseRef
+      },
+      {
+        html: caseName
+      },
+      {
+        text: task.caseCategory
+      },
+      {
+        text: task.location
+      },
+      {
+        text: task.taskName
+      },
+      {
+        html: futureTaskDate,
+        classes: "govuk-!-padding-bottom-0"
+      }
+    ],
+    [
+      {
+        html: caseRef
+      },
+      {
+        html: caseName
+      },
+      {
+        text: task.caseCategory
+      },
+      {
+        text: task.location
+      },
+      {
+        text: task.taskName
+      },
+      {
+        html: pastTaskDate,
+        classes: "govuk-!-padding-bottom-0"
+      }
+    ]
+  ]
+}) }}
+
+    
+{% endmacro %}
