@@ -10,3 +10,10 @@ gulp.task('generate-assets',
     'copy-client-scripts',
   ),
 );
+
+gulp.task('clean',
+  gulp.series(
+    'restore-webpack-originals',
+    'clean-public',
+  ),
+);
