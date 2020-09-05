@@ -55,6 +55,7 @@
 
 
   {% block pageScripts %}
+  {% include "includes/sortable-table-scripts.njk" %}
   <script>
     new MOJFrontend.SortableTable({
       table: $('table')[0]
