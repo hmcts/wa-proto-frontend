@@ -20,30 +20,47 @@
 {% macro myTasks(tasks) %}
 
 {{ govukTable({
-  firstCellIsHeader: true,
   head: [
     {
       text: "Case reference",
+      attributes: {
+        "aria-sort": "ascending"
+      },
       classes: "my-task-header"
     },
     {
       text: "Case name",
-      classes: "my-task-header"
+      classes: "my-task-header",
+      attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Case category",
-      classes: "my-task-header"
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Location",
-      classes: "my-task-header"
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Task",
-      classes: "my-task-header"
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
     },
     {
       text: "Date",
+      attributes: {
+        "aria-sort": "ascending"
+      },
       classes: "my-task-header"
     }
   ],
@@ -66,8 +83,11 @@
         text: tasks[0].taskName
       },
       {
-        html: formatTaskDueDate(tasks[0].date),
-        classes: "govuk-!-padding-bottom-0"
+        html: formatTaskDueDate(tasks[0].dueDate),
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "2"
+        }
       }
     ],
     [
@@ -88,8 +108,11 @@
         text: tasks[1].taskName
       },
       {
-        html: formatTaskDueDate(tasks[1].date),
-        classes: "govuk-!-padding-bottom-0"
+        html: formatTaskDueDate(tasks[1].dueDate),
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "1"
+        }
       }
     ],
     [
@@ -110,8 +133,11 @@
         text: tasks[2].taskName
       },
       {
-        html: formatTaskDueDate(tasks[2].date),
-        classes: "govuk-!-padding-bottom-0"
+        html: formatTaskDueDate(tasks[2].dueDate),
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "3"
+        }
       }
     ]
   ]
