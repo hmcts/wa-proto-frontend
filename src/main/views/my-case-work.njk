@@ -42,13 +42,15 @@
   </div>
 </div>
 
-{{ myTasks(tasks) }}
+{{ myTasks(tasks.myTasks) }}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
       <h1 class="govuk-heading-l">My available tasks</h1>
   </div>
 </div>
+
+{{ myTasks(tasks.myAvailableTasks) }}
 
   
 {% endblock %}
@@ -59,6 +61,9 @@
   <script>
     new MOJFrontend.SortableTable({
       table: $('table')[0]
+    });
+    new MOJFrontend.SortableTable({
+      table: $('table')[1]
     });
   </script>
  {% endblock %}
