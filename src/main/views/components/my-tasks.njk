@@ -84,7 +84,10 @@
       },
       {
         html: formatTaskDueDate(tasks[0].dueDate),
-        classes: "govuk-!-padding-bottom-0"
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "2"
+        }
       }
     ],
     [
@@ -106,7 +109,10 @@
       },
       {
         html: formatTaskDueDate(tasks[1].dueDate),
-        classes: "govuk-!-padding-bottom-0"
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "1"
+        }
       }
     ],
     [
@@ -128,7 +134,10 @@
       },
       {
         html: formatTaskDueDate(tasks[2].dueDate),
-        classes: "govuk-!-padding-bottom-0"
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "3"
+        }
       }
     ]
   ]
