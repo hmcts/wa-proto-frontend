@@ -4,7 +4,7 @@ import Debug from 'debug';
 
 const debug = Debug('app:controller:myCaseWork');
 
-const myAvailableTasks = function getMyAvailableTasks(): Array<Task> {
+function getMyAvailableTasks(): Array<Task> {
   const myAvailableTasks: Array<Task> = [];
 
   const task1 = new Task('1549 6338 2756 6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today');
@@ -16,9 +16,9 @@ const myAvailableTasks = function getMyAvailableTasks(): Array<Task> {
   myAvailableTasks.push(task3);
 
   return myAvailableTasks;
-};
+}
 
-const myTasks = function getMyTasks(): Array<Task> {
+function getMyTasks(): Array<Task> {
   const myTasks: Array<Task> = [];
 
   const task1 = new Task('1549 4765 3206 5586', 'Kili Muso', 'Protection', 'Taylor House', 'Review respondent evidence', 'Today');
@@ -30,7 +30,7 @@ const myTasks = function getMyTasks(): Array<Task> {
   myTasks.push(task3);
 
   return myTasks;
-};
+}
 
 
 export function createMyCaseWorkPage(req: Request, res: Response): void {
@@ -38,8 +38,8 @@ export function createMyCaseWorkPage(req: Request, res: Response): void {
 
   res.render('my-case-work', {
     tasks: {
-      'myTasks': myTasks,
-      'myAvailableTasks': myAvailableTasks,
+      'myTasks': getMyTasks(),
+      'myAvailableTasks': getMyAvailableTasks(),
     },
   });
 }
