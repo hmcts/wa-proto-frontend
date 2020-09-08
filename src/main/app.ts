@@ -8,7 +8,7 @@ import { RouterFinder } from './router/routerFinder';
 import favicon from 'serve-favicon';
 import { HTTPError } from 'HttpError';
 import { Nunjucks } from './modules/nunjucks';
-import { setupSession } from './session';
+import session from 'express-session';
 import { MyCaseWorkModel } from './models/myCaseWorkModel';
 
 const { Express, Logger } = require('@hmcts/nodejs-logging');
@@ -19,7 +19,11 @@ const developmentMode = env === 'development';
 export const app = express();
 app.locals.ENV = env;
 
-app.use(setupSession());
+app.use(session({
+  secret: 'defaultsecret',
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // setup logging of HTTP requests
 app.use(Express.accessLogger());
