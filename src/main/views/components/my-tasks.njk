@@ -18,17 +18,17 @@
 {% endmacro %}
 
 
-{% macro myTasks(tasks) %}
+{% macro setClaimTask(caseRef) %}
+  <a href="/claim-task/{{caseRef}}">Claim this task</a>
+{% endmacro %}
 
-{% set claimTask %}
-  <a href=#>Claim this task</a>
-{% endset %}
-
-{% set details %}
+{% macro setDetails(caseRef) %}
   {{ govukDetails({
-    html: claimTask
+    html: setClaimTask(caseRef)
   }) }}
-{% endset %}
+{% endmacro %}
+
+{% macro myTasks(tasks) %}
 
 {{ govukTable({
   head: [
@@ -104,7 +104,7 @@
         }
       },
       {
-        html: details
+        html: setDetails(tasks[0].caseRef)
       }
     ],
     [
@@ -132,7 +132,7 @@
         }
       },
       {
-        html: details
+        html: setDetails(tasks[1].caseRef)
       }
     ],
     [
@@ -160,7 +160,7 @@
         }
       },
       {
-        html: details
+        html: setDetails(tasks[2].caseRef)
       }
     ]
   ]
