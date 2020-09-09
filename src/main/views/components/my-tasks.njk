@@ -5,14 +5,14 @@
   <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
 {% endmacro %}
 
-{% macro formatTaskDueDate(taskDueDate) %}
-  {% if taskDueDate === 'Today' %}
+{% macro formatTaskDueDate(taskDueDate, dateColourCode) %}
+  {% if dateColourCode === 'today' %}
     <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
   {% endif %} 
-  {% if taskDueDate === '04 Dec' %}
+  {% if dateColourCode === 'future' %}
     <div class="task-date--future govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
   {% endif %} 
-  {% if taskDueDate === '+2 days' %}
+  {% if dateColourCode === 'past' %}
     <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
   {% endif %} 
 {% endmacro %}
@@ -54,10 +54,10 @@
         text: tasks[loop.index0].taskName
       },
       {
-        html: formatTaskDueDate(tasks[loop.index0].dueDate),
+        html: formatTaskDueDate(tasks[loop.index0].dueDate, tasks[loop.index0].dateColourCode),
         classes: "govuk-!-padding-bottom-0",
         attributes: {
-          "data-sort-value": "1"
+          "data-sort-value": tasks[loop.index0].dateOrder
         }
       },
       {
