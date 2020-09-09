@@ -53,7 +53,7 @@ describe('myCaseWork controller', () => {
     expect(res.render).toHaveBeenCalledWith('my-case-work', {
       tasks: {
         myAvailableTasks: [{ caseRef: '4' }],
-        myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
+        myTasks: [{ caseRef: '1' }, { caseRef: '2' }, { caseRef: '3' }],
       },
     });
   });
