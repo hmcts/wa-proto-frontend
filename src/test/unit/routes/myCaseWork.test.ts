@@ -12,10 +12,10 @@ describe('myCaseWork routers', () => {
     expect(mock).toHaveBeenCalledTimes(1);
   });
 
-  test('get /claim-task:caseRef router', async () => {
+  test('get /claim-task?caseRef={caseRef} router', async () => {
     const mock = jest.spyOn(controller, 'claimTask');
 
-    const response = await request(app).get('/claim-task/1');
+    const response = await request(app).get('/claim-task?caseRef=1');
 
     expect(response.status).toBe(200);
     expect(mock).toHaveBeenCalledTimes(1);

@@ -11,8 +11,8 @@ router.get('/my-case-work', (req, res) => {
   createMyCaseWorkPage(req, res);
 });
 
-router.get('/claim-task/:caseRef', (req, res) => {
-  debug(`claim-task router with caseRef=${req.params.caseRef}...`);
+router.get('/claim-task', (req, res) => {
+  debug(`claim-task router with caseRef=${req.query.caseRef}...`);
   claimTask(req, res);
 });
 

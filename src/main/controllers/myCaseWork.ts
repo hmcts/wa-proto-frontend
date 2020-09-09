@@ -19,7 +19,7 @@ export function createMyCaseWorkPage(req: Request, res: Response): void {
 function udpateSessionTasks(claimedTask: Task, actualMyAvailableTasks: Task[], req: Request): void {
   if (claimedTask) {
     claimTaskDebug(`claimedTask: ${JSON.stringify(claimedTask)}`);
-    const newMyAvailableTasks: Array<Task> = actualMyAvailableTasks.filter(task => task.caseRef != req.params.caseRef);
+    const newMyAvailableTasks: Array<Task> = actualMyAvailableTasks.filter(task => task.caseRef != req.query.caseRef);
 
     req.session.myAvailableTasks = newMyAvailableTasks;
     req.session.myTasks.push(claimedTask);
@@ -29,9 +29,9 @@ function udpateSessionTasks(claimedTask: Task, actualMyAvailableTasks: Task[], r
 }
 
 export function claimTask(req: Request, res: Response): void {
-  claimTaskDebug(`myCaseWork.claimTask controller with caseRef=${req.params.caseRef}...`);
+  claimTaskDebug(`myCaseWork.claimTask controller with caseRef=${req.query.caseRef}...`);
   const actualMyAvailableTasks: Array<Task> = req.session.myAvailableTasks;
-  const claimedTask: Task = actualMyAvailableTasks.find(task => task.caseRef === req.params.caseRef);
+  const claimedTask: Task = actualMyAvailableTasks.find(task => task.caseRef === req.query.caseRef);
 
   udpateSessionTasks(claimedTask, actualMyAvailableTasks, req);
 

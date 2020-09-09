@@ -34,7 +34,7 @@ describe('myCaseWork controller', () => {
 
     const req = (
       {
-        params: {
+        query: {
           caseRef: '3',
         },
         session: {
