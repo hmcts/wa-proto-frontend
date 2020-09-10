@@ -59,7 +59,7 @@ describe('myCaseWork controller', () => {
   });
   describe('unClaimTask method', () => {
 
-    test('unClaim exsting task', () => {
+    test('unClaim existing task', () => {
 
       const req = (
         {
@@ -87,7 +87,7 @@ describe('myCaseWork controller', () => {
       });
     });
 
-    test('unClaim nonexsting task', () => {
+    test('unClaim non-existing task', () => {
 
       const req = (
         {
