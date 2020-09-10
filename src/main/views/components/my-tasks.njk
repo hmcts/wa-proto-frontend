@@ -18,20 +18,21 @@
 {% endmacro %}
 
 
-{% macro setClaimTask(caseRef) %}
-  <a href="/claim-task?caseRef={{caseRef}}">Claim this task</a>
+{% macro setClaimTask(caseRef, tasksType) %}
+  <a href="/claim-task?caseRef={{caseRef}}">
+    {{ "Unclaim this task" if tasksType == 'myTasks' else "Claim this task" }}
+  </a>
 {% endmacro %}
 
-{% macro setDetails(caseRef) %}
+{% macro setDetails(caseRef, tasksType) %}
   {{ govukDetails({
-    html: setClaimTask(caseRef)
+    html: setClaimTask(caseRef, tasksType)
   }) }}
 {% endmacro %}
 
-
-{% macro myTasks(tasks) %}
-
-
+{# tasks: is list of tasks either myTasks or myAvailableTasks. #}
+{# tasksType: type of the tasks, either myTaks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
+{% macro myTasks(tasks, tasksType) %}
 
 {% set dynamicRows = [] %}
 {% for task in tasks %}
@@ -61,7 +62,7 @@
         }
       },
       {
-        html: setDetails(tasks[loop.index0].caseRef)
+        html: setDetails(tasks[loop.index0].caseRef, tasksType)
       }
     ] 
     %}
