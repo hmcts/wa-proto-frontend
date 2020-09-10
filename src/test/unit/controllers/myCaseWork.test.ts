@@ -1,12 +1,12 @@
 import { Response } from 'express';
-import { createMyCaseWorkPage, claimTask } from '../../../main/controllers/myCaseWork';
+import { createMyCaseWorkPage, claimTask, unClaimTask } from '../../../main/controllers/myCaseWork';
 
 
 jest.mock('../../../main/models/task');
 
 describe('myCaseWork controller', () => {
 
-  test('createMyCaseWorkPage method', async () => {
+  test('createMyCaseWorkPage method', () => {
     const req = (
       {
         session: {
@@ -30,7 +30,7 @@ describe('myCaseWork controller', () => {
     });
   });
 
-  test('claimTask method', async () => {
+  test('claimTask method', () => {
 
     const req = (
       {
@@ -57,5 +57,65 @@ describe('myCaseWork controller', () => {
       },
     });
   });
+  describe('unClaimTask method', () => {
+
+    test('unClaim exsting task', () => {
+
+      const req = (
+        {
+          query: {
+            caseRef: '2',
+          },
+          session: {
+            myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
+            myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+          },
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
+        } as any);
+      const res = ({} as Response);
+
+      res.render = jest.fn();
+
+      unClaimTask(req, res);
+
+      expect(res.render).toHaveBeenCalledTimes(1);
+      expect(res.render).toHaveBeenCalledWith('my-case-work', {
+        tasks: {
+          myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }, { caseRef: '2' }],
+          myTasks: [{ caseRef: '1' }],
+        },
+      });
+    });
+
+    test('unClaim nonexsting task', () => {
+
+      const req = (
+        {
+          query: {
+            caseRef: '6',
+          },
+          session: {
+            myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
+            myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+          },
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
+        } as any);
+      const res = ({} as Response);
+
+      res.render = jest.fn();
+
+      unClaimTask(req, res);
+
+      expect(res.render).toHaveBeenCalledTimes(1);
+      expect(res.render).toHaveBeenCalledWith('my-case-work', {
+        tasks: {
+          myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
+          myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+        },
+      });
+    });
+
+  });
+
 
 });
