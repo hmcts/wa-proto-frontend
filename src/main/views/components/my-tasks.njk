@@ -19,9 +19,17 @@
 
 
 {% macro setClaimTask(caseRef, tasksType) %}
-  <a href="/claim-task?caseRef={{caseRef}}">
-    {{ "Unclaim this task" if tasksType == 'myTasks' else "Claim this task" }}
-  </a>
+  
+  {% if tasksType == 'myTasks' %}
+    <a href="/unclaim-task?caseRef={{caseRef}}">
+      Unclaim this task
+    </a>
+  {% else %}
+    <a href="/claim-task?caseRef={{caseRef}}">
+      Claim this task
+    </a>
+  {% endif%}
+      
 {% endmacro %}
 
 {% macro setDetails(caseRef, tasksType) %}
