@@ -1,0 +1,71 @@
+{% extends "template.njk" %}
+
+{% from "components/my-tasks.njk" import myTasks %}
+
+{% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
+
+{% block header %}
+  <a href="#" class="sign-out-button">Sign Out</a>
+  {{ govukHeader({
+    homepageUrl: "/",
+    containerClasses: "app-width-container",
+    serviceName: "Immigration & Asylum",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "/",
+        text: "My cases"
+      },
+      {
+        href: "/my-case-work",
+        text: "My casework",
+        active: true
+      },
+      {
+        href: "#",
+        text: "All cases"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <h1 class="govuk-heading-xl">My casework</h1>      
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <h1 class="govuk-heading-l">My tasks</h1>      
+  </div>
+</div>
+
+{{ myTasks(tasks.myTasks) }}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">My available tasks</h1>
+  </div>
+</div>
+
+{{ myTasks(tasks.myAvailableTasks) }}
+
+  
+{% endblock %}
+
+
+  {% block pageScripts %}
+  {% include "includes/sortable-table-scripts.njk" %}
+  <script>
+    new MOJFrontend.SortableTable({
+      table: $('table')[0]
+    });
+    new MOJFrontend.SortableTable({
+      table: $('table')[1]
+    });
+  </script>
+ {% endblock %}
+
+

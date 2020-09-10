@@ -1,0 +1,147 @@
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% macro formatTaskCaseRef(taskCaseRef) %}
+  <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
+{% endmacro %}
+
+{% macro formatTaskDueDate(taskDueDate) %}
+  {% if taskDueDate === 'Today' %}
+    <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+  {% endif %} 
+  {% if taskDueDate === '04 Dec' %}
+    <div class="task-date--future govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+  {% endif %} 
+  {% if taskDueDate === '+2 days' %}
+    <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+  {% endif %} 
+{% endmacro %}
+
+
+{% macro myTasks(tasks) %}
+
+{{ govukTable({
+  head: [
+    {
+      text: "Case reference",
+      attributes: {
+        "aria-sort": "ascending"
+      },
+      classes: "my-task-header"
+    },
+    {
+      text: "Case name",
+      classes: "my-task-header",
+      attributes: {
+        "aria-sort": "ascending"
+      }
+    },
+    {
+      text: "Case category",
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
+    },
+    {
+      text: "Location",
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
+    },
+    {
+      text: "Task",
+      classes: "my-task-header",
+       attributes: {
+        "aria-sort": "ascending"
+      }
+    },
+    {
+      text: "Date",
+      attributes: {
+        "aria-sort": "ascending"
+      },
+      classes: "my-task-header"
+    }
+  ],
+  rows: [
+    [
+      {
+        html: formatTaskCaseRef(tasks[0].caseRef)
+      },
+      {
+        text: tasks[0].caseName,
+        classes: "govuk-!-font-weight-bold" 
+      },
+      {
+        text: tasks[0].caseCategory
+      },
+      {
+        text: tasks[0].location
+      },
+      {
+        text: tasks[0].taskName
+      },
+      {
+        html: formatTaskDueDate(tasks[0].dueDate),
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "2"
+        }
+      }
+    ],
+    [
+      {
+        html: formatTaskCaseRef(tasks[1].caseRef)
+      },
+      {
+        text: tasks[1].caseName,
+        classes: "govuk-!-font-weight-bold" 
+      },
+      {
+        text: tasks[1].caseCategory
+      },
+      {
+        text: tasks[1].location
+      },
+      {
+        text: tasks[1].taskName
+      },
+      {
+        html: formatTaskDueDate(tasks[1].dueDate),
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "1"
+        }
+      }
+    ],
+    [
+      {
+        html: formatTaskCaseRef(tasks[2].caseRef)
+      },
+      {
+        text: tasks[2].caseName,
+        classes: "govuk-!-font-weight-bold" 
+      },
+      {
+        text: tasks[2].caseCategory
+      },
+      {
+        text: tasks[2].location
+      },
+      {
+        text: tasks[2].taskName
+      },
+      {
+        html: formatTaskDueDate(tasks[2].dueDate),
+        classes: "govuk-!-padding-bottom-0",
+        attributes: {
+          "data-sort-value": "3"
+        }
+      }
+    ]
+  ]
+}) }}
+
+    
+{% endmacro %}

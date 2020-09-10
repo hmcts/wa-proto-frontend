@@ -1,0 +1,23 @@
+.task-date {
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+  
+  &--future {
+    @extend .task-date;
+    background-color: green;
+  }
+  &--today {
+    @extend .task-date;
+    background-color: orange;
+  }
+  &--past {
+    @extend .task-date;
+    background-color: red;
+  }
+}
+
+.my-task-header {
+  border-bottom: none;
+  padding-bottom: 30px;
+}

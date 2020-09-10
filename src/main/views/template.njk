@@ -11,21 +11,23 @@
   {% include "webpack/css.njk" %}
 {% endblock %}
 
+{% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
+
 {% block header %}
   <a href="#" class="sign-out-button">Sign Out</a>
   {{ govukHeader({
-    homepageUrl: "#",
+    homepageUrl: "/",
     containerClasses: "app-width-container",
     serviceName: "Immigration & Asylum",
-    serviceUrl: "#",
+    serviceUrl: "/",
     navigation: [
       {
-        href: "#",
+        href: "/",
         text: "My cases",
         active: true
       },
       {
-        href: "#",
+        href: "/my-case-work",
         text: "My casework"
       },
       {
@@ -48,6 +50,9 @@
 
 
 {% block bodyEnd %}
+
   {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
   {% include "webpack/js.njk" %}
+  {% block pageScripts %}{% endblock %}
+ 
 {% endblock %}

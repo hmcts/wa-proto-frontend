@@ -1,3 +1,4 @@
+
 const stages = [
   {
     title: 'Appeal submitted',
