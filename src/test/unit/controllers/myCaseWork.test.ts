@@ -6,18 +6,24 @@ jest.mock('../../../main/models/task');
 
 describe('myCaseWork controller', () => {
 
-  test('createMyCaseWorkPage method', () => {
-    const req = (
-      {
-        session: {
-          myTasks: [{}],
-          myAvailableTasks: [{}],
-        },
-        /* eslint-disable  @typescript-eslint/no-explicit-any */
-      } as any);
-    const res = ({} as Response);
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  let req = {} as any;
+  const res = {} as Response;
+
+  beforeEach(() => {
+    req = {
+      session: {
+        myTasks: [{}],
+        myAvailableTasks: [{}],
+
+      },
+    };
 
     res.render = jest.fn();
+
+  });
+
+  test('createMyCaseWorkPage method', () => {
 
     createMyCaseWorkPage(req, res);
 
@@ -32,7 +38,7 @@ describe('myCaseWork controller', () => {
 
   test('claimTask method', () => {
 
-    const req = (
+    req = (
       {
         query: {
           caseRef: '3',
@@ -43,9 +49,6 @@ describe('myCaseWork controller', () => {
         },
         /* eslint-disable  @typescript-eslint/no-explicit-any */
       } as any);
-    const res = ({} as Response);
-
-    res.render = jest.fn();
 
     claimTask(req, res);
 
@@ -57,11 +60,12 @@ describe('myCaseWork controller', () => {
       },
     });
   });
+  
   describe('unClaimTask method', () => {
 
     test('unClaim existing task', () => {
 
-      const req = (
+      req = (
         {
           query: {
             caseRef: '2',
@@ -72,9 +76,6 @@ describe('myCaseWork controller', () => {
           },
           /* eslint-disable  @typescript-eslint/no-explicit-any */
         } as any);
-      const res = ({} as Response);
-
-      res.render = jest.fn();
 
       unClaimTask(req, res);
 
@@ -89,7 +90,7 @@ describe('myCaseWork controller', () => {
 
     test('unClaim non-existing task', () => {
 
-      const req = (
+      req = (
         {
           query: {
             caseRef: '6',
@@ -100,9 +101,6 @@ describe('myCaseWork controller', () => {
           },
           /* eslint-disable  @typescript-eslint/no-explicit-any */
         } as any);
-      const res = ({} as Response);
-
-      res.render = jest.fn();
 
       unClaimTask(req, res);
 
