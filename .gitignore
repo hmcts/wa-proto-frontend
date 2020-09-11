@@ -26,3 +26,5 @@ public/
 
 src/main/views/webpack/css.njk
 src/main/views/webpack/js.njk
+
+.vscode

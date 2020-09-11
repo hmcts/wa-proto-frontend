@@ -32,7 +32,7 @@ export class Helmet {
           imgSrc: [self, googleAnalyticsDomain],
           objectSrc: [self],
           scriptSrc: [self, googleAnalyticsDomain, "'unsafe-inline'", "'unsafe-eval'"],
-          styleSrc: [self],
+          styleSrc: [self, "'unsafe-inline'"],
         },
       }),
     );

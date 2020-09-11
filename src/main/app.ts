@@ -1,5 +1,3 @@
-const { Express, Logger } = require('@hmcts/nodejs-logging');
-
 import * as bodyParser from 'body-parser';
 import config = require('config');
 import cookieParser from 'cookie-parser';
@@ -10,13 +8,24 @@ import { RouterFinder } from './router/routerFinder';
 import favicon from 'serve-favicon';
 import { HTTPError } from 'HttpError';
 import { Nunjucks } from './modules/nunjucks';
-const { setupDev } = require('./development');
+import session from 'express-session';
+import { MyCaseWorkModel } from './models/myCaseWorkModel';
+import Debug from 'debug';
 
+const { Express, Logger } = require('@hmcts/nodejs-logging');
+const { setupDev } = require('./development');
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
+const debug = Debug('app:app');
 
 export const app = express();
 app.locals.ENV = env;
+
+app.use(session({
+  secret: 'defaultsecret',
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // setup logging of HTTP requests
 app.use(Express.accessLogger());
@@ -39,8 +48,27 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+  debug(`req.session: ${JSON.stringify(req.session)}`);
+  debug(`req.session.myAvailableTasks: ${JSON.stringify(req.session.myAvailableTasks)}`);
+  debug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
+  
+  const myCaseWorkModel = new MyCaseWorkModel();
+  if (!req.session.myAvailableTasks) {
+    req.session.myAvailableTasks = myCaseWorkModel.getMyAvailableTasks;  
+  }
+  
+  if (!req.session.myTasks) {
+    req.session.myTasks = myCaseWorkModel.getMyTasks;  
+  }
+  
+  next();
+});
+
 app.use('/', RouterFinder.findAll(path.join(__dirname, 'routes')));
-setupDev(app,developmentMode);
+setupDev(app, developmentMode);
+
 // returning "not found" page for requests with paths not resolved by the router
 app.use((req, res) => {
   res.status(404);

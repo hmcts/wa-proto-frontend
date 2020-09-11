@@ -1,26 +1,61 @@
-import { Request, Response } from 'express';
-import { createMyCaseWorkPage } from '../../../main/controllers/myCaseWork';
-import { Task } from '../../../main/models/task';
+import { Response } from 'express';
+import { createMyCaseWorkPage, claimTask } from '../../../main/controllers/myCaseWork';
+
 
 jest.mock('../../../main/models/task');
 
 describe('myCaseWork controller', () => {
 
-  it('render my-case-work page', async () => {
-    const req = ({} as Request);
+  test('createMyCaseWorkPage method', async () => {
+    const req = (
+      {
+        session: {
+          myTasks: [{}],
+          myAvailableTasks: [{}],
+        },
+        /* eslint-disable  @typescript-eslint/no-explicit-any */
+      } as any);
     const res = ({} as Response);
-    const renderFnMock = jest.fn();
-    res.render = renderFnMock;
+
+    res.render = jest.fn();
 
     createMyCaseWorkPage(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
-    expect(Task).toHaveBeenCalledTimes(6);
     expect(res.render).toHaveBeenCalledWith('my-case-work', {
       'tasks': {
-        'myAvailableTasks': [{}, {}, {}],
-        'myTasks': [{}, {}, {}],
+        'myAvailableTasks': [{}],
+        'myTasks': [{}],
       },
     });
   });
+
+  test('claimTask method', async () => {
+
+    const req = (
+      {
+        query: {
+          caseRef: '3',
+        },
+        session: {
+          myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
+          myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+        },
+        /* eslint-disable  @typescript-eslint/no-explicit-any */
+      } as any);
+    const res = ({} as Response);
+
+    res.render = jest.fn();
+
+    claimTask(req, res);
+
+    expect(res.render).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledWith('my-case-work', {
+      tasks: {
+        myAvailableTasks: [{ caseRef: '4' }],
+        myTasks: [{ caseRef: '1' }, { caseRef: '2' }, { caseRef: '3' }],
+      },
+    });
+  });
+
 });

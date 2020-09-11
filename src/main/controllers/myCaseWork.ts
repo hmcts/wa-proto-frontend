@@ -1,46 +1,46 @@
 import { Request, Response } from 'express';
-import { Task } from '../models/task';
 import Debug from 'debug';
+import { Task } from 'models/task';
 
-const debug = Debug('app:controller:myCaseWork');
-
-function getMyAvailableTasks(): Array<Task> {
-  const myAvailableTasks: Array<Task> = [];
-
-  const task1 = new Task('1549 6338 2756 6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today');
-  const task2 = new Task('1549 9061 9513 0004', 'Nonasky Pecki', 'EEA', 'Taylor House', 'Create case summary', '04 Dec');
-  const task3 = new Task('1549 9083 5480 6960', 'Wauanda Jik', 'Human Rights', 'Taylor House', 'Review appellant case', '+2 days');
-
-  myAvailableTasks.push(task1);
-  myAvailableTasks.push(task2);
-  myAvailableTasks.push(task3);
-
-  return myAvailableTasks;
-}
-
-function getMyTasks(): Array<Task> {
-  const myTasks: Array<Task> = [];
-
-  const task1 = new Task('1549 4765 3206 5586', 'Kili Muso', 'Protection', 'Taylor House', 'Review respondent evidence', 'Today');
-  const task2 = new Task('1549 5366 1108 0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '04 Dec');
-  const task3 = new Task('1549 2345 7854 9786', 'Wina Palic', 'Human Rights', 'Taylor House', 'Review respondent evidence', '+2 days');
-
-  myTasks.push(task1);
-  myTasks.push(task2);
-  myTasks.push(task3);
-
-  return myTasks;
-}
+const createMyCaseWorkPageDebug = Debug('app:controller:myCaseWork:createMyCaseWorkPage');
+const claimTaskDebug = Debug('app:controller:myCaseWork:claimTask');
 
 
 export function createMyCaseWorkPage(req: Request, res: Response): void {
-  debug('myCaseWork controller...');
+  createMyCaseWorkPageDebug('myCaseWork.createMyCaseWorkPage controller...');
+  res.render('my-case-work', {
+    tasks: {
+      'myTasks': req.session.myTasks,
+      'myAvailableTasks': req.session.myAvailableTasks,
+    },
+  });
+}
+
+function udpateSessionTasks(claimedTask: Task, actualMyAvailableTasks: Task[], req: Request): void {
+  if (claimedTask) {
+    claimTaskDebug(`claimedTask: ${JSON.stringify(claimedTask)}`);
+    const newMyAvailableTasks: Array<Task> = actualMyAvailableTasks.filter(task => task.caseRef != req.query.caseRef);
+
+    req.session.myAvailableTasks = newMyAvailableTasks;
+    req.session.myTasks.push(claimedTask);
+    claimTaskDebug(`req.session.myAvailableTasks: ${JSON.stringify(req.session.myAvailableTasks)}`);
+    claimTaskDebug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
+  }
+}
+
+export function claimTask(req: Request, res: Response): void {
+  claimTaskDebug(`myCaseWork.claimTask controller with caseRef=${req.query.caseRef}...`);
+  const actualMyAvailableTasks: Array<Task> = req.session.myAvailableTasks;
+  const claimedTask: Task = actualMyAvailableTasks.find(task => task.caseRef === req.query.caseRef);
+
+  udpateSessionTasks(claimedTask, actualMyAvailableTasks, req);
 
   res.render('my-case-work', {
     tasks: {
-      'myTasks': getMyTasks(),
-      'myAvailableTasks': getMyAvailableTasks(),
+      'myTasks': req.session.myTasks,
+      'myAvailableTasks': req.session.myAvailableTasks,
     },
   });
+
 }
 

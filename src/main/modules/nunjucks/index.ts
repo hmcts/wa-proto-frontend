@@ -26,6 +26,7 @@ export class Nunjucks {
       '..',
       'node_modules',
       '@ministryofjustice',
+      'frontend',
     );
     nunjucks.configure(
       [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath, ministryMojFrontendPath],
