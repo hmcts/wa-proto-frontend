@@ -60,60 +60,47 @@ describe('myCaseWork controller', () => {
       },
     });
   });
-  
-  describe('unClaimTask method', () => {
 
-    test('unClaim existing task', () => {
+  const scenarios = [
+    {
+      caseRef: '2',
+      expectedMyTask: [{ caseRef: ('1') }],
+      expectedMyAvailableTask: [{ caseRef: '3' }, { caseRef: '4' }, { caseRef: '2' }],
+    },
+    {
+      caseRef: '6',
+      expectedMyTask: [{ caseRef: '1' }, { caseRef: '2' }],
+      expectedMyAvailableTask: [{ caseRef: '3' }, { caseRef: '4' }],
+    },
+  ];
+  describe.each(scenarios)(
+    '%s', (scenario) => {
 
-      req = (
-        {
-          query: {
-            caseRef: '2',
+      test(`unClaim task for caseRef=${scenario.caseRef}`, () => {
+
+        req = (
+          {
+            query: {
+              caseRef: scenario.caseRef,
+            },
+            session: {
+              myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
+              myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+            },
+            /* eslint-disable  @typescript-eslint/no-explicit-any */
+          } as any);
+
+        unClaimTask(req, res);
+
+        expect(res.render).toHaveBeenCalledTimes(1);
+        expect(res.render).toHaveBeenCalledWith('my-case-work', {
+          tasks: {
+            myAvailableTasks: scenario.expectedMyAvailableTask,
+            myTasks: scenario.expectedMyTask,
           },
-          session: {
-            myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
-            myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
-          },
-          /* eslint-disable  @typescript-eslint/no-explicit-any */
-        } as any);
-
-      unClaimTask(req, res);
-
-      expect(res.render).toHaveBeenCalledTimes(1);
-      expect(res.render).toHaveBeenCalledWith('my-case-work', {
-        tasks: {
-          myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }, { caseRef: '2' }],
-          myTasks: [{ caseRef: '1' }],
-        },
+        });
       });
+
     });
-
-    test('unClaim non-existing task', () => {
-
-      req = (
-        {
-          query: {
-            caseRef: '6',
-          },
-          session: {
-            myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
-            myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
-          },
-          /* eslint-disable  @typescript-eslint/no-explicit-any */
-        } as any);
-
-      unClaimTask(req, res);
-
-      expect(res.render).toHaveBeenCalledTimes(1);
-      expect(res.render).toHaveBeenCalledWith('my-case-work', {
-        tasks: {
-          myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
-          myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
-        },
-      });
-    });
-
-  });
-
 
 });
