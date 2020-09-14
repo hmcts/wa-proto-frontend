@@ -65,6 +65,24 @@
     new MOJFrontend.SortableTable({
       table: $('table')[1]
     });
+
+  
+  document.querySelectorAll('details[tasks-type=myTasks]').forEach((detail, index) => {
+    detail.addEventListener('click', () => {
+      let element = document.getElementById('my-task-action-' + index);  
+      
+       if (!element.style || element.style.display === "" || element.style.display === "none") {
+         element.style.display = "block";
+        } else {
+           element.style.display = "none";
+      }  
+    });
+  });
+    
+  
+  
+
+
   </script>
  {% endblock %}
 

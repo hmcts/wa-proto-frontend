@@ -5,7 +5,7 @@
   <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
 {% endmacro %}
 
-{% macro formatTaskDueDate(taskDueDate, dateColourCode) %}
+{% macro formatTaskDueDate(tasksType, index, taskDueDate, dateColourCode) %}
   {% if dateColourCode === 'today' %}
     <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
   {% endif %} 
@@ -15,6 +15,18 @@
   {% if dateColourCode === 'past' %}
     <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
   {% endif %} 
+  
+  {% if tasksType === 'myTasks' %}
+    <div id="my-task-action-{{index}}" class="wa-action-task">
+      Unclaim task
+    </div>
+  {% else %}
+    <div id="my-available-task-{{index}}" class="wa-action-task">
+      Claim task
+    </div>
+  {% endif %}
+  
+  
 {% endmacro %}
 
 
@@ -34,12 +46,14 @@
 
 {% macro setDetails(caseRef, tasksType) %}
   {{ govukDetails({
-    html: setClaimTask(caseRef, tasksType)
+    attributes: {
+      "tasks-type": tasksType
+    }
   }) }}
 {% endmacro %}
 
-{# tasks: is list of tasks either myTasks or myAvailableTasks. #}
-{# tasksType: type of the tasks, either myTaks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
+{# tasks: list of tasks either myTasks or myAvailableTasks. #}
+{# tasksType: type of the tasks, either myTasks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
 {% macro myTasks(tasks, tasksType) %}
 
 {% set dynamicRows = [] %}
@@ -63,7 +77,7 @@
         text: tasks[loop.index0].taskName
       },
       {
-        html: formatTaskDueDate(tasks[loop.index0].dueDate, tasks[loop.index0].dateColourCode),
+        html: formatTaskDueDate(tasksType, loop.index0, tasks[loop.index0].dueDate, tasks[loop.index0].dateColourCode),
         classes: "govuk-!-padding-bottom-0",
         attributes: {
           "data-sort-value": tasks[loop.index0].dateOrder
