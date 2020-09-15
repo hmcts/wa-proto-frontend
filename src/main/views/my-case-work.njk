@@ -78,13 +78,13 @@
   }
 
   
-  document.querySelectorAll('details[tasks-type=myTasks]').forEach((detail, index) => {
+  document.querySelectorAll('details>summary[tasks-type=myTasks]').forEach((detail, index) => {
     detail.addEventListener('click', () => {
       hideShowDetailForGivenId('my-task-action-' + index);
     });
   });
   
-  document.querySelectorAll('details[tasks-type=myAvailableTasks]').forEach((detail, index) => {
+  document.querySelectorAll('details>summary[tasks-type=myAvailableTasks]').forEach((detail, index) => {
     detail.addEventListener('click', () => {
       hideShowDetailForGivenId('my-available-task-' + index);
     });
