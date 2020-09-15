@@ -9,11 +9,11 @@
   }
   &--today {
     @extend .task-date;
-    background-color: orange;
+    background-color: #a66900;
   }
   &--past {
     @extend .task-date;
-    background-color: red;
+    background-color: #e00;
   }
 }
 
