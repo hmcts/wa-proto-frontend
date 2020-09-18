@@ -5,7 +5,6 @@
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
 {% block header %}
-  <a href="#" class="sign-out-button">Sign Out</a>
   {{ govukHeader({
     homepageUrl: "/",
     containerClasses: "app-width-container",
@@ -24,7 +23,11 @@
       {
         href: "#",
         text: "All cases"
-      }
+      },
+      {
+        href: "#",
+        html: signOut()
+      }  
     ]
   }) }}
 {% endblock %}
