@@ -1,11 +1,10 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% macro formatTaskCaseRef(taskCaseRef) %}
   <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
 {% endmacro %}
 
-{% macro formatTaskDueDate(taskDueDate, dateColourCode) %}
+{% macro formatTaskDueDate(caseRef, tasksType, index, taskDueDate, dateColourCode) %}
   {% if dateColourCode === 'today' %}
     <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
   {% endif %} 
@@ -15,31 +14,31 @@
   {% if dateColourCode === 'past' %}
     <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
   {% endif %} 
-{% endmacro %}
-
-
-{% macro setClaimTask(caseRef, tasksType) %}
   
-  {% if tasksType == 'myTasks' %}
-    <a href="/unclaim-task?caseRef={{caseRef}}">
-      Unclaim this task
-    </a>
+  {% if tasksType === 'myTasks' %}
+    <div id="my-task-action-{{index}}" class="wa-action-task">
+      <a href="/unclaim-task?caseRef={{caseRef}}">
+        Unclaim this task
+      </a>
+    </div>
   {% else %}
-    <a href="/claim-task?caseRef={{caseRef}}">
-      Claim this task
-    </a>
-  {% endif%}
-      
+    <div id="my-available-task-{{index}}" class="wa-action-task">
+      <a href="/claim-task?caseRef={{caseRef}}">
+        Claim this task
+      </a>
+    </div>
+  {% endif %}
 {% endmacro %}
+
 
 {% macro setDetails(caseRef, tasksType) %}
-  {{ govukDetails({
-    html: setClaimTask(caseRef, tasksType)
-  }) }}
+  <details class="govuk-details">
+    <summary class="govuk-details__summary" tasks-type="{{tasksType}}"></summary>
+  </details>
 {% endmacro %}
 
-{# tasks: is list of tasks either myTasks or myAvailableTasks. #}
-{# tasksType: type of the tasks, either myTaks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
+{# tasks: list of tasks either myTasks or myAvailableTasks. #}
+{# tasksType: type of the tasks, either myTasks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
 {% macro myTasks(tasks, tasksType) %}
 
 {% set dynamicRows = [] %}
@@ -63,7 +62,7 @@
         text: tasks[loop.index0].taskName
       },
       {
-        html: formatTaskDueDate(tasks[loop.index0].dueDate, tasks[loop.index0].dateColourCode),
+        html: formatTaskDueDate(tasks[loop.index0].caseRef, tasksType, loop.index0, tasks[loop.index0].dueDate, tasks[loop.index0].dateColourCode),
         classes: "govuk-!-padding-bottom-0",
         attributes: {
           "data-sort-value": tasks[loop.index0].dateOrder

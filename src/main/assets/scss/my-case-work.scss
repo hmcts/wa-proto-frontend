@@ -9,11 +9,11 @@
   }
   &--today {
     @extend .task-date;
-    background-color: orange;
+    background-color: #a66900;
   }
   &--past {
     @extend .task-date;
-    background-color: red;
+    background-color: #e00;
   }
 }
 
@@ -24,4 +24,9 @@
 
 .my-tasks-table {
   white-space: nowrap;
+}
+
+.wa-action-task {
+  display: none;
+  padding-bottom: 20px;
 }
