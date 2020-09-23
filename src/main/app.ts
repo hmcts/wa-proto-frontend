@@ -48,7 +48,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: true,
-    sameSite: true,
+    sameSite: 'lax',
     maxAge: 8 * 60 * 60 * 1000, // 8 hours in ms
   },
 }));
