@@ -41,13 +41,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 app.use(session({
   secret: 'defaultsecret',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
+    secure: false,
     sameSite: 'lax',
     maxAge: 8 * 60 * 60 * 1000, // 8 hours in ms
   },
