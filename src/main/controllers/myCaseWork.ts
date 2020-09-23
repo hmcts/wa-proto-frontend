@@ -20,7 +20,7 @@ export function createMyCaseWorkPage(req: Request, res: Response): void {
 function udpateSessionTasksForClaimedTask(claimedTask: Task, actualMyAvailableTasks: Task[], req: Request): void {
   if (claimedTask) {
     claimTaskDebug(`claimedTask: ${JSON.stringify(claimedTask)}`);
-    const newMyAvailableTasks: Array<Task> = actualMyAvailableTasks.filter(task => task.caseRef != req.query.caseRef);
+    const newMyAvailableTasks: Array<Task> = actualMyAvailableTasks.filter(task => task.caseRef !== req.query.caseRef);
 
     req.session.myAvailableTasks = newMyAvailableTasks;
     req.session.myTasks.push(claimedTask);
@@ -32,7 +32,7 @@ function udpateSessionTasksForClaimedTask(claimedTask: Task, actualMyAvailableTa
 function udpateSessionTasksForUnClaimedTask(unClaimedTask: Task, actualMyTasks: Task[], req: Request): void {
   if (unClaimedTask) {
     unClaimTaskDebug(`unClaimedTask: ${JSON.stringify(unClaimedTask)}`);
-    const newMyTasks: Array<Task> = actualMyTasks.filter(task => task.caseRef != req.query.caseRef);
+    const newMyTasks: Array<Task> = actualMyTasks.filter(task => task.caseRef !== req.query.caseRef);
 
     req.session.myTasks = newMyTasks;
     req.session.myAvailableTasks.push(unClaimedTask);
