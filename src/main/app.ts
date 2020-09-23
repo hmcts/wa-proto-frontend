@@ -21,15 +21,7 @@ const debug = Debug('app:app');
 export const app = express();
 app.locals.ENV = env;
 
-app.use(session({
-  secret: 'defaultsecret',
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    secure: true,
-    maxAge: 8 * 60 * 60 * 1000, // 8 hours in ms
-  },
-}));
+app.set('trust proxy', 1);
 
 // setup logging of HTTP requests
 app.use(Express.accessLogger());
@@ -52,6 +44,16 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(session({
+  secret: 'defaultsecret',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    secure: true,
+    maxAge: 8 * 60 * 60 * 1000, // 8 hours in ms
+  },
+}));
 
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   debug(`req.session: ${JSON.stringify(req.session)}`);
