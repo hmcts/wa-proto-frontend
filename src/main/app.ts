@@ -25,7 +25,7 @@ app.use(session({
   secret: 'defaultsecret',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 60000, secure: true },
 }));
 
 // setup logging of HTTP requests
