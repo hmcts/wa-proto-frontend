@@ -23,7 +23,7 @@ app.locals.ENV = env;
 
 app.use(session({
   secret: 'defaultsecret',
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   cookie: {
     secure: true,
