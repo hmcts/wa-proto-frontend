@@ -20,8 +20,6 @@ const debug = Debug('app:app');
 export const app = express();
 app.locals.ENV = env;
 
-app.set('trust proxy', 1);
-
 // setup logging of HTTP requests
 app.use(Express.accessLogger());
 
@@ -43,12 +41,14 @@ app.use((req, res, next) => {
   next();
 });
 
+app.set('trust proxy', 1);
 app.use(session({
   secret: 'defaultsecret',
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: true,
+    sameSite: true,
     maxAge: 8 * 60 * 60 * 1000, // 8 hours in ms
   },
 }));
