@@ -25,7 +25,11 @@ app.use(session({
   secret: 'defaultsecret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true, expires:  new Date(2030, 0, 1)},
+  cookie: {
+    secure: true,
+    expires: new Date(2030, 0, 1),
+    maxAge: 8 * 60 * 60 * 1000, // 8 hours in ms
+  },
 }));
 
 // setup logging of HTTP requests
