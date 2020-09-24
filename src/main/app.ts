@@ -53,6 +53,7 @@ app.use(session({
     httpOnly: true,
     secure: true,
     maxAge: eightHours,
+    sameSite: 'none',
     expires: new Date(Date.now() + eightHours),
   },
 }));
