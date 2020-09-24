@@ -47,10 +47,11 @@ const eightHours = 8 * 60 * 60 * 1000;
 app.use(session({
   secret: 'defaultsecret',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
+  rolling: true,
   cookie: {
-    secure: false,
-    httpOnly: false,
+    httpOnly: true,
+    secure: true,
     maxAge: eightHours,
     expires: new Date(Date.now() + eightHours),
   },
