@@ -42,14 +42,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.set('trust proxy', 1);
+app.enable('trust proxy');
+const eightHours = 8 * 60 * 60 * 1000;
 app.use(session({
   secret: 'defaultsecret',
   resave: false,
   saveUninitialized: false,
   cookie: {
     secure: false,
-    maxAge: 8 * 60 * 60 * 1000, // 8 hours in ms
+    maxAge: eightHours,
+    expires: new Date(Date.now() + eightHours),
   },
 }));
 
