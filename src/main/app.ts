@@ -46,6 +46,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   secret: 'defaultsecret',
+  cookie: { secure: false },
 }));
 
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
