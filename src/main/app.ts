@@ -50,6 +50,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: false,
+    httpOnly: false,
     maxAge: eightHours,
     expires: new Date(Date.now() + eightHours),
   },
