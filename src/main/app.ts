@@ -11,7 +11,6 @@ import session from 'express-session';
 import { MyCaseWorkModel } from './models/myCaseWorkModel';
 import Debug from 'debug';
 import { isNullOrUndefined } from 'util';
-import cookieParser from 'cookie-parser';
 
 const { Express, Logger } = require('@hmcts/nodejs-logging');
 const { setupDev } = require('./development');
@@ -34,7 +33,6 @@ new Helmet(config.get('security')).enableFor(app);
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   res.setHeader(
@@ -55,7 +53,6 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   debug(`req.session: ${JSON.stringify(req.session)}`);
   debug(`req.session.myAvailableTasks: ${JSON.stringify(req.session.myAvailableTasks)}`);
   debug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
-  debug(`cookies: ${JSON.stringify(req.cookies)}`);
 
   const myCaseWorkModel = new MyCaseWorkModel();
   if (isNullOrUndefined(req.session.myAvailableTasks)) {
