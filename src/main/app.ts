@@ -10,6 +10,7 @@ import { Nunjucks } from './modules/nunjucks';
 import session from 'express-session';
 import { MyCaseWorkModel } from './models/myCaseWorkModel';
 import Debug from 'debug';
+import { isNullOrUndefined } from 'util';
 
 const { Express, Logger } = require('@hmcts/nodejs-logging');
 const { setupDev } = require('./development');
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.set('trust proxy', 1);
 app.use(session({
   secret: 'defaultsecret',
   resave: false,
@@ -57,11 +59,11 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   debug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
 
   const myCaseWorkModel = new MyCaseWorkModel();
-  if (!req.session.myAvailableTasks) {
+  if (isNullOrUndefined(req.session.myAvailableTasks)) {
     req.session.myAvailableTasks = myCaseWorkModel.getMyAvailableTasks;
   }
 
-  if (!req.session.myTasks) {
+  if (isNullOrUndefined(req.session.myTasks)) {
     req.session.myTasks = myCaseWorkModel.getMyTasks;
   }
 
