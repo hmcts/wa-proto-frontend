@@ -1,3 +1,5 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% set locationList = [
   {
     name: "Birmingham"
@@ -96,5 +98,18 @@
     <span aria-live="polite" id="ss_live_region"></span>
   </div>
 </div>
+
+
+<div class="grid-container">
+ <div class="grid-item">
+  {{ govukButton({
+  text: "Done"
+  }) }}
+  </div>
+  <div class="grid-item">
+    <a href="#" class="govuk-link">Cancel</a>
+  </div>
+</div>
+  
 
 {% endmacro %}
