@@ -1,18 +1,31 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
 
 {% macro formatTaskCaseRef(taskCaseRef) %}
   <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
 {% endmacro %}
 
 {% macro formatTaskDueDate(caseRef, tasksType, index, taskDueDate, dateColourCode) %}
-  {% if dateColourCode === 'today' %}
-    <div class="task-date--today govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+  {% if dateColourCode === 'today' %}    
+    {{govukTag({
+          text: taskDueDate,
+          classes: "govuk-tag--orange"
+      })
+    }}
   {% endif %} 
   {% if dateColourCode === 'future' %}
-    <div class="task-date--future govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+    {{govukTag({
+          text: taskDueDate,
+          classes: "govuk-tag--green"
+      })
+    }}
   {% endif %} 
   {% if dateColourCode === 'past' %}
-    <div class="task-date--past govuk-heading-s govuk-!-font-weight-regular">{{ taskDueDate }}</div>
+    {{govukTag({
+          text: taskDueDate,
+          classes: "govuk-tag--pink"
+      })
+    }}
   {% endif %} 
   
   {% if tasksType === 'myTasks' %}
