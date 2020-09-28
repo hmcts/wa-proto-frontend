@@ -121,11 +121,11 @@ button[aria-disabled="true"] {
 }
 
 .move-right-btn::after {
-  content: " →";
+  content: " >>";
 }
 
 .move-left-btn::before {
-  content: "← ";
+  content: "<< ";
 }
 
 .annotate {
