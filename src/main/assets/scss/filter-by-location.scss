@@ -145,13 +145,10 @@ button[aria-disabled="true"] {
   white-space: nowrap;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: 100px 100px;
-  padding-left: 0px;
+.filter-by-location-done-button {
+  width: 10%;
 }
 
-.grid-item {
-  padding: 20px 20px 0px 0px;
-  font-size: 23px;
+.filter-by-location-cancel-button {
+  margin-top: 5px;
 }
