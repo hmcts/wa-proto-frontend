@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 
 {% from "components/my-tasks.njk" import myTasks %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
@@ -50,6 +51,19 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-half">
       <h1 class="govuk-heading-l">My available tasks</h1>
+  </div>
+</div>
+
+{% macro listBox() %}
+  <div>Work in Progress</div>
+{% endmacro %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    {{ govukDetails({
+      summaryText: "Filter by location",
+      html: listBox()
+    }) }}    
   </div>
 </div>
 
