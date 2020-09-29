@@ -14,10 +14,11 @@ export class MyCaseWorkModel {
     this.myAvailableTasks.push(tasks[0]);
     this.myAvailableTasks.push(tasks[1]);
     this.myAvailableTasks.push(tasks[2]);
+    this.myAvailableTasks.push(tasks[3]);
 
-    this.myTasks.push(tasks[3]);
     this.myTasks.push(tasks[4]);
     this.myTasks.push(tasks[5]);
+    this.myTasks.push(tasks[6]);
   }
 
   get getMyAvailableTasks(): Array<Task> {
