@@ -59,7 +59,7 @@
   <div id="ex1" class="govuk-grid-column-two-half">
     {{ govukDetails({
       summaryText: "Filter by location",
-      html: filterByLocation(),
+      html: filterByLocation(tasks.addLocations, tasks.removeLocations),
       classes: "filter-by-location-details"
     }) }}    
   </div>

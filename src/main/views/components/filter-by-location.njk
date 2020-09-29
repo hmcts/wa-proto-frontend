@@ -1,35 +1,5 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set locationList = [
-  {
-    name: "Birmingham"
-  },
-  {
-    name: "Bradford"
-  },
-  {
-    name: "Glasgow"
-  },
-  {
-    name: "Hatton Cross"
-  },
-  {
-    name: "Manchester"
-  },
-  {
-    name: "Newcastle"
-  },
-  {
-    name: "Newport"
-  },
-  {
-    name: "Taylor House"
-  }
-] 
-
-%}
-
-
 {% macro displayLocation(name, id) %}
   <li id="ss_opt{{id}}" role="option">
         {{name}}
@@ -37,7 +7,7 @@
 {% endmacro%}
 
 
-{% macro filterByLocation() %}
+{% macro filterByLocation(addLocations, removeLocations) %}
 <div class="listbox-area">
   <div class="left-area">
     
@@ -45,8 +15,8 @@
         tabindex="0"
         role="listbox"
         aria-labelledby="ss_imp_l">
-      {% for location in  locationList%}
-        {{displayLocation(location.name, loop.index)}}
+      {% for location in  addLocations%}
+        {{displayLocation(location, loop.index)}}
       {% endfor %}
 
     </ul>

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
 import { Task } from 'models/task';
+import { MyCaseWorkModel as model } from '../models/myCaseWorkModel';
 
 const createMyCaseWorkPageDebug = Debug('app:controller:myCaseWork:createMyCaseWorkPage');
 const claimTaskDebug = Debug('app:controller:myCaseWork:claimTask');
@@ -13,6 +14,8 @@ export function createMyCaseWorkPage(req: Request, res: Response): void {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myAvailableTasks,
+      'addLocations': model.getAddLocations,
+      'removeLocations': model.getRemoveLocations,
     },
   });
 }
@@ -52,6 +55,8 @@ export function claimTask(req: Request, res: Response): void {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myAvailableTasks,
+      'addLocations': model.getAddLocations,
+      'removeLocations': model.getRemoveLocations,
     },
   });
 
@@ -68,6 +73,8 @@ export function unClaimTask(req: Request, res: Response): void {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myAvailableTasks,
+      'addLocations': model.getAddLocations,
+      'removeLocations': model.getRemoveLocations,
     },
   });
 
