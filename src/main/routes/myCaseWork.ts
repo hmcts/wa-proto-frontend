@@ -1,6 +1,7 @@
 import * as express from 'express';
 import Debug from 'debug';
 import { createMyCaseWorkPage, claimTask, unClaimTask } from '../controllers/myCaseWork';
+import { filterTasksByLocations } from '../controllers/filterTasksByLocations';
 
 const debugMyCaseWork = Debug('app:route:myCaseWork');
 const debugFilter = Debug('app:route:filter');
@@ -18,7 +19,7 @@ router.get('/filter', (req, res) => {
   debugFilter('filter router...');
   const query = {...req.query};
   debugFilter(`query: ${JSON.stringify(query)}`);
-  createMyCaseWorkPage(req, res);
+  filterTasksByLocations(req, res);
 });
 
 router.get('/claim-task', (req, res) => {
