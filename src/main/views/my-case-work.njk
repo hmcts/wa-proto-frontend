@@ -74,6 +74,7 @@
   {% block pageScripts %}
   {% include "includes/sortable-table-scripts.njk" %}
   {% include "includes/filter-by-location-scripts.njk" %}
+  {% include "includes/detail-actions-scripts.njk" %}
   <script>
     new MOJFrontend.SortableTable({
       table: $('table')[0]
@@ -81,31 +82,6 @@
     new MOJFrontend.SortableTable({
       table: $('table')[1]
     });
-
-
-  function hideShowDetailForGivenId(taskId) {
-    let detail = document.getElementById(taskId);  
-      
-       if (!detail.style || detail.style.display === "" || detail.style.display === "none") {
-         detail.style.display = "block";
-        } else {
-           detail.style.display = "none";
-      }
-  }
-
-  
-  document.querySelectorAll('details>summary[tasks-type=myTasks]').forEach((detail, index) => {
-    detail.addEventListener('click', () => {
-      hideShowDetailForGivenId('my-task-action-' + index);
-    });
-  });
-  
-  document.querySelectorAll('details>summary[tasks-type=myAvailableTasks]').forEach((detail, index) => {
-    detail.addEventListener('click', () => {
-      hideShowDetailForGivenId('my-available-task-' + index);
-    });
-  });
-
   </script>
  {% endblock %}
 
