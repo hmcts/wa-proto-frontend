@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get('/my-case-work', (req, res) => {
   debug('myCaseWork router...');
+  const query = {...req.query};
+  debug(`query: ${JSON.stringify(query)}`);
   createMyCaseWorkPage(req, res);
 });
 

@@ -102,7 +102,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter filter-by-location-done-button">
     {{ govukButton({
-      text: "Done"
+      text: "Done",
+      preventDoubleClick: true,
+      attributes: {
+        "id": "my-button"
+        }
       }) }}
   </div>
   <div class="govuk-grid-column-three-quarters filter-by-location-cancel-button">
