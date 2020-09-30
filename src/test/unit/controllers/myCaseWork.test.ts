@@ -1,16 +1,14 @@
 import { Response } from 'express';
 import { createMyCaseWorkPage, claimTask, unClaimTask } from '../../../main/controllers/myCaseWork';
-
-
-jest.mock('../../../main/models/task');
+import { MyCaseWorkModel as model } from '../../../main/models/myCaseWorkModel';
 
 describe('myCaseWork controller', () => {
-
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   let req = {} as any;
   const res = {} as Response;
 
   beforeEach(() => {
+
     req = {
       session: {
         myTasks: [{}],
@@ -21,6 +19,14 @@ describe('myCaseWork controller', () => {
 
     res.render = jest.fn();
 
+    jest.spyOn(model, 'getAddLocations').mockReturnValue([
+      {
+        'index': 1,
+        'name': 'Birmingham',
+      },
+    ]);
+    jest.spyOn(model, 'getRemoveLocations').mockReturnValue([]);
+
   });
 
   test('createMyCaseWorkPage method', () => {
@@ -29,9 +35,16 @@ describe('myCaseWork controller', () => {
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('my-case-work', {
-      'tasks': {
-        'myAvailableTasks': [{}],
-        'myTasks': [{}],
+      tasks: {
+        myAvailableTasks: [{}],
+        myTasks: [{}],
+        addLocations: [
+          {
+            index: 1,
+            name: 'Birmingham',
+          },
+        ],
+        removeLocations: [],
       },
     });
   });
@@ -57,6 +70,13 @@ describe('myCaseWork controller', () => {
       tasks: {
         myAvailableTasks: [{ caseRef: '4' }],
         myTasks: [{ caseRef: '1' }, { caseRef: '2' }, { caseRef: '3' }],
+        addLocations: [
+          {
+            index: 1,
+            name: 'Birmingham',
+          },
+        ],
+        removeLocations: [],
       },
     });
   });
@@ -97,6 +117,13 @@ describe('myCaseWork controller', () => {
           tasks: {
             myAvailableTasks: scenario.expectedMyAvailableTask,
             myTasks: scenario.expectedMyTask,
+            addLocations: [
+              {
+                index: 1,
+                name: 'Birmingham',
+              },
+            ],
+            removeLocations: [],
           },
         });
       });

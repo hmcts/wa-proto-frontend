@@ -15,8 +15,8 @@ export function filterTasksByLocationsController(req: Request, res: Response): v
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myFilteredAvailableTasks,
-      'addLocations': model.getAddLocations.filter(x => !locations.includes(x.name)),
-      'removeLocations': model.getAddLocations.filter(x => locations.includes(x.name)),
+      'addLocations': model.getAddLocations().filter(x => !locations.includes(x.name)),
+      'removeLocations': model.getAddLocations().filter(x => locations.includes(x.name)),
     },
   });
 }

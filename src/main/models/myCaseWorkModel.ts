@@ -37,7 +37,7 @@ export class MyCaseWorkModel {
     return this.myTasks;
   }
 
-  static get getAddLocations(): Array<Location> {
+  static getAddLocations(): Array<Location> {
     return [
       {
         name: 'Birmingham',
@@ -74,7 +74,7 @@ export class MyCaseWorkModel {
     ];
   }
 
-  static get getRemoveLocations(): Array<Location> {
+  static getRemoveLocations(): Array<Location> {
     return [];
   }
 

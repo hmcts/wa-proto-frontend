@@ -14,8 +14,8 @@ export function createMyCaseWorkPage(req: Request, res: Response): void {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myAvailableTasks,
-      'addLocations': model.getAddLocations,
-      'removeLocations': model.getRemoveLocations,
+      'addLocations': model.getAddLocations(),
+      'removeLocations': model.getRemoveLocations(),
     },
   });
 }
@@ -55,8 +55,8 @@ export function claimTask(req: Request, res: Response): void {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myAvailableTasks,
-      'addLocations': model.getAddLocations,
-      'removeLocations': model.getRemoveLocations,
+      'addLocations': model.getAddLocations(),
+      'removeLocations': model.getRemoveLocations(),
     },
   });
 
@@ -73,8 +73,8 @@ export function unClaimTask(req: Request, res: Response): void {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myAvailableTasks,
-      'addLocations': model.getAddLocations,
-      'removeLocations': model.getRemoveLocations,
+      'addLocations': model.getAddLocations(),
+      'removeLocations': model.getRemoveLocations(),
     },
   });
 
