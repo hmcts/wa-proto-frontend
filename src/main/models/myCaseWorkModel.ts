@@ -1,6 +1,7 @@
 import Debug from 'debug';
 import { tasks } from '../data/myCaseWorkData';
 import { Task } from '../models/task';
+import { Location } from '../models/location';
 
 const debug = Debug('app:model:myCaseWorkModel');
 
@@ -36,11 +37,44 @@ export class MyCaseWorkModel {
     return this.myTasks;
   }
 
-  static get getAddLocations(): Array<string> {
-    return ['Birmingham', 'Bradford', 'Glasgow', 'Hatton Cross', 'Manchester', 'Newcastle', 'Newport', 'Taylor House'];
+  static get getAddLocations(): Array<Location> {
+    return [
+      {
+        name: 'Birmingham',
+        index: 1,
+      },
+      {
+        name: 'Bradford',
+        index: 2,
+      },
+      {
+        name: 'Glasgow',
+        index: 3,
+      },
+      {
+        name: 'Hatton Cross',
+        index: 4,
+      },
+      {
+        name: 'Manchester',
+        index: 5,
+      },
+      {
+        name: 'Newcastle',
+        index: 6,
+      },
+      {
+        name: 'Newport',
+        index: 7,
+      },
+      {
+        name: 'Taylor House',
+        index: 8,
+      },
+    ];
   }
 
-  static get getRemoveLocations(): Array<string> {
+  static get getRemoveLocations(): Array<Location> {
     return [];
   }
 

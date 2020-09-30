@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
 import { Task } from 'models/task';
+import { MyCaseWorkModel as model } from '../models/myCaseWorkModel';
 
 const filterDebug = Debug('app:controller:filterTasksByLocations');
 
@@ -25,8 +26,8 @@ export function filterTasksByLocationsController(req: Request, res: Response): v
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myFilteredAvailableTasks,
-      'addLocations': [],
-      'removeLocations': [],
+      'addLocations': model.getAddLocations.filter(x => !locations.includes(x.name)),
+      'removeLocations': model.getAddLocations.filter(x => locations.includes(x.name)),
     },
   });
 }

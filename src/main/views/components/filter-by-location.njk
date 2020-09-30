@@ -9,16 +9,14 @@
 
 {% macro filterByLocation(addLocations, removeLocations) %}
 <div class="listbox-area">
-  <div class="left-area">
-    
+  <div class="left-area">    
     <ul id="ss_imp_list"
         tabindex="0"
         role="listbox"
         aria-labelledby="ss_imp_l">
       {% for location in  addLocations%}
-        {{displayLocation(location, loop.index)}}
+        {{displayLocation(location.name, location.index)}}
       {% endfor %}
-
     </ul>
     <div role="toolbar"
          aria-label="Actions"
@@ -54,6 +52,9 @@
         role="listbox"
         aria-labelledby="ss_unimp_l"
         aria-activedescendant="">
+      {% for location in  removeLocations%}
+        {{displayLocation(location.name, location.index)}}
+      {% endfor %}
     </ul>
     <button type="button"
             id="ex1-add"
