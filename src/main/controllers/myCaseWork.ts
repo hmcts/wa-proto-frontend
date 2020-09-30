@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
 import { Task } from 'models/task';
+import { Location } from 'models/location';
 
 const createMyCaseWorkPageDebug = Debug('app:controller:myCaseWork:createMyCaseWorkPage');
 const claimTaskDebug = Debug('app:controller:myCaseWork:claimTask');
@@ -44,11 +45,14 @@ export function unClaimTask(req: Request, res: Response): void {
   const actualMyTasks: Array<Task> = req.session.myTasks;
   const unclaimedTask: Task = actualMyTasks.find(task => task.caseRef === req.query.caseRef);
 
-  req.session.myAvailableTasks.push(unclaimedTask);
-  if (req.session.removeLocations.includes(unclaimedTask.location)) {
-    req.session.myFilteredAvailableTasks.push(unclaimedTask);
+  if (unclaimedTask) {
+    req.session.myAvailableTasks.push(unclaimedTask);
+    const removeLocations: Array<Location> = req.session.removeLocations;
+    if (removeLocations.length === 0 || removeLocations.find(x => x.name === unclaimedTask.location)) {
+      req.session.myFilteredAvailableTasks.push(unclaimedTask);
+    }
+    req.session.myTasks = actualMyTasks.filter(x => x.caseRef !== req.query.caseRef);
   }
-  req.session.myTasks = actualMyTasks.filter(x => x.caseRef !== req.query.caseRef);
 
   res.render('my-case-work', {
     tasks: {

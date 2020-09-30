@@ -1,6 +1,5 @@
 import { Response } from 'express';
 import { createMyCaseWorkPage, claimTask, unClaimTask } from '../../../main/controllers/myCaseWork';
-import { MyCaseWorkModel as model } from '../../../main/models/myCaseWorkModel';
 
 describe('myCaseWork controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -11,21 +10,22 @@ describe('myCaseWork controller', () => {
 
     req = {
       session: {
-        myTasks: [{}],
-        myAvailableTasks: [{}],
-
+        myTasks: [{ location: 'Birmingham' }],
+        myAvailableTasks: [{ location: 'Taylor House' }],
+        myFilteredAvailableTasks: [{ location: 'Taylor House' }],
+        addLocations: [{
+          index: 1,
+          name: 'Birmingham',
+        },
+        {
+          index: 2,
+          name: 'Bradford',
+        }],
+        removeLocations: [],
       },
     };
 
     res.render = jest.fn();
-
-    jest.spyOn(model, 'getAddLocations').mockReturnValue([
-      {
-        'index': 1,
-        'name': 'Birmingham',
-      },
-    ]);
-    jest.spyOn(model, 'getRemoveLocations').mockReturnValue([]);
 
   });
 
@@ -36,14 +36,16 @@ describe('myCaseWork controller', () => {
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('my-case-work', {
       tasks: {
-        myAvailableTasks: [{}],
-        myTasks: [{}],
-        addLocations: [
-          {
-            index: 1,
-            name: 'Birmingham',
-          },
-        ],
+        myAvailableTasks: [{ location: 'Taylor House' }],
+        myTasks: [{ location: 'Birmingham' }],
+        addLocations: [{
+          index: 1,
+          name: 'Birmingham',
+        },
+        {
+          index: 2,
+          name: 'Bradford',
+        }],
         removeLocations: [],
       },
     });
@@ -59,6 +61,14 @@ describe('myCaseWork controller', () => {
         session: {
           myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
           myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+          myFilteredAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+          addLocations: [
+            {
+              index: 1,
+              name: 'Birmingham',
+            },
+          ],
+          removeLocations: [],
         },
         /* eslint-disable  @typescript-eslint/no-explicit-any */
       } as any);
@@ -106,6 +116,9 @@ describe('myCaseWork controller', () => {
             session: {
               myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
               myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+              myFilteredAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+              addLocations: [],
+              removeLocations: [],
             },
             /* eslint-disable  @typescript-eslint/no-explicit-any */
           } as any);
@@ -117,12 +130,7 @@ describe('myCaseWork controller', () => {
           tasks: {
             myAvailableTasks: scenario.expectedMyAvailableTask,
             myTasks: scenario.expectedMyTask,
-            addLocations: [
-              {
-                index: 1,
-                name: 'Birmingham',
-              },
-            ],
+            addLocations: [],
             removeLocations: [],
           },
         });
