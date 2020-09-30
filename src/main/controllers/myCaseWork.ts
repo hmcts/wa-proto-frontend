@@ -45,7 +45,9 @@ export function unClaimTask(req: Request, res: Response): void {
   const unclaimedTask: Task = actualMyTasks.find(task => task.caseRef === req.query.caseRef);
 
   req.session.myAvailableTasks.push(unclaimedTask);
-  req.session.myFilteredAvailableTasks.push(unclaimedTask);
+  if (req.session.removeLocations.includes(unclaimedTask.location)) {
+    req.session.myFilteredAvailableTasks.push(unclaimedTask);
+  }
   req.session.myTasks = actualMyTasks.filter(x => x.caseRef !== req.query.caseRef);
 
   res.render('my-case-work', {
