@@ -57,10 +57,19 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   const myCaseWorkModel = new MyCaseWorkModel();
   if (isNullOrUndefined(req.session.myAvailableTasks)) {
     req.session.myAvailableTasks = myCaseWorkModel.getMyAvailableTasks;
+    req.session.myFilteredAvailableTasks = myCaseWorkModel.getMyAvailableTasks;
   }
 
   if (isNullOrUndefined(req.session.myTasks)) {
     req.session.myTasks = myCaseWorkModel.getMyTasks;
+  }
+
+  if (isNullOrUndefined(req.session.addLocations)) {
+    req.session.addLocations = MyCaseWorkModel.getAddLocations();
+  }
+
+  if (isNullOrUndefined(req.session.removeLocations)) {
+    req.session.removeLocations = MyCaseWorkModel.getRemoveLocations();
   }
 
   next();
