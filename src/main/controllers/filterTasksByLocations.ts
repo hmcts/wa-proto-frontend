@@ -4,7 +4,7 @@ import { MyCaseWorkModel as model } from '../models/myCaseWorkModel';
 
 const filterDebug = Debug('app:controller:filterTasksByLocations');
 
-export function filterTasksByLocationsController(req: Request, res: Response): void {
+export function filterTasksByLocations(req: Request, res: Response): void {
   filterDebug('filterTasksByLocations controller...');
   const locations: Array<string> = (Object as any).values(req.query); // eslint-disable-line @typescript-eslint/no-explicit-any
 
