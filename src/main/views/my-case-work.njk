@@ -59,7 +59,7 @@
   <div id="ex1" class="govuk-grid-column-two-half">
     {{ govukDetails({
       summaryText: "Filter by location",
-      html: filterByLocation(),
+      html: filterByLocation(tasks.addLocations, tasks.removeLocations),
       classes: "filter-by-location-details"
     }) }}    
   </div>
@@ -82,6 +82,20 @@
     new MOJFrontend.SortableTable({
       table: $('table')[1]
     });
+
+    document.getElementById("my-button").onclick = () => {
+      const listItems = document.querySelectorAll('#ss_unimp_list li');
+      let query = "";
+      for (let step = 0; step < listItems.length; step++) {
+        query +="item" + step + '=' + listItems[step].innerText;
+        if (step < listItems.length - 1) {
+          query += "&";  
+        }
+       
+      }
+      location.href = "/filter?" + query;
+    }
+
   </script>
  {% endblock %}
 

@@ -54,13 +54,24 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   debug(`req.session.myAvailableTasks: ${JSON.stringify(req.session.myAvailableTasks)}`);
   debug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
 
-  const myCaseWorkModel = new MyCaseWorkModel();
   if (isNullOrUndefined(req.session.myAvailableTasks)) {
-    req.session.myAvailableTasks = myCaseWorkModel.getMyAvailableTasks;
+    req.session.myAvailableTasks = MyCaseWorkModel.getMyAvailableTasks();
+  }
+
+  if (isNullOrUndefined(req.session.myFilteredAvailableTasks)) {
+    req.session.myFilteredAvailableTasks = MyCaseWorkModel.getMyFilteredAvailableTasks();
   }
 
   if (isNullOrUndefined(req.session.myTasks)) {
-    req.session.myTasks = myCaseWorkModel.getMyTasks;
+    req.session.myTasks = MyCaseWorkModel.getMyTasks();
+  }
+
+  if (isNullOrUndefined(req.session.addLocations)) {
+    req.session.addLocations = MyCaseWorkModel.getAddLocations();
+  }
+
+  if (isNullOrUndefined(req.session.removeLocations)) {
+    req.session.removeLocations = MyCaseWorkModel.getRemoveLocations();
   }
 
   next();

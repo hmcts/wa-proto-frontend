@@ -1,21 +1,27 @@
 import { Response } from 'express';
 import { createMyCaseWorkPage, claimTask, unClaimTask } from '../../../main/controllers/myCaseWork';
 
-
-jest.mock('../../../main/models/task');
-
 describe('myCaseWork controller', () => {
-
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   let req = {} as any;
   const res = {} as Response;
 
   beforeEach(() => {
+
     req = {
       session: {
-        myTasks: [{}],
-        myAvailableTasks: [{}],
-
+        myTasks: [{ location: 'Birmingham' }],
+        myAvailableTasks: [{ location: 'Taylor House' }],
+        myFilteredAvailableTasks: [{ location: 'Taylor House' }],
+        addLocations: [{
+          index: 1,
+          name: 'Birmingham',
+        },
+        {
+          index: 2,
+          name: 'Bradford',
+        }],
+        removeLocations: [],
       },
     };
 
@@ -29,9 +35,18 @@ describe('myCaseWork controller', () => {
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('my-case-work', {
-      'tasks': {
-        'myAvailableTasks': [{}],
-        'myTasks': [{}],
+      tasks: {
+        myAvailableTasks: [{ location: 'Taylor House' }],
+        myTasks: [{ location: 'Birmingham' }],
+        addLocations: [{
+          index: 1,
+          name: 'Birmingham',
+        },
+        {
+          index: 2,
+          name: 'Bradford',
+        }],
+        removeLocations: [],
       },
     });
   });
@@ -46,6 +61,14 @@ describe('myCaseWork controller', () => {
         session: {
           myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
           myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+          myFilteredAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+          addLocations: [
+            {
+              index: 1,
+              name: 'Birmingham',
+            },
+          ],
+          removeLocations: [],
         },
         /* eslint-disable  @typescript-eslint/no-explicit-any */
       } as any);
@@ -57,6 +80,13 @@ describe('myCaseWork controller', () => {
       tasks: {
         myAvailableTasks: [{ caseRef: '4' }],
         myTasks: [{ caseRef: '1' }, { caseRef: '2' }, { caseRef: '3' }],
+        addLocations: [
+          {
+            index: 1,
+            name: 'Birmingham',
+          },
+        ],
+        removeLocations: [],
       },
     });
   });
@@ -65,11 +95,11 @@ describe('myCaseWork controller', () => {
     {
       caseRef: '2',
       expectedMyTask: [{ caseRef: ('1') }],
-      expectedMyAvailableTask: [{ caseRef: '3' }, { caseRef: '4' }, { caseRef: '2' }],
+      expectedMyAvailableTask: [{ caseRef: '3' }, { caseRef: '4' }, { caseRef: '2', location: 'Birmingham' }],
     },
     {
       caseRef: '6',
-      expectedMyTask: [{ caseRef: '1' }, { caseRef: '2' }],
+      expectedMyTask: [{ caseRef: '1' }, { caseRef: '2', location: 'Birmingham' }],
       expectedMyAvailableTask: [{ caseRef: '3' }, { caseRef: '4' }],
     },
   ];
@@ -84,8 +114,14 @@ describe('myCaseWork controller', () => {
               caseRef: scenario.caseRef,
             },
             session: {
-              myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
+              myTasks: [{ caseRef: '1' }, { caseRef: '2', location: 'Birmingham' }],
               myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+              myFilteredAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
+              addLocations: [],
+              removeLocations: [{
+                index: 1,
+                name: 'Birmingham',
+              }],
             },
             /* eslint-disable  @typescript-eslint/no-explicit-any */
           } as any);
@@ -97,6 +133,11 @@ describe('myCaseWork controller', () => {
           tasks: {
             myAvailableTasks: scenario.expectedMyAvailableTask,
             myTasks: scenario.expectedMyTask,
+            addLocations: [],
+            removeLocations: [{
+              index: 1,
+              name: 'Birmingham',
+            }],
           },
         });
       });

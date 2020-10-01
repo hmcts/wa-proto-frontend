@@ -1,35 +1,5 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set locationList = [
-  {
-    name: "Birmingham"
-  },
-  {
-    name: "Bradford"
-  },
-  {
-    name: "Glasgow"
-  },
-  {
-    name: "Hatton Cross"
-  },
-  {
-    name: "Manchester"
-  },
-  {
-    name: "Newcastle"
-  },
-  {
-    name: "Newport"
-  },
-  {
-    name: "Taylor House"
-  }
-] 
-
-%}
-
-
 {% macro displayLocation(name, id) %}
   <li id="ss_opt{{id}}" role="option">
         {{name}}
@@ -37,18 +7,16 @@
 {% endmacro%}
 
 
-{% macro filterByLocation() %}
+{% macro filterByLocation(addLocations, removeLocations) %}
 <div class="listbox-area">
-  <div class="left-area">
-    
+  <div class="left-area">    
     <ul id="ss_imp_list"
         tabindex="0"
         role="listbox"
         aria-labelledby="ss_imp_l">
-      {% for location in  locationList%}
-        {{displayLocation(location.name, loop.index)}}
+      {% for location in  addLocations%}
+        {{displayLocation(location.name, location.index)}}
       {% endfor %}
-
     </ul>
     <div role="toolbar"
          aria-label="Actions"
@@ -84,6 +52,9 @@
         role="listbox"
         aria-labelledby="ss_unimp_l"
         aria-activedescendant="">
+      {% for location in  removeLocations%}
+        {{displayLocation(location.name, location.index)}}
+      {% endfor %}
     </ul>
     <button type="button"
             id="ex1-add"
@@ -102,11 +73,12 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-quarter filter-by-location-done-button">
     {{ govukButton({
-      text: "Done"
+      text: "Done",
+      preventDoubleClick: true,
+      attributes: {
+        "id": "my-button"
+        }
       }) }}
-  </div>
-  <div class="govuk-grid-column-three-quarters filter-by-location-cancel-button">
-    <a href="#" class="govuk-link">Cancel</a>
   </div>
 </div>
   
