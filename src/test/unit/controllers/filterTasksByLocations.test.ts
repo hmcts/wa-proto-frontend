@@ -11,7 +11,7 @@ describe('filterTasksByLocations controller', () => {
 
     req = {
       query: {
-        item0: 'Birmingham',
+        item0: 'Birmingham'
       },
       session: {
         myTasks: [{}],
@@ -24,7 +24,7 @@ describe('filterTasksByLocations controller', () => {
 
     res.render = jest.fn();
 
-    jest.spyOn(model, 'getAddLocations').mockReturnValue([
+    jest.spyOn(model, 'getAllLocations').mockReturnValue([
       {
         'index': 1,
         'name': 'Birmingham',
@@ -34,7 +34,6 @@ describe('filterTasksByLocations controller', () => {
         'name': 'Bradford',
       },
     ]);
-    jest.spyOn(model, 'getRemoveLocations').mockReturnValue([]);
 
   });
 
