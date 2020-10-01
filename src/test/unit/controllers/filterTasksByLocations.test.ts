@@ -11,7 +11,7 @@ describe('filterTasksByLocations controller', () => {
 
     req = {
       query: {
-        item0: 'Birmingham'
+        item0: 'Birmingham',
       },
       session: {
         myTasks: [{}],
