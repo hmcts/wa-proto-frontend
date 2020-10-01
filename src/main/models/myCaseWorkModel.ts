@@ -9,11 +9,13 @@ export class MyCaseWorkModel {
 
   private myAvailableTasks: Array<Task> = [];
   private myTasks: Array<Task> = [];
+  private myFilteredAvailableTasks: Array<Task> = [];
 
   constructor() {
     debug('MyCaseWorkModel created...');
     this.buildMyAvailableTasks();
     this.buildMyTasks();
+    this.buildMyFilteredAvailableTasks();
   }
 
   private buildMyTasks(): void {
@@ -29,15 +31,25 @@ export class MyCaseWorkModel {
     this.myAvailableTasks.push(tasks[3]);
   }
 
+  private buildMyFilteredAvailableTasks(): void {
+    this.myFilteredAvailableTasks.push(tasks[0]);
+    this.myFilteredAvailableTasks.push(tasks[2]);
+    this.myFilteredAvailableTasks.push(tasks[3]);
+  }
+
   get getMyAvailableTasks(): Array<Task> {
     return this.myAvailableTasks;
+  }
+
+  get getMyFilteredAvailableTasks(): Array<Task> {
+    return this.myFilteredAvailableTasks;
   }
 
   get getMyTasks(): Array<Task> {
     return this.myTasks;
   }
 
-  static getAddLocations(): Array<Location> {
+  static getAllLocations(): Array<Location> {
     return [
       {
         name: 'Birmingham',
@@ -72,10 +84,50 @@ export class MyCaseWorkModel {
         index: 8,
       },
     ];
+    
+  }
+
+  static getAddLocations(): Array<Location> {
+    return [
+      {
+        name: 'Birmingham',
+        index: 1,
+      },
+      {
+        name: 'Bradford',
+        index: 2,
+      },
+      {
+        name: 'Glasgow',
+        index: 3,
+      },
+      {
+        name: 'Hatton Cross',
+        index: 4,
+      },
+      {
+        name: 'Manchester',
+        index: 5,
+      },
+      {
+        name: 'Newcastle',
+        index: 6,
+      },
+      {
+        name: 'Newport',
+        index: 7,
+      },
+
+    ];
   }
 
   static getRemoveLocations(): Array<Location> {
-    return [];
+    return [
+      {
+        name: 'Taylor House',
+        index: 8,
+      },
+    ];
   }
 
 }

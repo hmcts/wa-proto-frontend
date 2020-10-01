@@ -57,7 +57,10 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   const myCaseWorkModel = new MyCaseWorkModel();
   if (isNullOrUndefined(req.session.myAvailableTasks)) {
     req.session.myAvailableTasks = myCaseWorkModel.getMyAvailableTasks;
-    req.session.myFilteredAvailableTasks = myCaseWorkModel.getMyAvailableTasks;
+  }
+
+  if (isNullOrUndefined(req.session.myFilteredAvailableTasks)) {
+    req.session.myFilteredAvailableTasks = myCaseWorkModel.getMyFilteredAvailableTasks;
   }
 
   if (isNullOrUndefined(req.session.myTasks)) {
