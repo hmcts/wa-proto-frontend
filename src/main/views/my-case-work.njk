@@ -1,6 +1,8 @@
 {% extends "template.njk" %}
 
 {% from "components/my-tasks.njk" import myTasks %}
+{% from "components/filter-by-location.njk" import filterByLocation %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
@@ -53,6 +55,16 @@
   </div>
 </div>
 
+<div class="govuk-grid-row">
+  <div id="ex1" class="govuk-grid-column-two-half">
+    {{ govukDetails({
+      summaryText: "Filter by location",
+      html: filterByLocation(tasks.addLocations, tasks.removeLocations),
+      classes: "filter-by-location-details"
+    }) }}    
+  </div>
+</div>
+
 {{ myTasks(tasks.myAvailableTasks, "myAvailableTasks") }}
 
   
@@ -61,6 +73,8 @@
 
   {% block pageScripts %}
   {% include "includes/sortable-table-scripts.njk" %}
+  {% include "includes/filter-by-location-scripts.njk" %}
+  {% include "includes/detail-actions-scripts.njk" %}
   <script>
     new MOJFrontend.SortableTable({
       table: $('table')[0]
@@ -69,29 +83,18 @@
       table: $('table')[1]
     });
 
-
-  function hideShowDetailForGivenId(taskId) {
-    let detail = document.getElementById(taskId);  
-      
-       if (!detail.style || detail.style.display === "" || detail.style.display === "none") {
-         detail.style.display = "block";
-        } else {
-           detail.style.display = "none";
+    document.getElementById("my-button").onclick = () => {
+      const listItems = document.querySelectorAll('#ss_unimp_list li');
+      let query = "";
+      for (let step = 0; step < listItems.length; step++) {
+        query +="item" + step + '=' + listItems[step].innerText;
+        if (step < listItems.length - 1) {
+          query += "&";  
+        }
+       
       }
-  }
-
-  
-  document.querySelectorAll('details>summary[tasks-type=myTasks]').forEach((detail, index) => {
-    detail.addEventListener('click', () => {
-      hideShowDetailForGivenId('my-task-action-' + index);
-    });
-  });
-  
-  document.querySelectorAll('details>summary[tasks-type=myAvailableTasks]').forEach((detail, index) => {
-    detail.addEventListener('click', () => {
-      hideShowDetailForGivenId('my-available-task-' + index);
-    });
-  });
+      location.href = "/filter?" + query;
+    }
 
   </script>
  {% endblock %}
