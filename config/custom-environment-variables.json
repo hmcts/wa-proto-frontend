@@ -1,0 +1,19 @@
+{
+  "session": {
+    "useRedis": {
+      "__name": "USE_REDIS",
+      "__format": "json"
+    },
+    "useLogger": "USE_SESSION_LOGGER",
+    "redis": {
+      "url": "REDIS_URL",
+      "secret": "SESSION_SECRET"
+    },
+    "cookie": {
+      "secure": {
+        "__name": "SECURE_SESSION",
+        "__format": "json"
+      }
+    }
+  }
+}
