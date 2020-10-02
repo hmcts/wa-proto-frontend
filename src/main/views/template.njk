@@ -9,17 +9,11 @@
 
 {% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
 
-{% macro signOut() %}
-  <div class="sign-out-button">
-    <span>Sign Out</span>
-  </div>
-{% endmacro %}
-
 {% block header %}
   {{ govukHeader({
     homepageUrl: "/",
     containerClasses: "app-width-container",
-    serviceName: "Immigration & Asylum",
+    serviceName: "Manage cases",
     serviceUrl: "/",
     navigation: [
       {
@@ -36,8 +30,11 @@
         text: "All cases"
       }, 
       {
-        href: "#",
-        html: signOut()
+        href: "/",
+        text: "Sign Out",
+        attributes: {
+          "id": "sign-out-button"
+          }
       }  
     ]
   }) }}
