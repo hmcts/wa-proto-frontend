@@ -4,8 +4,6 @@
 {% from "components/filter-by-location.njk" import filterByLocation %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
-{% block pageTitle %}GOV.UK - WA prototype frontend{% endblock %}
-
 {% block header %}
   {{ govukHeader({
     homepageUrl: "/",
@@ -14,17 +12,21 @@
     serviceUrl: "/",
     navigation: [
       {
-        href: "/",
-        text: "My cases"
-      },
-      {
         href: "/my-case-work",
-        text: "My casework",
+        text: "Task list",
         active: true
       },
       {
         href: "#",
-        text: "All cases"
+        text: "Task manager"
+      },
+      {
+        href: "/",
+        text: "Case list"
+      },
+      {
+        href: "#",
+        text: "Create case"
       },
       {
         href: "/",
