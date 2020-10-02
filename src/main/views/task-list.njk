@@ -1,6 +1,9 @@
 {% extends "template.njk" %}
 
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
 {% block header %}
+
   {{ govukHeader({
     homepageUrl: "/",
     containerClasses: "app-width-container",
@@ -33,5 +36,70 @@
       }  
     ]
   }) }}
+
 {% endblock %}
+
+
+{% block content %}  
+
+{{ govukRadios({
+  classes: "govuk-radios--inline",
+  idPrefix: "task-list-radio-button",
+  name: "task-list",
+  fieldset: {
+    legend: {
+      text: "Task List",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: "Choose the tasks you'd like to view"
+  },
+  items: [
+    {
+      value: "myTasks",
+      text: "My tasks"
+    },
+    {
+      value: "availableTasks",
+      text: "Available tasks"
+    }
+  ]
+}) }}
+
+<div id="my-tasks-content" class="govuk-grid-row" style="display:none">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">My tasks</h1>      
+    </div>
+</div>
+
+<div id="available-tasks-content" class="govuk-grid-row" style="display:none">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">Available tasks</h1>      
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+
+  <script>
+    document.getElementById('task-list-radio-button').onclick = (event) => {
+      if (event.currentTarget.checked) {
+        document.getElementById('my-tasks-content').style.display = 'block';
+        document.getElementById('available-tasks-content').style.display = 'none';
+      } 
+    };
+    
+    document.getElementById('task-list-radio-button-2').onclick = (event) => {
+      if (event.currentTarget.checked) {
+        document.getElementById('my-tasks-content').style.display = 'none';
+        document.getElementById('available-tasks-content').style.display = 'block';
+      } 
+    };
+  </script>
+{% endblock %}
+
+
 
