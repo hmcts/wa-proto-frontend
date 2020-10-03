@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "components/my-tasks.njk" import myTasks %}
 
 {% block header %}
 
@@ -59,7 +60,10 @@
   items: [
     {
       value: "myTasks",
-      text: "My tasks"
+      text: "My tasks",
+      attributes: {
+        "checked": "true"
+      }
     },
     {
       value: "availableTasks",
@@ -68,23 +72,34 @@
   ]
 }) }}
 
-<div id="my-tasks-content" class="govuk-grid-row" style="display:none">
+<div id="my-tasks-content" class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
-      <h1 class="govuk-heading-l">My tasks</h1>      
+      <h3 class="govuk-heading-m">My tasks</h3>
+      {{ myTasks(tasks.myTasks, "myTasks") }}      
     </div>
 </div>
 
 <div id="available-tasks-content" class="govuk-grid-row" style="display:none">
     <div class="govuk-grid-column-one-half">
-      <h1 class="govuk-heading-l">Available tasks</h1>      
+      <h3 class="govuk-heading-m">Available tasks</h3>      
     </div>
 </div>
 
 {% endblock %}
 
 {% block pageScripts %}
+  {% include "includes/sortable-table-scripts.njk" %}
+  {% include "includes/detail-actions-scripts.njk" %}
 
   <script>
+    new MOJFrontend.SortableTable({
+      table: $('table')[0]
+    });
+    new MOJFrontend.SortableTable({
+      table: $('table')[1]
+    });
+
+    
     document.getElementById('task-list-radio-button').onclick = (event) => {
       if (event.currentTarget.checked) {
         document.getElementById('my-tasks-content').style.display = 'block';
