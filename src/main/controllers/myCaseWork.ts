@@ -29,7 +29,7 @@ export function claimTask(req: Request, res: Response): void {
   req.session.myFilteredAvailableTasks = filteredAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
   req.session.myAvailableTasks = myAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
 
-  res.render('my-case-work', {
+  res.render('task-list', {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myFilteredAvailableTasks,
@@ -54,7 +54,7 @@ export function unClaimTask(req: Request, res: Response): void {
     req.session.myTasks = actualMyTasks.filter(x => x.caseRef !== req.query.caseRef);
   }
 
-  res.render('my-case-work', {
+  res.render('task-list', {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myFilteredAvailableTasks,
