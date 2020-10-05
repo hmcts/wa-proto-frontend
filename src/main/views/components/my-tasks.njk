@@ -26,15 +26,11 @@
   
   {% if tasksType === 'myTasks' %}
     <div id="my-task-action-{{index}}" class="wa-action-task">
-      <a href="/unclaim-task?caseRef={{caseRef}}">
-        Unclaim this task
-      </a>
+      <a href="/unclaim-task?caseRef={{caseRef}}">Release this task</a>
     </div>
   {% else %}
     <div id="my-available-task-{{index}}" class="wa-action-task">
-      <a href="/claim-task?caseRef={{caseRef}}">
-        Claim this task
-      </a>
+      <a href="/claim-task?caseRef={{caseRef}}">Claim this task</a>
     </div>
   {% endif %}
 {% endmacro %}
@@ -42,7 +38,9 @@
 
 {% macro setDetails(caseRef, tasksType) %}
   <details class="govuk-details">
-    <summary class="govuk-details__summary" tasks-type="{{tasksType}}"></summary>
+    <summary class="govuk-details__summary" tasks-type="{{tasksType}}">
+      <span class="govuk-details__summary-text">Manage</span>
+    </summary>
   </details>
 {% endmacro %}
 
