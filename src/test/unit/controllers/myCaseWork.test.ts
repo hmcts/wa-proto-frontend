@@ -76,7 +76,7 @@ describe('myCaseWork controller', () => {
     claimTask(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
-    expect(res.render).toHaveBeenCalledWith('my-case-work', {
+    expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myAvailableTasks: [{ caseRef: '4' }],
         myTasks: [{ caseRef: '1' }, { caseRef: '2' }, { caseRef: '3' }],
@@ -129,7 +129,7 @@ describe('myCaseWork controller', () => {
         unClaimTask(req, res);
 
         expect(res.render).toHaveBeenCalledTimes(1);
-        expect(res.render).toHaveBeenCalledWith('my-case-work', {
+        expect(res.render).toHaveBeenCalledWith('task-list', {
           tasks: {
             myAvailableTasks: scenario.expectedMyAvailableTask,
             myTasks: scenario.expectedMyTask,
