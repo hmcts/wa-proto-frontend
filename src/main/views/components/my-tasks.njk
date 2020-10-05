@@ -29,8 +29,17 @@
       <a href="/unclaim-task?caseRef={{caseRef}}">Release this task</a>
     </div>
   {% else %}
-    <div id="my-available-task-{{index}}" class="wa-action-task">
-      <a href="/claim-task?caseRef={{caseRef}}">Claim this task</a>
+    <div id="my-available-task-action-{{index}}" class="wa-action-task">
+      <a href="/claim-task?caseRef={{caseRef}}">Assign to me and go to case</a>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro formatTaskName(taskName, tasksType, index, caseRef) %}
+  {{ taskName }}
+  {% if tasksType === 'myAvailableTasks' %}
+    <div id="my-available-task2-action-{{index}}" class="wa-action-task">
+      <a href="/claim-task?caseRef={{caseRef}}">Assign to me</a>
     </div>
   {% endif %}
 {% endmacro %}
@@ -56,27 +65,27 @@
         text: task.caseRef
       },
       {
-        text: tasks[loop.index0].caseName,
+        text: task.caseName,
         classes: "govuk-!-font-weight-bold" 
       },
       {
-        text: tasks[loop.index0].caseCategory
+        text: task.caseCategory
       },
       {
-        text: tasks[loop.index0].location
+        text: task.location
       },
       {
-        text: tasks[loop.index0].taskName
+        html: formatTaskName(task.taskName, tasksType, loop.index0, task.caseRef)
       },
       {
-        html: formatTaskDueDate(tasks[loop.index0].caseRef, tasksType, loop.index0, tasks[loop.index0].dueDate, tasks[loop.index0].dateColourCode),
+        html: formatTaskDueDate(task.caseRef, tasksType, loop.index0, task.dueDate, task.dateColourCode),
         classes: "govuk-!-padding-bottom-0",
         attributes: {
-          "data-sort-value": tasks[loop.index0].dateOrder
+          "data-sort-value": task.dateOrder
         }
       },
       {
-        html: setDetails(tasks[loop.index0].caseRef, tasksType)
+        html: setDetails(task.caseRef, tasksType)
       }
     ] 
     %}
