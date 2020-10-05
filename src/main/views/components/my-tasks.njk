@@ -1,10 +1,6 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 
-{% macro formatTaskCaseRef(taskCaseRef) %}
-  <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
-{% endmacro %}
-
 {% macro formatTaskDueDate(caseRef, tasksType, index, taskDueDate, dateColourCode) %}
   {% if dateColourCode === 'today' %}    
     {{govukTag({
@@ -59,7 +55,7 @@
     
     {% set row = [
       {
-        html: formatTaskCaseRef(tasks[loop.index0].caseRef)
+        text: task.caseRef
       },
       {
         text: tasks[loop.index0].caseName,
@@ -123,7 +119,7 @@
     },
     {
       text: "Task",
-      classes: "my-task-headerf govuk-!-font-weight-regular",
+      classes: "my-task-header govuk-!-font-weight-regular",
        attributes: {
         "aria-sort": "ascending"
       }
