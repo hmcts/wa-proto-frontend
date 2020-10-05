@@ -22,4 +22,7 @@
    detail.addEventListener('click', () => {
      hideShowDetailForGivenId('my-available-task2-action-' + index);
    });
+   detail.addEventListener('click', () => {
+     hideShowDetailForGivenId('my-available-task3-action-' + index);
+   });
  });
