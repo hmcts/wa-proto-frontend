@@ -2,6 +2,8 @@
 
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "components/my-tasks.njk" import myTasks %}
+{% from "components/filter-by-location.njk" import filterByLocation %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block header %}
 
@@ -77,13 +79,28 @@
       <h3 class="govuk-heading-m">My tasks</h3>
       {{ myTasks(tasks.myTasks, "myTasks") }}      
     </div>
+    
 </div>
 
-<div id="available-tasks-content" class="govuk-grid-row" style="display:none">
-    <div class="govuk-grid-column-one-half">
-      <h3 class="govuk-heading-m">Available tasks</h3>      
-      {{ myTasks(tasks.myAvailableTasks, "myAvailableTasks") }}
+<div id="available-tasks-content" style="display:none">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h3 class="govuk-heading-m">Available tasks</h3>
+      </div>
     </div>
+      
+    <div class="govuk-grid-row">
+      <div id="ex1" class="govuk-grid-column-two-half">
+        {{ govukDetails({
+          summaryText: "Filter by location",
+          html: filterByLocation(tasks.addLocations, tasks.removeLocations),
+          classes: "filter-by-location-details"
+        }) }}    
+      </div>
+    </div>
+    
+    {{ myTasks(tasks.myAvailableTasks, "myAvailableTasks") }}         
+    
 </div>
 
 {% endblock %}
@@ -91,6 +108,7 @@
 {% block pageScripts %}
   {% include "includes/sortable-table-scripts.njk" %}
   {% include "includes/detail-actions-scripts.njk" %}
+  {% include "includes/filter-by-location-scripts.njk" %}
 
   <script>
     new MOJFrontend.SortableTable({
@@ -99,7 +117,6 @@
     new MOJFrontend.SortableTable({
       table: $('table')[1]
     });
-
     
     document.getElementById('task-list-radio-button').onclick = (event) => {
       if (event.currentTarget.checked) {
@@ -114,6 +131,20 @@
         document.getElementById('available-tasks-content').style.display = 'block';
       } 
     };
+
+    document.getElementById("my-button").onclick = () => {
+      const listItems = document.querySelectorAll('#ss_unimp_list li');
+      let query = "";
+      for (let step = 0; step < listItems.length; step++) {
+        query +="item" + step + '=' + listItems[step].innerText;
+        if (step < listItems.length - 1) {
+          query += "&";  
+        }
+       
+      }
+      location.href = "/filter?" + query;
+    }
+
   </script>
 {% endblock %}
 

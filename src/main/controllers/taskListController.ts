@@ -10,6 +10,8 @@ export function createTaskListPage(req: Request, res: Response): void {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myFilteredAvailableTasks,
+      'addLocations': req.session.addLocations,
+      'removeLocations': req.session.removeLocations,
     },
   });
 }

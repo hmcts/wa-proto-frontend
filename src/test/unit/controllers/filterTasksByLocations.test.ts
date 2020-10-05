@@ -42,7 +42,7 @@ describe('filterTasksByLocations controller', () => {
     filterTasksByLocations(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
-    expect(res.render).toHaveBeenCalledWith('my-case-work', {
+    expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myAvailableTasks: [{ location: 'Birmingham' }],
         myTasks: [{}],
