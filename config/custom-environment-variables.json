@@ -1,0 +1,8 @@
+{
+  "session": {
+    "redis": {
+      "url": "REDIS_URL",
+      "secret": "SESSION_SECRET"
+    }
+  }
+}
