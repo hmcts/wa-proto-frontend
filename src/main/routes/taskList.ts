@@ -4,11 +4,13 @@ import { createTaskListPage } from '../controllers/taskListController';
 import { claimTask } from '../controllers/claimTaskController';
 import { unClaimTask } from '../controllers/unClaimTaskController';
 import { filterTasksByLocations } from '../controllers/filterTasksByLocations';
+import { completeTask } from '../controllers/completeTaskFromMyTasks';
 
 const debugFilter = Debug('app:route:filter');
 const debugClaimTask = Debug('app:route:claimTask');
 const debugUnclaimTask = Debug('app:route:unclaimTask');
 const debugTaskList = Debug('app:route:taskList');
+const debugCompleteTask = Debug('app:route:completeTask');
 
 const router = express.Router();
 
@@ -32,5 +34,9 @@ router.get('/unclaim-task', (req, res) => {
   unClaimTask(req, res);
 });
 
+router.get('/complete-task/:caseRef', (req, res) => {
+  debugCompleteTask(`complete-task router with caseRef=${req.query.caseRef}...`);
+  completeTask(req, res);
+});
 
 module.exports = router;
