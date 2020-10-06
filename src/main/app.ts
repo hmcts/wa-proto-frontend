@@ -7,7 +7,6 @@ import { RouterFinder } from './router/routerFinder';
 import favicon from 'serve-favicon';
 import { HTTPError } from 'HttpError';
 import { Nunjucks } from './modules/nunjucks';
-import session from 'express-session';
 import { MyCaseWorkModel } from './models/myCaseWorkModel';
 import Debug from 'debug';
 import { isNullOrUndefined } from 'util';
@@ -17,6 +16,14 @@ const { setupDev } = require('./development');
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
 const debug = Debug('app:app');
+
+const redis = require('redis');
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const redisOps = {
+  url: config.get('session.redis.url'),
+};
+const redisClient = redis.createClient(redisOps);
 
 export const app = express();
 app.locals.ENV = env;
@@ -42,12 +49,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  secret: 'defaultsecret',
-  cookie: { secure: false },
-}));
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: config.get('session.redis.secret'),
+    resave: false,
+    cookie: { secure: false },
+  }),
+);
 
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   debug(`req.session: ${JSON.stringify(req.session)}`);
