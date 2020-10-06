@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
-import { Task } from 'models/task';
+import { Task } from '../models/task';
 
-const claimTaskDebug = Debug('app:controller:myCaseWork:claimTask');
+const claimTaskDebug = Debug('app:controller:claimTask');
 
 export function claimTask(req: Request, res: Response): void {
   claimTaskDebug(`myCaseWork.claimTask controller with caseRef=${req.query.caseRef}...`);
