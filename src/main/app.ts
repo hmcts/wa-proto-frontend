@@ -17,13 +17,9 @@ const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
 const debug = Debug('app:app');
 
-const redis = require('redis');
 const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-const redisOps = {
-  url: config.get('session.redis.url'),
-};
-const redisClient = redis.createClient(redisOps);
+const redis = require('redis');
+const useRedisStore: boolean = config.get('session.redis.redisStore') === true;
 
 export const app = express();
 app.locals.ENV = env;
@@ -49,15 +45,30 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(
-  session({
-    store: new RedisStore({ client: redisClient }),
-    secret: config.get('session.redis.secret'),
+if (useRedisStore) {
+  const RedisStore = require('connect-redis')(session);
+  const redisOps = {
+    url: config.get('session.redis.url'),
+  };
+  const redisClient = redis.createClient(redisOps);
+  app.use(
+    session({
+      store: new RedisStore({ client: redisClient }),
+      secret: config.get('session.redis.secret'),
+      resave: false,
+      saveUninitialized: false,
+      cookie: { secure: false },
+    }),
+  );
+} else {
+  app.use(session({
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    secret: config.get('session.redis.secret'),
     cookie: { secure: false },
-  }),
-);
+  }));
+}
+
 
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   debug(`req.session: ${JSON.stringify(req.session)}`);
