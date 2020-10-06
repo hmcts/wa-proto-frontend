@@ -1,9 +1,9 @@
 provider "azurerm" {
-  version = "1.41.0"
+  features {}
 }
 
 locals {
-  key_vault_name                  = "${var.product}-${var.env}"
+  key_vault_name = "${var.product}-${var.env}"
 }
 
 resource "azurerm_resource_group" "rg" {
