@@ -1,33 +1,33 @@
-{% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/table/macro.njk" import govukTable with context %}
+{% from "govuk/components/tag/macro.njk" import govukTag with context %}
 
-{% macro formatTaskCaseRef(taskCaseRef) %}
-  <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
+{% macro formatTaskCaseRef(taskCaseRef,removeTasksByCase) %}
+  <a href="{{ removeTasksByCase }}" class="govuk-link">{{ taskCaseRef }}</a>
 {% endmacro %}
 
 {% macro formatTaskDueDate(caseRef, tasksType, index, taskDueDate, dateColourCode) %}
-  {% if dateColourCode === 'today' %}    
+  {% if dateColourCode === 'today' %}
     {{govukTag({
           text: taskDueDate,
           classes: "govuk-tag--orange"
       })
     }}
-  {% endif %} 
+  {% endif %}
   {% if dateColourCode === 'future' %}
     {{govukTag({
           text: taskDueDate,
           classes: "govuk-tag--green"
       })
     }}
-  {% endif %} 
+  {% endif %}
   {% if dateColourCode === 'past' %}
     {{govukTag({
           text: taskDueDate,
           classes: "govuk-tag--pink"
       })
     }}
-  {% endif %} 
-  
+  {% endif %}
+
   {% if tasksType === 'myTasks' %}
     <div id="my-task-action-{{index}}" class="wa-action-task">
       <a href="/unclaim-task?caseRef={{caseRef}}">
@@ -52,18 +52,18 @@
 
 {# tasks: list of tasks either myTasks or myAvailableTasks. #}
 {# tasksType: type of the tasks, either myTasks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
-{% macro myTasks(tasks, tasksType) %}
+{% macro myTasks(tasks, tasksType, removeTaskByCase) %}
 
 {% set dynamicRows = [] %}
 {% for task in tasks %}
-    
+
     {% set row = [
       {
-        html: formatTaskCaseRef(tasks[loop.index0].caseRef)
+        html: formatTaskCaseRef(tasks[loop.index0].caseRef,removeTaskByCase)
       },
       {
         text: tasks[loop.index0].caseName,
-        classes: "govuk-!-font-weight-bold" 
+        classes: "govuk-!-font-weight-bold"
       },
       {
         text: tasks[loop.index0].caseCategory
@@ -84,7 +84,7 @@
       {
         html: setDetails(tasks[loop.index0].caseRef, tasksType)
       }
-    ] 
+    ]
     %}
 
     {% set dynamicRows = (dynamicRows.push(row), dynamicRows) %}
@@ -143,5 +143,5 @@
   classes: "my-tasks-table"
 }) }}
 
-    
+
 {% endmacro %}
