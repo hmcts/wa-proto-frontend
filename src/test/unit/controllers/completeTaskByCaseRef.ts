@@ -1,6 +1,8 @@
 import { Response } from 'express';
 import { completeTask } from '../../../main/controllers/completeTaskFromMyTasks';
 
+const stages = require('../../../main/data/stages');
+
 
 describe('completeTaskFromMyTasks controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -30,7 +32,7 @@ describe('completeTaskFromMyTasks controller', () => {
       },
     };
 
-    res.redirect = jest.fn();
+    res.render = jest.fn();
   });
 
   test('completeTaskFromMyTasks method', () => {
@@ -38,8 +40,10 @@ describe('completeTaskFromMyTasks controller', () => {
     completeTask(req, res);
     req.params.caseRef = '1549-2345-7854-9786',
 
-    expect(res.redirect).toHaveBeenCalledTimes(1);
-    expect(res.redirect).toBeCalledWith('/');
+    expect(res.render).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledWith('my-cases', {
+      stages: stages,
+    });
 
     expect(req.session.myTasks.length === 0);
   });

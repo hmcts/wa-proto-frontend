@@ -3,7 +3,7 @@ import Debug from 'debug';
 import { Task } from 'models/task';
 import { Location } from 'models/location';
 
-const unClaimTaskDebug = Debug('app:controller:myCaseWork:unclaimTask');
+const unClaimTaskDebug = Debug('app:controller:unclaimTask');
 
 export function unClaimTask(req: Request, res: Response): void {
   unClaimTaskDebug(`myCaseWork.unclaimTask controller with caseRef=${req.query.caseRef}...`);
