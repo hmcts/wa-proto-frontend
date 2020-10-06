@@ -1,0 +1,41 @@
+.my-task-header {
+  border-bottom: none;
+  padding-bottom: 30px;
+}
+
+.my-tasks-table {
+  white-space: nowrap;
+}
+
+.govuk-table__cell {
+  position: relative;
+  padding: 10px 20px 20px 0px;
+}
+
+.wa-action-task {
+  display: none;
+  padding: 15px 0px 20px 0;
+  position: absolute;
+}
+
+.action-button-0 {
+  @extend .wa-action-task;
+  left: -25px;
+}
+.action-button-1 {
+  @extend .wa-action-task;
+  left: 50px;
+}
+.action-button-2 {
+  @extend .wa-action-task;
+  left: 20px;
+}
+
+.govuk-details__text {
+  border-left: none;
+  padding: 15px 15px 0px 15px;
+}
+
+.filter-by-location-details {
+  padding-left: 15px;
+}
