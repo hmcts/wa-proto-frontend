@@ -5,7 +5,7 @@ terraform {
 data "terraform_remote_state" "core_apps_infrastructure" {
   backend = "azurerm"
 
-  config {
+  config = {
     resource_group_name  = "mgmt-state-store-${var.subscription}"
     storage_account_name = "mgmtstatestore${var.subscription}"
     container_name       = "mgmtstatestorecontainer${var.env}"
@@ -16,10 +16,14 @@ data "terraform_remote_state" "core_apps_infrastructure" {
 data "terraform_remote_state" "core_apps_compute" {
   backend = "azurerm"
 
-  config {
+  config = {
     resource_group_name  = "mgmt-state-store-${var.subscription}"
     storage_account_name = "mgmtstatestore${var.subscription}"
     container_name       = "mgmtstatestorecontainer${var.env}"
     key                  = "core-compute/${var.env}/terraform.tfstate"
   }
 }
+
+
+
+

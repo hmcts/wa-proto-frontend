@@ -1,15 +1,5 @@
 provider "azurerm" {
-  features {}
-}
-
-
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "~> 2.25"
-    }
-  }
+  version = "1.41.0"
 }
 
 locals {
@@ -18,7 +8,7 @@ locals {
 
 resource "azurerm_resource_group" "rg" {
   name     = "${var.product}-${var.component}-${var.env}"
-  location = "${var.location}"
+  location =  var.location
   tags     = "${merge(var.common_tags, map("lastUpdated", "${timestamp()}"))}"
 }
 
@@ -28,11 +18,11 @@ data "azurerm_key_vault" "wa_key_vault" {
 }
 
 module "redis-cache" {
-  source      = "git@github.com:hmcts/cnp-module-redis?ref=azurermv2"
+  source      = "git@github.com:hmcts/cnp-module-redis?ref=master"
   product     = "${var.product}-redis"
   location    = "${var.location}"
   env         = "${var.env}"
-  subnetid    = "${data.terraform_remote_state.core_apps_infrastructure.subnet_ids[1]}"
+  subnetid    = "${data.terraform_remote_state.core_apps_infrastructure.outputs.subnet_ids[1]}"
   common_tags = "${var.common_tags}"
 }
 
