@@ -54,6 +54,7 @@ app.use(
     store: new RedisStore({ client: redisClient }),
     secret: config.get('session.redis.secret'),
     resave: false,
+    saveUninitialized: false,
     cookie: { secure: false },
   }),
 );
