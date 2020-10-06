@@ -6,12 +6,12 @@ const debug = Debug('app:controller:taskListController');
 
 
 export function createTaskListPage(req: Request, res: Response): void {
-  const removeMyTasksByCase = () => {
+  const removeMyTasksByCase = (): string => {
     req.session.myTasks = req.session.myTasks.filter((task: Task) => task.caseRef !== '1549 4765 3206 5586');
-    return res.redirect('/');
+    return '/';
   };
 
-  const redirectTasks = () => {
+  const redirectTasks = (): string => {
     return '/';
   };
 
