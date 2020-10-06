@@ -13,7 +13,7 @@ export function filterTasksByLocations(req: Request, res: Response): void {
 
   req.session.addLocations = model.getAllLocations().filter(x => !locations.includes(x.name));
   req.session.removeLocations = model.getAllLocations().filter(x => locations.includes(x.name));
-  res.render('my-case-work', {
+  res.render('task-list', {
     tasks: {
       'myTasks': req.session.myTasks,
       'myAvailableTasks': req.session.myFilteredAvailableTasks,

@@ -1,10 +1,6 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 
-{% macro formatTaskCaseRef(taskCaseRef) %}
-  <a href="#" class="govuk-link">{{ taskCaseRef }}</a>
-{% endmacro %}
-
 {% macro formatTaskDueDate(caseRef, tasksType, index, taskDueDate, dateColourCode) %}
   {% if dateColourCode === 'today' %}    
     {{govukTag({
@@ -29,16 +25,30 @@
   {% endif %} 
   
   {% if tasksType === 'myTasks' %}
-    <div id="my-task-action-{{index}}" class="wa-action-task">
-      <a href="/unclaim-task?caseRef={{caseRef}}">
-        Unclaim this task
-      </a>
+    <div id="my-task-action-{{index}}" class="wa-action-task action-button-0">
+      <a href="/unclaim-task?caseRef={{caseRef}}">Release this task</a>
     </div>
   {% else %}
-    <div id="my-available-task-{{index}}" class="wa-action-task">
-      <a href="/claim-task?caseRef={{caseRef}}">
-        Claim this task
-      </a>
+    <div id="my-available-task-action-{{index}}" class="wa-action-task action-button-0">
+      <a href="/claim-task?caseRef={{caseRef}}">Assign to me and go to case</a>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro addActionToTask(rowValue, taskId, actionName, tasksType, index, caseRef) %}
+  {{ rowValue }}
+  {% if tasksType === 'myAvailableTasks' %}
+    <div id="my-available-{{taskId}}-action-{{index}}" class="wa-action-task action-button-1">
+      <a href="/claim-task?caseRef={{caseRef}}">{{ actionName }}</a>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro addActionToLocation(rowValue, taskId, actionName, tasksType, index, caseRef) %}
+  {{ rowValue }}
+  {% if tasksType === 'myAvailableTasks' %}
+    <div id="my-available-{{taskId}}-action-{{index}}" class="wa-action-task action-button-2">
+      <a href="/">{{ actionName }}</a>
     </div>
   {% endif %}
 {% endmacro %}
@@ -46,7 +56,9 @@
 
 {% macro setDetails(caseRef, tasksType) %}
   <details class="govuk-details">
-    <summary class="govuk-details__summary" tasks-type="{{tasksType}}"></summary>
+    <summary class="govuk-details__summary" tasks-type="{{tasksType}}">
+      <span class="govuk-details__summary-text">Manage</span>
+    </summary>
   </details>
 {% endmacro %}
 
@@ -59,30 +71,30 @@
     
     {% set row = [
       {
-        html: formatTaskCaseRef(tasks[loop.index0].caseRef)
+        text: task.caseRef
       },
       {
-        text: tasks[loop.index0].caseName,
+        text: task.caseName,
         classes: "govuk-!-font-weight-bold" 
       },
       {
-        text: tasks[loop.index0].caseCategory
+        text: task.caseCategory
       },
       {
-        text: tasks[loop.index0].location
+        html: addActionToLocation(task.location, "task3", "Go to case", tasksType, loop.index0, task.caseRef)
       },
       {
-        text: tasks[loop.index0].taskName
+        html: addActionToTask(task.taskName, "task2", "Assign to me", tasksType, loop.index0, task.caseRef)
       },
       {
-        html: formatTaskDueDate(tasks[loop.index0].caseRef, tasksType, loop.index0, tasks[loop.index0].dueDate, tasks[loop.index0].dateColourCode),
+        html: formatTaskDueDate(task.caseRef, tasksType, loop.index0, task.dueDate, task.dateColourCode),
         classes: "govuk-!-padding-bottom-0",
         attributes: {
-          "data-sort-value": tasks[loop.index0].dateOrder
+          "data-sort-value": task.dateOrder
         }
       },
       {
-        html: setDetails(tasks[loop.index0].caseRef, tasksType)
+        html: setDetails(task.caseRef, tasksType)
       }
     ] 
     %}
@@ -98,38 +110,38 @@
       attributes: {
         "aria-sort": "ascending"
       },
-      classes: "my-task-header"
+      classes: "my-task-header govuk-!-font-weight-regular"
     },
     {
       text: "Case name",
-      classes: "my-task-header",
+      classes: "my-task-header govuk-!-font-weight-regular",
       attributes: {
         "aria-sort": "ascending"
       }
     },
     {
       text: "Case category",
-      classes: "my-task-header",
+      classes: "my-task-header govuk-!-font-weight-regular",
        attributes: {
         "aria-sort": "ascending"
       }
     },
     {
       text: "Location",
-      classes: "my-task-header",
+      classes: "my-task-header govuk-!-font-weight-regular",
        attributes: {
         "aria-sort": "ascending"
       }
     },
     {
       text: "Task",
-      classes: "my-task-header",
+      classes: "my-task-header govuk-!-font-weight-regular",
        attributes: {
         "aria-sort": "ascending"
       }
     },
     {
-      text: "Date",
+      text: "Due",
       attributes: {
         "aria-sort": "ascending"
       },

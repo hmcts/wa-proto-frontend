@@ -6,6 +6,41 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    containerClasses: "app-width-container",
+    serviceName: "Manage cases",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "/task-list",
+        text: "Task list"
+      },
+      {
+        href: "#",
+        text: "Task manager"
+      },
+      {
+        href: "/",
+        text: "Case list",
+        active: true
+      },
+      {
+        href: "#",
+        text: "Create case"
+      },
+      {
+        href: "/",
+        text: "Sign Out",
+        attributes: {
+          "id": "sign-out-button"
+          }
+      }  
+    ]
+  }) }}
+{% endblock %}
+
 {% block content %}
   
 <div class="govuk-grid-row">
