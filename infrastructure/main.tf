@@ -2,6 +2,16 @@ provider "azurerm" {
   features {}
 }
 
+
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "~> 2.25"
+    }
+  }
+}
+
 locals {
   key_vault_name = "${var.product}-${var.env}"
 }
@@ -17,9 +27,8 @@ data "azurerm_key_vault" "wa_key_vault" {
   resource_group_name = "${local.key_vault_name}"
 }
 
-
 module "redis-cache" {
-  source      = "git@github.com:hmcts/cnp-module-redis?ref=master"
+  source      = "git@github.com:hmcts/cnp-module-redis?ref=azurermv2"
   product     = "${var.product}-redis"
   location    = "${var.location}"
   env         = "${var.env}"
