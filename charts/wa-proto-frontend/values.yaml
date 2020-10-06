@@ -10,3 +10,13 @@ nodejs:
     wa:
       secrets:
         - AppInsightsInstrumentationKey
+redis:
+    cluster:
+        enabled: false
+        slaveCount: 0
+    usePassword: false
+    master:
+        persistence:
+            enabled: false
+tags:
+    pr: false
