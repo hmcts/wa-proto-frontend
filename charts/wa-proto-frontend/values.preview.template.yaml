@@ -1,0 +1,13 @@
+nodejs:
+  environment:
+  # Don't modify below here
+  image: ${IMAGE_NAME}
+  ingressHost: ${SERVICE_FQDN}
+  redis:
+    enabled: true
+    master:
+      persistence:
+        enabled: false
+  APPINSIGHTS_INSTRUMENTATIONKEY: "dummykey"
+  REDIS_URL: "redis://${SERVICE_NAME}-redis-master:6379"
+
