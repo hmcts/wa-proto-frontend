@@ -3,8 +3,12 @@
   padding-bottom: 30px;
 }
 
-.my-tasks-table {
+table.govuk-table {
   white-space: nowrap;
+  font-size: 1.0588rem;
+  details {
+    font-size: 1.0588rem;
+  }
 }
 
 .govuk-table__cell {

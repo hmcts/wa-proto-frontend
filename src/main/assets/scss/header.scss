@@ -5,9 +5,12 @@
   float: right;
   padding: 10px;
   z-index: 100;
-  
 }
 
 .govuk-header__logo {
-  width: 24.33%;
+  display: none;
+}
+
+.govuk-header__content {
+  padding-left: 0%;
 }
