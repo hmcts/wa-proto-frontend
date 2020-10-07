@@ -12,6 +12,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverageFrom: [
     '!src/main/development.ts', 
+    '!src/main/services/setupSecrets.ts', 
     '!src/main/client/**',
     '!src/main/app.ts', 
     '!webpack/app.js',
