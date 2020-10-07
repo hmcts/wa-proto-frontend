@@ -9,5 +9,8 @@
       "secret": "defaultsecret",
       "redisStore": false
     }
+  },
+  "appInsights": {
+    "instrumentationKey": ""
   }
 }

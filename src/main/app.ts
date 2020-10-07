@@ -10,6 +10,7 @@ import { Nunjucks } from './modules/nunjucks';
 import { MyCaseWorkModel } from './models/myCaseWorkModel';
 import Debug from 'debug';
 import { isNullOrUndefined } from 'util';
+import { setupSecrets } from '../main/services/setupSecrets';
 
 const { Express, Logger } = require('@hmcts/nodejs-logging');
 const { setupDev } = require('./development');
@@ -20,6 +21,9 @@ const debug = Debug('app:app');
 const session = require('express-session');
 const redis = require('redis');
 const useRedisStore: boolean = config.get('session.redis.redisStore') === true;
+
+// Setup secrets before loading the app
+setupSecrets();
 
 export const app = express();
 app.locals.ENV = env;
