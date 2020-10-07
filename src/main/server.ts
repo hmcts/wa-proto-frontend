@@ -1,10 +1,15 @@
 #!/usr/bin/env node
-const { Logger } = require('@hmcts/nodejs-logging');
+import { setupSecrets } from '../main/services/setupSecrets';
 import * as fs from 'fs';
 import * as https from 'https';
 import * as path from 'path';
+
+// Setup secrets before loading the app
+setupSecrets();
+
 import { app } from './app';
 
+const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('server');
 
 // TODO: set the right port for your application
