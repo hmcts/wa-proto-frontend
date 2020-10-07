@@ -9,12 +9,11 @@ nodejs:
       secrets:
         - AppInsightsInstrumentationKey
 redis:
-    cluster:
-        enabled: false
-        slaveCount: 0
-    usePassword: false
-    master:
-        persistence:
-            enabled: false
-tags:
-    pr: false
+  enabled: false
+  cluster:
+    enabled: false
+    slaveCount: 0
+  usePassword: false
+  master:
+    persistence:
+      enabled: false
