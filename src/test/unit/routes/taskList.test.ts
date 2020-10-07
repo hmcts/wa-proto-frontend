@@ -4,6 +4,7 @@ import * as claimTaskController from '../../../main/controllers/claimTaskControl
 import * as unClaimTaskController from '../../../main/controllers/unClaimTaskController';
 import * as filterController from '../../../main/controllers/filterTasksByLocations';
 import * as taskListController from '../../../main/controllers/taskListController';
+import * as completeTaskFromMyTasks from '../../../main/controllers/completeTaskFromMyTasks';
 
 describe('task-list page routers', () => {
 
@@ -19,7 +20,7 @@ describe('task-list page routers', () => {
   test('get /claim-task?caseRef={caseRef} router', async () => {
     const mock = jest.spyOn(claimTaskController, 'claimTask');
 
-    const response = await request(app).get('/claim-task?caseRef=1');
+    const response = await request(app).get('/claim-task?caseRef=1&complete=false');
 
     expect(response.status).toBe(200);
     expect(mock).toHaveBeenCalledTimes(1);
@@ -38,6 +39,15 @@ describe('task-list page routers', () => {
     const mock = jest.spyOn(taskListController, 'createTaskListPage');
 
     const response = await request(app).get('/task-list');
+
+    expect(response.status).toBe(200);
+    expect(mock).toHaveBeenCalledTimes(1);
+  });
+
+  test('get /complete-task/caseRef router', async () => {
+    const mock = jest.spyOn(completeTaskFromMyTasks, 'completeTask');
+    const caseRef = 'dkfkgf';
+    const response = await request(app).get('/complete-task/'+caseRef);
 
     expect(response.status).toBe(200);
     expect(mock).toHaveBeenCalledTimes(1);
