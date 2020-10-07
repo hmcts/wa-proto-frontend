@@ -8,16 +8,9 @@ describe('claimTask controller', () => {
 
   beforeEach(() => {
 
-    res.render = jest.fn();
-
-  });
-
-  test('claimTask method', () => {
-
     req = (
       {
         query: {
-          caseRef: '3',
         },
         session: {
           myTasks: [{ caseRef: '1' }, { caseRef: '2' }],
@@ -34,7 +27,15 @@ describe('claimTask controller', () => {
         /* eslint-disable  @typescript-eslint/no-explicit-any */
       } as any);
 
+    res.render = jest.fn();
+
+  });
+
+  test('claimTask method', () => {
+    req.query.complete = 'false';
+    req.query.caseRef = '3';
     claimTask(req, res);
+
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
@@ -49,6 +50,20 @@ describe('claimTask controller', () => {
         ],
         removeLocations: [],
       },
+    });
+  });
+
+  test('claimTask and complete method', () => {
+    const stages = require('../../../main/data/stages');
+
+    req.query.complete = 'true';
+    req.query.caseRef = '3';
+    claimTask(req, res);
+
+    expect(req.session.myFilteredAvailableTasks.length).toEqual(1);
+    expect(res.render).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledWith('my-cases', {
+      stages: stages,
     });
   });
 
