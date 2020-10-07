@@ -6,8 +6,3 @@ home: https://github.com/hmcts/wa-proto-frontend
 version: 0.0.11
 maintainers: 
   - name: HMCTS WA team
-dependencies:
-  - name: nodejs
-    version: 2.0.1
-    repository: '@hmctspublic'
-
