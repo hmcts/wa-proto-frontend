@@ -1,24 +1,27 @@
-variable "product" {
-  type = "string"
-}
+variable "product" {}
 
-variable "component" {
-  type = "string"
-}
+variable "component" {}
 
 variable "location" {
-  type    = "string"
   default = "UK South"
 }
 
-variable "env" {
-  type = "string"
-}
+variable "env" {}
 
-variable "subscription" {
-  type = "string"
+variable "subscription" {}
+
+variable "ilbIp" {}
+variable "deployment_namespace" {}
+
+variable "node_environment" {
+  default = "sandbox"
 }
 
 variable "common_tags" {
-  type = "map"
+  type = map(string)
+}
+
+variable "appinsights_instrumentation_key" {
+  description = "Instrumentation key of the App Insights instance this webapp should use. Module will create own App Insights resource if this is not provided"
+  default     = ""
 }
