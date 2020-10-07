@@ -30,7 +30,7 @@
     </div>
   {% else %}
     <div id="my-available-task-action-{{index}}" class="wa-action-task action-button-0">
-      <a href="/claim-task?caseRef={{caseRef}}">Assign to me and go to case</a>
+      <a href="/claim-task?caseRef={{caseRef}}&complete=true">Assign to me and go to case</a>
     </div>
   {% endif %}
 {% endmacro %}
@@ -39,7 +39,7 @@
   {{ rowValue }}
   {% if tasksType === 'myAvailableTasks' %}
     <div id="my-available-{{taskId}}-action-{{index}}" class="wa-action-task action-button-1">
-      <a href="/claim-task?caseRef={{caseRef}}">{{ actionName }}</a>
+      <a href="/claim-task?caseRef={{caseRef}}&complete=false">{{ actionName }}</a>
     </div>
   {% endif %}
 {% endmacro %}
