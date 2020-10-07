@@ -28,7 +28,7 @@ module "redis-cache" {
 
 resource "azurerm_key_vault_secret" "redis_access_key" {
   name         = "${var.product}-redis-access-key"
-  value        = "${module.redis-cache.access_key}"
+  value        = "module.redis-cache.access_key"
   key_vault_id = data.azurerm_key_vault.wa_key_vault.id
 }
 
