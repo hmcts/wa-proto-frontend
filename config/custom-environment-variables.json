@@ -1,0 +1,12 @@
+{
+  "session": {
+    "redis": {
+      "url": "REDIS_URL",
+      "secret": "SESSION_SECRET",
+      "redisStore": "REDIS_STORE"
+    }
+  },
+  "appInsights": {
+    "instrumentationKey": "APPINSIGHTS_INSTRUMENTATIONKEY"
+  }
+}
