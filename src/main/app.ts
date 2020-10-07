@@ -20,7 +20,7 @@ const debug = Debug('app:app');
 
 const session = require('express-session');
 const redis = require('redis');
-const useRedisStore: boolean = config.get('session.redis.redisStore') === true;
+const useRedisStore: boolean = config.get('session.redis.redisStore') === 'true';
 
 // Setup secrets before loading the app
 setupSecrets();
@@ -50,6 +50,7 @@ app.use((req, res, next) => {
 });
 
 if (useRedisStore) {
+  debug(`redis store= ${useRedisStore}`);
   const RedisStore = require('connect-redis')(session);
   const redisOps = {
     url: config.get('session.redis.url'),
@@ -65,6 +66,7 @@ if (useRedisStore) {
     }),
   );
 } else {
+  debug(`No redis store= ${useRedisStore}`);
   app.use(session({
     resave: false,
     saveUninitialized: true,
