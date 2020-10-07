@@ -6,5 +6,9 @@ nodejs:
   environment: 
     REDIS_URL: "redis://${SERVICE_NAME}-redis-master:6379"
     REDIS_STORE: "true"
+  keyVaults:
+    wa:
+      secrets:
+        - AppInsightsInstrumentationKey
 redis:
   enabled: true
