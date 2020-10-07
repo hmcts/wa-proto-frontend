@@ -1,0 +1,37 @@
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+
+
+{% macro generateDropDown(rows,id,name,textName) %}
+
+  {% set dynamicRows = [] %}
+  {% set row =
+    {
+      value: '',
+      text: "--Select a value--",
+      selected: true
+    }
+  %}
+  {% set dynamicRows = (dynamicRows.push(row), dynamicRows) %}
+  {% for valueRow in rows %}
+
+    {% set row =
+      {
+        value: valueRow.name,
+        text: valueRow.name
+      }
+    %}
+
+    {% set dynamicRows = (dynamicRows.push(row), dynamicRows) %}
+  {% endfor %}
+
+
+  {{ govukSelect({
+    id: id ,
+    name: name,
+    label: {
+      text: textName
+    },
+    items: dynamicRows
+  }) }}
+
+{% endmacro %}
