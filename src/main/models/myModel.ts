@@ -10,7 +10,7 @@ const task4 = new Task('1549-4765-3206-5586', 'Kili Muso', 'Protection', 'Taylor
 const task5 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 1, 'future','Simone Harley');
 const task6 = new Task('1549-2345-7854-9786', 'Wina Palic', 'Human Rights', 'Taylor House', 'Review respondent evidence', '+4 days', 5, 'past','Simone Harley');
 
-export class MyCaseWorkModel {
+export class MyModel {
 
   static getMyAvailableTasks(): Array<Task> {
     const tasks: Array<Task> = [];

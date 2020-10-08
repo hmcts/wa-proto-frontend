@@ -7,7 +7,7 @@ import { RouterFinder } from './router/routerFinder';
 import favicon from 'serve-favicon';
 import { HTTPError } from 'HttpError';
 import { Nunjucks } from './modules/nunjucks';
-import { MyCaseWorkModel } from './models/myCaseWorkModel';
+import { MyModel } from './models/myModel';
 import Debug from 'debug';
 import { isNullOrUndefined } from 'util';
 
@@ -78,23 +78,23 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   debug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
 
   if (isNullOrUndefined(req.session.myAvailableTasks)) {
-    req.session.myAvailableTasks = MyCaseWorkModel.getMyAvailableTasks();
+    req.session.myAvailableTasks = MyModel.getMyAvailableTasks();
   }
 
   if (isNullOrUndefined(req.session.myFilteredAvailableTasks)) {
-    req.session.myFilteredAvailableTasks = MyCaseWorkModel.getMyFilteredAvailableTasks();
+    req.session.myFilteredAvailableTasks = MyModel.getMyFilteredAvailableTasks();
   }
 
   if (isNullOrUndefined(req.session.myTasks)) {
-    req.session.myTasks = MyCaseWorkModel.getMyTasks();
+    req.session.myTasks = MyModel.getMyTasks();
   }
 
   if (isNullOrUndefined(req.session.addLocations)) {
-    req.session.addLocations = MyCaseWorkModel.getAddLocations();
+    req.session.addLocations = MyModel.getAddLocations();
   }
 
   if (isNullOrUndefined(req.session.removeLocations)) {
-    req.session.removeLocations = MyCaseWorkModel.getRemoveLocations();
+    req.session.removeLocations = MyModel.getRemoveLocations();
   }
 
   next();

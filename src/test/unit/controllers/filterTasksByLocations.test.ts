@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { filterTasksByLocations } from '../../../main/controllers/filterTasksByLocations';
-import { MyCaseWorkModel as model } from '../../../main/models/myCaseWorkModel';
+import { MyModel as model } from '../../../main/models/myModel';
 
 describe('filterTasksByLocations controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
-import { MyCaseWorkModel as model } from '../models/myCaseWorkModel';
+import { MyModel as model } from '../models/myModel';
 
 const filterDebug = Debug('app:controller:filterTasksByLocations');
 

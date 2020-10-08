@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { reassignTask , postReassignTask } from '../../../main/controllers/reassignTaskController';
-import {MyCaseWorkModel} from '../../../main/models/myCaseWorkModel';
+import {MyModel} from '../../../main/models/myModel';
 
 describe('re-assign controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -41,8 +41,8 @@ describe('re-assign controller', () => {
   });
 
   test('get re-assign method', () => {
-    const locations = MyCaseWorkModel.getAllLocations();
-    const caseworker = MyCaseWorkModel.getAllCaseworker();
+    const locations = MyModel.getAllLocations();
+    const caseworker = MyModel.getAllCaseworker();
     req.query.caseRef = '1';
     reassignTask(req, res);
 
