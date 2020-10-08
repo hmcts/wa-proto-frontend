@@ -42,12 +42,12 @@ router.get('/complete-task/:caseRef', (req, res) => {
 });
 
 router.get('/reassign-task', (req, res) => {
-  debugReassignTask(`reassign-task router with caseRef=${req.query.caseRef}...`);
+  debugReassignTask(`reassign-task get router with caseRef=${req.query.caseRef}...`);
   reassignTask(req, res);
 });
 
 router.post('/reassign-task', (req, res) => {
-  debugReassignTask(`reassign-task router with caseRef=${req.query.caseRef}...`);
+  debugReassignTask(`reassign-task post router with caseRef=${req.query.caseRef}...`);
   postReassignTask(req, res);
 });
 

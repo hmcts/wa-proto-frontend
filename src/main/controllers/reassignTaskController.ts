@@ -6,7 +6,7 @@ import { MyCaseWorkModel } from '../models/myCaseWorkModel';
 const debugReassignTask = Debug('app:controller:reassignTask');
 
 export function reassignTask(req: Request, res: Response): void {
-  debugReassignTask(`myCaseWork.claimTask controller with caseRef=${req.query.caseRef}...`);
+  debugReassignTask(`reassignTask controller with caseRef=${req.query.caseRef}...`);
   const myTasks: Array<Task> = req.session.myTasks;
   const task = myTasks.filter( i => i.caseRef === req.query.caseRef);
   const locations = MyCaseWorkModel.getAllLocations();
