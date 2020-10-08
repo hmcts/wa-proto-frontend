@@ -1,0 +1,35 @@
+{% extends "template.njk" %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Manage cases",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "/task-list",
+        text: "Task list"
+      },
+      {
+        href: "/task-manager",
+        text: "Task manager",
+        active: true
+      },
+      {
+        href: "/",
+        text: "Case list"
+      },
+      {
+        href: "#",
+        text: "Create case"
+      },
+      {
+        href: "/",
+        text: "Sign Out",
+        attributes: {
+          "id": "sign-out-button"
+          }
+      }  
+    ]
+  }) }}
+{% endblock %}
