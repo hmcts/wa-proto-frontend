@@ -18,6 +18,9 @@ export function unClaimTask(req: Request, res: Response): void {
     }
     req.session.myTasks = actualMyTasks.filter(x => x.caseRef !== req.query.caseRef);
   }
+  req.session.myTasks = req.session.myTasks.sort((a: Task,b: Task) => a.dateOrder - b.dateOrder).reverse();
+  req.session.myFilteredAvailableTasks = req.session.myFilteredAvailableTasks.sort((a: Task,b: Task) => a.dateOrder - b.dateOrder).reverse();
+  req.session.myAvailableTasks = req.session.myAvailableTasks.sort((a: Task,b: Task) => a.dateOrder - b.dateOrder).reverse();
 
   res.render('task-list', {
     tasks: {
@@ -25,6 +28,10 @@ export function unClaimTask(req: Request, res: Response): void {
       'myAvailableTasks': req.session.myFilteredAvailableTasks,
       'addLocations': req.session.addLocations,
       'removeLocations': req.session.removeLocations,
+      'myChecked': { checked: true },
+      'availableChecked': {},
+      'myDisplay': 'block',
+      'availableDisplay': 'none',
     },
   });
 

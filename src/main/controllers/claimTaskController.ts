@@ -15,14 +15,18 @@ export function claimTask(req: Request, res: Response): void {
     req.session.myTasks = req.session.myTasks.filter((task: Task) => task.caseRef !== req.query.caseRef);
     req.session.myFilteredAvailableTasks = filteredAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
     req.session.myAvailableTasks = myAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
-
     res.render('my-cases', {
       stages: new MyCasesPage('my-cases', stages).stages,
     });
   } else if (complete === 'false') {
+
     req.session.myTasks.push(myAvailableTasks.find(x => x.caseRef === req.query.caseRef));
     req.session.myFilteredAvailableTasks = filteredAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
     req.session.myAvailableTasks = myAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
+
+    req.session.myTasks = req.session.myTasks.sort((a: Task,b: Task) => a.dateOrder - b.dateOrder).reverse();
+    req.session.myFilteredAvailableTasks = req.session.myFilteredAvailableTasks.sort((a: Task,b: Task) => a.dateOrder - b.dateOrder).reverse();
+    req.session.myAvailableTasks = req.session.myAvailableTasks.sort((a: Task,b: Task) => a.dateOrder - b.dateOrder).reverse();
 
     res.render('task-list', {
       tasks: {
@@ -30,7 +34,12 @@ export function claimTask(req: Request, res: Response): void {
         'myAvailableTasks': req.session.myFilteredAvailableTasks,
         'addLocations': req.session.addLocations,
         'removeLocations': req.session.removeLocations,
+        'myChecked': {},
+        'availableChecked': { checked: true },
+        'myDisplay': 'none',
+        'availableDisplay': 'block',
       },
+
     });
   }
 
