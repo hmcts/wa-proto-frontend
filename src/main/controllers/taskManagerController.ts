@@ -4,9 +4,9 @@ import { MyModel } from '../models/myModel';
 
 const debug = Debug('app:controller:taskManagerController');
 
-function getLocationsForDropDownMenu(selectedLocation: string): Array<{}> {
+function getLocationsForDropDownMenu(selectedOption: string): Array<{}> {
   return MyModel.getAllLocations().map(l => {
-    if (selectedLocation === l.name) {
+    if (selectedOption === l.name) {
       return {
         text: l.name,
         selected: true,
@@ -19,10 +19,32 @@ function getLocationsForDropDownMenu(selectedLocation: string): Array<{}> {
   });
 }
 
-function getCaseWorkersForDropDownMenu(): Array<{}> {
-  return MyModel.getAllCaseworker().map(cw => {
+function getCaseWorkersForDropDownMenu(selectedOption: string): Array<{}> {
+
+  const allCaseWorkers = MyModel.getAllCaseworker().map(cw => {
     return {
       text: cw.name,
+    };
+  });
+
+  const allOptions = [
+    {
+      text: 'All',
+    },
+    ...allCaseWorkers,
+    {
+      text: 'Unassigned',
+    },
+  ];
+
+  return allOptions.map(o => {
+    if (o.text === selectedOption) {
+      return {
+        text: o.text,
+        selected: true,
+      };
+    } else return {
+      text: o.text,
     };
   });
 
@@ -36,15 +58,7 @@ export function createTaskManagerPage(req: Request, res: Response): void {
       myAvailableTasks: req.session.myAvailableTasks,
     },
     locations: getLocationsForDropDownMenu('Taylor House'),
-    caseWorkers: [
-      {
-        text: 'All',
-      },
-      ...getCaseWorkersForDropDownMenu(),
-      {
-        text: 'Unassigned',
-      },
-    ],
+    caseWorkers: getCaseWorkersForDropDownMenu('Bisa Butler'),
   });
 }
 
