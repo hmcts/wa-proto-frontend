@@ -35,11 +35,15 @@
   {% endif %}
 {% endmacro %}
 
-{% macro addActionToTask(rowValue, taskId, actionName, tasksType, index, caseRef) %}
+{% macro addActionToTask(rowValue, taskId, tasksType, index, caseRef) %}
   {{ rowValue }}
   {% if tasksType === 'myAvailableTasks' %}
     <div id="my-available-{{taskId}}-action-{{index}}" class="wa-action-task action-button-1">
-      <a href="/claim-task?caseRef={{caseRef}}&complete=false">{{ actionName }}</a>
+      <a href="/claim-task?caseRef={{caseRef}}&complete=false">Assign to me</a>
+    </div>
+  {% elseif tasksType === 'myTasks' %}
+    <div id="my-task-action2-{{index}}" class="wa-action-task action-button-1">
+      <a href="/reassign-task?caseRef={{caseRef}}">Reassign task</a>
     </div>
   {% endif %}
 {% endmacro %}
@@ -92,7 +96,7 @@
         html: addActionToLocation(task.location, "task3", "Go to case", tasksType, loop.index0, task.caseRef)
       },
       {
-        html: addActionToTask(task.taskName, "task2", "Assign to me", tasksType, loop.index0, task.caseRef)
+        html: addActionToTask(task.taskName, "task2", tasksType, loop.index0, task.caseRef)
       },
       {
         html: formatTaskDueDate(task.caseRef, tasksType, loop.index0, task.dueDate, task.dateColourCode),

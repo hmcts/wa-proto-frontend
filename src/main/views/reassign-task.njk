@@ -1,0 +1,143 @@
+{% extends "template.njk" %}
+
+{% from "macros/createDropdown.njk" import generateDropDown with context %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% macro formatTaskDueDate(taskDueDate, dateColourCode) %}
+  {% if dateColourCode === 'today' %}
+    {{govukTag({
+      text: taskDueDate,
+      classes: "govuk-tag--orange"
+    })
+    }}
+  {% endif %}
+  {% if dateColourCode === 'future' %}
+    {{govukTag({
+      text: taskDueDate,
+      classes: "govuk-tag--green"
+    })
+    }}
+  {% endif %}
+  {% if dateColourCode === 'past' %}
+    {{govukTag({
+      text: taskDueDate,
+      classes: "govuk-tag--pink"
+    })
+    }}
+  {% endif %}
+{%  endmacro %}
+
+{% block header %}
+
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Manage cases",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "/task-list",
+        text: "Task list",
+        active: true
+      },
+      {
+        href: "#",
+        text: "Task manager"
+      },
+      {
+        href: "/",
+        text: "Case list"
+      },
+      {
+        href: "#",
+        text: "Create case"
+      },
+      {
+        href: "/",
+        text: "Sign Out",
+        attributes: {
+        "id": "sign-out-button"
+      }
+      }
+    ]
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-l">Re-assign a Task</h1>
+  <span class="govuk-caption-m">Reassign a task to another tribunal caseworker</span>
+  <h1 class="govuk-heading-m">Case Summary</h1>
+  {{ govukTable({
+    firstCellIsHeader: true,
+    head: [
+      {
+        text: "Case reference",
+        classes: "my-task-header govuk-!-font-weight-regular"
+      },
+      {
+        text: "Case name",
+        classes: "my-task-header govuk-!-font-weight-regular"
+      },
+      {
+        text: "Case category",
+        classes: "my-task-header govuk-!-font-weight-regular"
+      },
+      {
+        text: "Location",
+        classes: "my-task-header govuk-!-font-weight-regular"
+      },
+      {
+        text: "Task",
+        classes: "my-task-header govuk-!-font-weight-regular"
+      },
+      {
+        text: "Date",
+        classes: "my-task-header govuk-!-font-weight-regular"
+      },
+      {
+        text: "Caseworker",
+        classes: "my-task-header govuk-!-font-weight-regular"
+      }
+    ],
+    rows: [
+      [{
+        text: task[0].caseRef
+      },
+      {
+        text: task[0].caseName
+      },
+      {
+        text: task[0].caseCategory
+      },
+      {
+        text: task[0].location
+      },
+      {
+        text: task[0].taskName
+      },
+      {
+        html: formatTaskDueDate(task[0].dueDate, task[0].dateColourCode)
+      },
+      {
+        text: task[0].caseworker
+      }
+      ]
+    ]
+  }) }}
+
+  <form method="post" type="submit" action='/reassign-task?caseRef={{ task[0].caseRef }}'>
+  <h1 class="govuk-heading-m">Find a colleague</h1>
+  {{ generateDropDown(locations,'location', 'locations', 'Location') }}
+  {{ generateDropDown(caseworker,'caseworker', 'caseworkers', 'Caseworker') }}
+  <div class="save-buttons__container">
+    {{ govukButton({
+      name: "submit",
+      text: "Submit",
+      classes: "govuk-!-margin-right-1"
+    }) }}
+     <a href='/' class="govuk-link">cancel and go back</a>
+  </div>
+</form>
+{% endblock %}

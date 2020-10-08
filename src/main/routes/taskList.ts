@@ -5,12 +5,14 @@ import { claimTask } from '../controllers/claimTaskController';
 import { unClaimTask } from '../controllers/unClaimTaskController';
 import { filterTasksByLocations } from '../controllers/filterTasksByLocations';
 import { completeTask } from '../controllers/completeTaskFromMyTasks';
+import {postReassignTask, reassignTask} from '../controllers/reassignTaskController';
 
 const debugFilter = Debug('app:route:filter');
 const debugClaimTask = Debug('app:route:claimTask');
 const debugUnclaimTask = Debug('app:route:unclaimTask');
 const debugTaskList = Debug('app:route:taskList');
 const debugCompleteTask = Debug('app:route:completeTask');
+const debugReassignTask = Debug('app:route:reassignTask');
 
 const router = express.Router();
 
@@ -37,6 +39,16 @@ router.get('/unclaim-task', (req, res) => {
 router.get('/complete-task/:caseRef', (req, res) => {
   debugCompleteTask(`complete-task router with caseRef=${req.query.caseRef}...`);
   completeTask(req, res);
+});
+
+router.get('/reassign-task', (req, res) => {
+  debugReassignTask(`reassign-task get router with caseRef=${req.query.caseRef}...`);
+  reassignTask(req, res);
+});
+
+router.post('/reassign-task', (req, res) => {
+  debugReassignTask(`reassign-task post router with caseRef=${req.query.caseRef}...`);
+  postReassignTask(req, res);
 });
 
 module.exports = router;

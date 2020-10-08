@@ -4,6 +4,7 @@ import * as claimTaskController from '../../../main/controllers/claimTaskControl
 import * as unClaimTaskController from '../../../main/controllers/unClaimTaskController';
 import * as filterController from '../../../main/controllers/filterTasksByLocations';
 import * as taskListController from '../../../main/controllers/taskListController';
+import * as reassignTaskController from '../../../main/controllers/reassignTaskController';
 import * as completeTaskFromMyTasks from '../../../main/controllers/completeTaskFromMyTasks';
 
 describe('task-list page routers', () => {
@@ -53,5 +54,21 @@ describe('task-list page routers', () => {
     expect(mock).toHaveBeenCalledTimes(1);
   });
 
+  test('get /reassign-task router', async () => {
+    const mock = jest.spyOn(reassignTaskController, 'reassignTask');
 
+    const response = await request(app).get('/reassign-task?caseRef=34');
+
+    expect(response.status).toBe(200);
+    expect(mock).toHaveBeenCalledTimes(1);
+  });
+
+  test('post /reassign-task router', async () => {
+    const mock = jest.spyOn(reassignTaskController, 'postReassignTask');
+
+    const response = await request(app).post('/reassign-task?caseRef=34');
+
+    expect(response.status).toBe(200);
+    expect(mock).toHaveBeenCalledTimes(1);
+  });
 });

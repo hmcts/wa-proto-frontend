@@ -13,6 +13,9 @@
    detail.addEventListener('click', () => {
      hideShowDetailForGivenId('my-task-action-' + index);
    });
+   detail.addEventListener('click', () => {
+     hideShowDetailForGivenId('my-task-action2-' + index);
+   });
  });
 
  document.querySelectorAll('details>summary[tasks-type=myAvailableTasks]').forEach((detail, index) => {
