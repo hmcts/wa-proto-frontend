@@ -1,5 +1,7 @@
 {% extends "template.njk" %}
 
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+
 {% block header %}
   {{ govukHeader({
     homepageUrl: "/",
@@ -44,4 +46,42 @@
       </span>
     </div>    
 </div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      {{ govukSelect({
+        id: "location",
+        name: "location",
+        label: {
+          text: "Location"
+        },
+        items: [
+          {
+            value: "Taylor House",
+            text: "Taylor House"
+          }  
+        ]
+      }) }} 
+      </div>     
+    <div class="govuk-grid-column-two-third">
+      {{ govukSelect({
+        id: "caseWorker",
+        name: "caseWorker",
+        label: {
+          text: "Caseworker"
+        },
+        items: [
+          {
+            value: "all",
+            text: "All"
+          },  
+          {
+            value: "Raffy Bushman",
+            text: "Raffy Bushman"
+          }  
+        ]
+      }) }}      
+    </div>    
+</div>
+
 {% endblock %}
