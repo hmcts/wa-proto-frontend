@@ -62,18 +62,17 @@
     {
       value: "myTasks",
       text: "My tasks",
-      attributes: {
-        "checked": "true"
-      }
+      attributes: tasks.myChecked
     },
     {
       value: "availableTasks",
-      text: "Available tasks"
+      text: "Available tasks",
+      attributes: tasks.availableChecked
     }
   ]
 }) }}
 
-<div id="my-tasks-content" class="govuk-grid-row">
+<div id="my-tasks-content" class="govuk-grid-row" style="display:{{tasks.myDisplay}}">
     <div class="govuk-grid-column-one-half">
       <h3 class="govuk-heading-m">My tasks</h3>
       {{ myTasks(tasks.myTasks, "myTasks") }}      
@@ -81,7 +80,7 @@
     
 </div>
 
-<div id="available-tasks-content" style="display:none">
+<div id="available-tasks-content" style="display:{{tasks.availableDisplay}}">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
         <h3 class="govuk-heading-m">Available tasks</h3>

@@ -12,6 +12,10 @@ export function createTaskListPage(req: Request, res: Response): void {
       'myAvailableTasks': req.session.myFilteredAvailableTasks,
       'addLocations': req.session.addLocations,
       'removeLocations': req.session.removeLocations,
+      'myChecked': { checked: true },
+      'availableChecked': {},
+      'myDisplay': 'block',
+      'availableDisplay': 'none',
     },
   });
 }
