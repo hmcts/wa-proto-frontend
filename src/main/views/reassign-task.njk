@@ -66,9 +66,21 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-l">Re-assign a Task</h1>
-  <span class="govuk-caption-m">Reassign a task to another tribunal caseworker</span>
-  <h1 class="govuk-heading-m">Case Summary</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">Re-assign a Task</h1>
+      <span class="govuk-hint">
+        Reassign a task to another tribunal caseworker
+      </span>
+    </div>    
+  </div>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h3 class="govuk-heading-m">Case Summary</h3>
+    </div>    
+  </div>
+  
   {{ govukTable({
     firstCellIsHeader: true,
     head: [
