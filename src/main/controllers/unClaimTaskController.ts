@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Debug from 'debug';
 import { Task } from 'models/task';
 import { Location } from 'models/location';
+import {taskDateOrderUtils} from '../utils/order-date-utils';
 
 const unClaimTaskDebug = Debug('app:controller:unclaimTask');
 
@@ -18,13 +19,23 @@ export function unClaimTask(req: Request, res: Response): void {
     }
     req.session.myTasks = actualMyTasks.filter(x => x.caseRef !== req.query.caseRef);
   }
-
+  taskDateOrderUtils(req);
   res.render('task-list', {
     tasks: {
-      'myTasks': req.session.myTasks,
-      'myAvailableTasks': req.session.myFilteredAvailableTasks,
-      'addLocations': req.session.addLocations,
-      'removeLocations': req.session.removeLocations,
+      myTasks: {
+        taskList: req.session.myTasks,
+        checked: { checked: true },
+        display: 'block',
+      },
+      myAvailableTasks: {
+        taskList: req.session.myAvailableTasks,
+        checked: {},
+        display: 'none',
+      },
+      filter: {
+        addLocations: req.session.addLocations,
+        removeLocations: req.session.removeLocations,
+      },
     },
   });
 

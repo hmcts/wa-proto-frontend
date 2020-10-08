@@ -15,7 +15,7 @@
       {
         href: "/task-list",
         text: "Task list",
-        active: true       
+        active: true
       },
       {
         href: "#",
@@ -35,14 +35,14 @@
         attributes: {
           "id": "sign-out-button"
           }
-      }  
+      }
     ]
   }) }}
 
 {% endblock %}
 
 
-{% block content %}  
+{% block content %}
 
 {{ govukRadios({
   classes: "govuk-radios--inline",
@@ -62,44 +62,43 @@
     {
       value: "myTasks",
       text: "My tasks",
-      attributes: {
-        "checked": "true"
-      }
+      attributes: tasks.myTasks.checked
     },
     {
       value: "availableTasks",
-      text: "Available tasks"
+      text: "Available tasks",
+      attributes: tasks.myAvailableTasks.checked
     }
   ]
 }) }}
 
-<div id="my-tasks-content" class="govuk-grid-row">
+  <div id="my-tasks-content" class="govuk-grid-row" style="display:{{tasks.myTasks.display}}">
     <div class="govuk-grid-column-one-half">
       <h3 class="govuk-heading-m">My tasks</h3>
-      {{ myTasks(tasks.myTasks, "myTasks") }}      
+      {{ myTasks(tasks.myTasks.taskList, "myTasks") }}
     </div>
-    
+
 </div>
 
-<div id="available-tasks-content" style="display:none">
+  <div id="available-tasks-content" style="display:{{tasks.myAvailableTasks.display}}">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
         <h3 class="govuk-heading-m">Available tasks</h3>
       </div>
     </div>
-      
+
     <div class="govuk-grid-row">
       <div id="ex1" class="govuk-grid-column-two-half">
         {{ govukDetails({
           summaryText: "Filter by location",
-          html: filterByLocation(tasks.addLocations, tasks.removeLocations),
+          html: filterByLocation(tasks.filter.addLocations, tasks.filter.removeLocations),
           classes: "filter-by-location-details"
-        }) }}    
+        }) }}
       </div>
     </div>
-    
-    {{ myTasks(tasks.myAvailableTasks, "myAvailableTasks") }}         
-    
+
+    {{ myTasks(tasks.myAvailableTasks.taskList, "myAvailableTasks") }}
+
 </div>
 
 {% endblock %}
@@ -116,19 +115,19 @@
     new MOJFrontend.SortableTable({
       table: $('table')[1]
     });
-    
+
     document.getElementById('task-list-radio-button').onclick = (event) => {
       if (event.currentTarget.checked) {
         document.getElementById('my-tasks-content').style.display = 'block';
         document.getElementById('available-tasks-content').style.display = 'none';
-      } 
+      }
     };
-    
+
     document.getElementById('task-list-radio-button-2').onclick = (event) => {
       if (event.currentTarget.checked) {
         document.getElementById('my-tasks-content').style.display = 'none';
         document.getElementById('available-tasks-content').style.display = 'block';
-      } 
+      }
     };
 
     document.getElementById("filter-done-button").onclick = () => {
@@ -137,9 +136,9 @@
       for (let step = 0; step < listItems.length; step++) {
         query +="item" + step + '=' + listItems[step].innerText;
         if (step < listItems.length - 1) {
-          query += "&";  
+          query += "&";
         }
-       
+
       }
       location.href = "/filter?" + query;
     }

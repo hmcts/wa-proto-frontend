@@ -39,20 +39,30 @@ describe('taskList controller', () => {
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
-        myAvailableTasks: [{ location: 'Taylor House' }],
-        myTasks: [{ location: 'Birmingham' }],
-        addLocations: [{
-          index: 1,
-          name: 'Birmingham',
+        myTasks: {
+          taskList: [{ location: 'Birmingham' }],
+          checked: {checked: true },
+          display: 'block',
         },
-        {
-          index: 2,
-          name: 'Bradford',
-        }],
-        removeLocations: [{
-          index: 3,
-          name: 'Tayloer House',
-        }],
+        myAvailableTasks: {
+          taskList: [{ location: 'Taylor House' }],
+          checked: {  },
+          display: 'none',
+        },
+        filter: {
+          addLocations: [{
+            index: 1,
+            name: 'Birmingham',
+          },
+          {
+            index: 2,
+            name: 'Bradford',
+          }],
+          removeLocations: [{
+            index: 3,
+            name: 'Tayloer House',
+          }],
+        },
       },
     });
   });
