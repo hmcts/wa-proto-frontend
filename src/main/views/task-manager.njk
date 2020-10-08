@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 
 {% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "macros/my-tasks.njk" import myTasks %}
 
 {% block header %}
   {{ govukHeader({
@@ -55,12 +56,7 @@
         label: {
           text: "Location"
         },
-        items: [
-          {
-            value: "Taylor House",
-            text: "Taylor House"
-          }  
-        ]
+        items: locations
       }) }} 
       </div>     
     <div class="govuk-grid-column-two-third">
@@ -70,18 +66,26 @@
         label: {
           text: "Caseworker"
         },
-        items: [
-          {
-            value: "all",
-            text: "All"
-          },  
-          {
-            value: "Raffy Bushman",
-            text: "Raffy Bushman"
-          }  
-        ]
+        items: caseWorkers
       }) }}      
     </div>    
 </div>
 
+{{ myTasks(tasks.myAvailableTasks, "myAvailableTasks") }}         
+
+{% endblock %}
+
+{% block pageScripts %}
+  {% include "includes/sortable-table-scripts.njk" %}
+  {% include "includes/detail-actions-scripts.njk" %}
+
+  <script>
+    new MOJFrontend.SortableTable({
+      table: $('table')[0]
+    });
+    new MOJFrontend.SortableTable({
+      table: $('table')[1]
+    });
+
+  </script>
 {% endblock %}
