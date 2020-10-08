@@ -1,9 +1,6 @@
 import { Response } from 'express';
 import { reassignTask , postReassignTask } from '../../../main/controllers/reassignTaskController';
 import {MyCaseWorkModel} from '../../../main/models/myCaseWorkModel';
-import  * as chai from 'chai';
-
-const expects = chai.expect;
 
 describe('re-assign controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -85,8 +82,8 @@ describe('re-assign controller', () => {
     postReassignTask(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
-    expects(req.session.myTasks[2].caseworker).deep.equals('caseworkerTwo');
-    expects(req.session.myTasks[2].location).deep.equals('New Location');
+    expect(req.session.myTasks[2].caseworker).toEqual('caseworkerTwo');
+    expect(req.session.myTasks[2].location).toEqual('New Location');
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         'myTasks': req.session.myTasks,
@@ -103,8 +100,8 @@ describe('re-assign controller', () => {
 
     postReassignTask(req, res);
     expect(res.render).toHaveBeenCalledTimes(1);
-    expects(req.session.myTasks[2].caseworker).deep.equals('New CaseWorker');
-    expects(req.session.myTasks[2].location).deep.equals('testThree');
+    expect(req.session.myTasks[2].caseworker).toEqual('New CaseWorker');
+    expect(req.session.myTasks[2].location).toEqual('testThree');
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         'myTasks': req.session.myTasks,

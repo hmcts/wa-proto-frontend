@@ -21,7 +21,7 @@ export function reassignTask(req: Request, res: Response): void {
 }
 
 export function postReassignTask(req: Request, res: Response): void {
-  debugReassignTask(`myCaseWork.claimTask controller with caseRef=${req.query.caseRef}...`);
+  debugReassignTask(`postReassignTask controller with caseRef=${req.query.caseRef}...`);
   const myTasks: Array<Task> = req.session.myTasks;
 
   const task = myTasks.filter((i: Task) => i.caseRef === req.query.caseRef);
