@@ -40,11 +40,20 @@ export function postReassignTask(req: Request, res: Response): void {
 
   res.render('task-list', {
     tasks: {
-      'myTasks': req.session.myTasks,
-      'myAvailableTasks': req.session.myFilteredAvailableTasks,
-      'addLocations': req.session.addLocations,
-      'removeLocations': req.session.removeLocations,
+      myTasks: {
+        taskList: req.session.myTasks,
+        checked: { checked: true },
+        display: 'block',
+      },
+      myAvailableTasks: {
+        taskList: req.session.myFilteredAvailableTasks,
+        checked: {},
+        display: 'none',
+      },
+      filter: {
+        addLocations: req.session.addLocations,
+        removeLocations: req.session.removeLocations,
+      },
     },
-
   });
 }
