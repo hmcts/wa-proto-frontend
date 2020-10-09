@@ -76,7 +76,7 @@
 
 {# tasks: list of tasks either myTasks or myAvailableTasks. #}
 {# tasksType: type of the tasks, either myTasks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
-{% macro myTasks(tasks, tasksType) %}
+{% macro taskManagerTasks(tasks, tasksType) %}
 
 {% set dynamicRows = [] %}
 {% for task in tasks %}
@@ -104,6 +104,9 @@
         attributes: {
           "data-sort-value": task.dateOrder
         }
+      },
+      {
+        text: task.caseworker
       },
       {
         html: setDetails(task.caseRef, tasksType)
@@ -156,6 +159,13 @@
       text: "Due",
       attributes: {
         "aria-sort": "descending"
+      },
+      classes: "my-task-header govuk-!-font-weight-regular"
+    },
+    {
+      text: "Caseworker",
+      attributes: {
+        "aria-sort": "none"
       },
       classes: "my-task-header govuk-!-font-weight-regular"
     },

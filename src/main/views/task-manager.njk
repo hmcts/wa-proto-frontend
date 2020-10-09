@@ -1,7 +1,7 @@
 {% extends "template.njk" %}
 
 {% from "govuk/components/select/macro.njk" import govukSelect %}
-{% from "macros/my-tasks.njk" import myTasks %}
+{% from "macros/task-manager-tasks.njk" import taskManagerTasks %}
 
 {% block header %}
   {{ govukHeader({
@@ -71,7 +71,7 @@
     </div>    
 </div>
 
-{{ myTasks(tasks.myAvailableTasks, "myAvailableTasks") }}         
+{{ taskManagerTasks(tasks.myAvailableTasks, "myAvailableTasks") }}         
 
 {% endblock %}
 
