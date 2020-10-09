@@ -12,7 +12,7 @@ export class Task {
     public dueDate: string,
     public dateOrder: number,
     public dateColourCode: string,
-    public caseworker: string) {
+    public caseworker?: string) {
 
     debug(`task ${caseRef} model created...`);
 
