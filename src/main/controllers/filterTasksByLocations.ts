@@ -19,13 +19,13 @@ export function filterTasksByLocations(req: Request, res: Response): void {
     tasks: {
       myTasks: {
         taskList: req.session.myTasks,
-        checked: { checked: true },
-        display: 'block',
+        checked: {  },
+        display: 'none',
       },
       myAvailableTasks: {
         taskList: req.session.myFilteredAvailableTasks,
-        checked: {},
-        display: 'none',
+        checked: { checked: true },
+        display: 'block',
       },
       filter: {
         addLocations: req.session.addLocations,

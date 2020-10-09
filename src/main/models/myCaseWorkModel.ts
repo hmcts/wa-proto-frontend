@@ -2,10 +2,9 @@ import { Task } from '../models/task';
 import { Location } from '../models/location';
 import { Caseworker } from '../models/caseworker';
 
-
 const task5 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future','Simone Harley');
 const task2 = new Task('1549-9061-9513-0004', 'Nonasky Pecki', 'EEA', 'Taylor House', 'Create case summary', '04 Dec', 4, 'future','Amanda Mc Donald');
-const task3 = new Task('1549-9083-5480-6960', 'Wauanda Jik', 'Human Rights', 'Taylor House', 'Review appellant case', '20 Dec', 2, 'future','Bisa Butler');
+const task3 = new Task('1549-9083-5480-6960', 'Wauanda Jik', 'Human Rights', 'Taylor House', 'Review appellant case', '20 Dec', 2, 'future','Amanda Mc Donald');
 const task16 = new Task('1549-3567-7832-9735', 'Gracie-May Houston', 'EEA', 'Manchester', 'Review respondent evidence', '14 Dec', 3, 'future','Amanda Mc Donald');
 const task19 = new Task('1549-2345-7845-9723', 'Ellouise Wagstaff', 'Human', 'Newport', 'Review appellant case', '7 Nov', 5, 'future','Simone Harley');
 const task20 = new Task('1549-2345-7833-9739', 'Griff Oakley', 'Human', 'Newport', 'Review appellant case', '5 Sept', 6, 'future','Bisa Butler');
@@ -36,7 +35,6 @@ export class MyCaseWorkModel {
     tasks.push(task0);
     tasks.push(task1);
     tasks.push(task2);
-    tasks.push(task3);
     tasks.push(task7);
     tasks.push(task22);
     tasks.push(task18);
@@ -46,6 +44,15 @@ export class MyCaseWorkModel {
     tasks.push(task13);
     tasks.push(task11);
     tasks.push(task12);
+    tasks.push(task17);
+    tasks.push(task18);
+    tasks.push(task19);
+    tasks.push(task20);
+    tasks.push(task16);
+    tasks.push(task9);
+    tasks.push(task8);
+    tasks.push(task21);
+    tasks.push(task14);
 
     return tasks;
   }
@@ -62,19 +69,10 @@ export class MyCaseWorkModel {
 
   static getMyTasks(): Array<Task> {
     const tasks: Array<Task> = [];
-
     tasks.push(task4);
     tasks.push(task5);
     tasks.push(task6);
-    tasks.push(task17);
-    tasks.push(task18);
-    tasks.push(task19);
-    tasks.push(task20);
-    tasks.push(task16);
-    tasks.push(task9);
-    tasks.push(task8);
-    tasks.push(task21);
-    tasks.push(task14);
+
 
     return tasks;
 
