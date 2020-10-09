@@ -11,4 +11,13 @@ router.get('/task-manager', (req, res) => {
   createTaskManagerPage(req, res);
 });
 
+router.get('/filter-task-manager', (req, res) => {
+  const location = req.query.location;
+  const caseworker = req.query.caseworker;
+
+  debug(`task-manager router with location: ${location} and caseworker: ${caseworker}`);
+
+  createTaskManagerPage(req, res);
+});
+
 module.exports = router;
