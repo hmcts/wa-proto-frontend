@@ -46,13 +46,13 @@ describe('filterTasksByLocations controller', () => {
       tasks: {
         myTasks: {
           taskList: [{}],
-          checked: {checked: true },
-          display: 'block',
+          checked: {},
+          display: 'none',
         },
         myAvailableTasks: {
           taskList: [{location: 'Birmingham'}],
-          checked: {  },
-          display: 'none',
+          checked: { checked: true  },
+          display: 'block',
         },
         filter: {
           addLocations: [
