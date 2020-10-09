@@ -10,20 +10,20 @@ export function createTaskManagerPage(req: Request, res: Response): void {
   debug('createTaskManagerPage controller...');
   taskDateOrderUtils(req);
 
-  const defaultLocation = req.session.taskManager.defaultLocation;
-  const defaultCaseworker = req.session.taskManager.defaultCaseworker;
+  const selectedLocation = req.session.taskManager.selectedLocation;
+  const selectedCaseworker = req.session.taskManager.selectedCaseworker;
 
-  let filteredManagerTasks = req.session.myAvailableTasks.filter((task: Task) => task.location === defaultLocation);
-  if (defaultCaseworker !== 'All' && defaultCaseworker !== 'Unassigned') {
-    filteredManagerTasks = filteredManagerTasks.filter((task: Task) => task.caseworker === defaultCaseworker);
+  let filteredManagerTasks = req.session.myAvailableTasks.filter((task: Task) => task.location === selectedLocation);
+  if (selectedCaseworker !== 'All' && selectedCaseworker !== 'Unassigned') {
+    filteredManagerTasks = filteredManagerTasks.filter((task: Task) => task.caseworker === selectedCaseworker);
   }
 
   res.render('task-manager', {
     tasks: {
       myAvailableTasks: filteredManagerTasks,
     },
-    locations: getLocationsForDropDownMenu(defaultLocation),
-    caseWorkers: getCaseWorkersForDropDownMenu(defaultCaseworker),
+    locations: getLocationsForDropDownMenu(selectedLocation),
+    caseWorkers: getCaseWorkersForDropDownMenu(selectedCaseworker),
   });
 }
 

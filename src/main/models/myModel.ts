@@ -181,8 +181,8 @@ export class MyModel {
 
   static getTaskManagerModel(): {} {
     return {
-      defaultLocation: 'Taylor House',
-      defaultCaseworker: 'All',
+      selectedLocation: 'Taylor House',
+      selectedCaseworker: 'All',
     };
   }
 
