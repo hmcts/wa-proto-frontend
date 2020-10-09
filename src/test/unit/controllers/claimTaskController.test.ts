@@ -40,15 +40,25 @@ describe('claimTask controller', () => {
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
-        myAvailableTasks: [{ caseRef: '4' }],
-        myTasks: [{ caseRef: '1' }, { caseRef: '2' }, { caseRef: '3' }],
-        addLocations: [
-          {
-            index: 1,
-            name: 'Birmingham',
-          },
-        ],
-        removeLocations: [],
+        myTasks: {
+          taskList: [{ caseRef: '3' }, { caseRef: '2' }, { caseRef: '1' }],
+          checked: { },
+          display: 'none',
+        },
+        myAvailableTasks: {
+          taskList: [{ caseRef: '4' }],
+          checked: { checked: true },
+          display: 'block',
+        },
+        filter: {
+          addLocations: [
+            {
+              index: 1,
+              name: 'Birmingham',
+            },
+          ],
+          removeLocations: [],
+        },
       },
     });
   });

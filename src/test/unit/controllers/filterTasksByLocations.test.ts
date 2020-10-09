@@ -44,23 +44,31 @@ describe('filterTasksByLocations controller', () => {
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
-        myAvailableTasks: [{ location: 'Birmingham' }],
-        myTasks: [{}],
-        addLocations: [
-          {
-            index: 2,
-            name: 'Bradford',
-          },
-        ],
-        removeLocations: [
-          {
-            index: 1,
-            name: 'Birmingham',
-          },
-        ],
+        myTasks: {
+          taskList: [{}],
+          checked: {checked: true },
+          display: 'block',
+        },
+        myAvailableTasks: {
+          taskList: [{ location: 'Bradford' },{location: 'Birmingham'}],
+          checked: {  },
+          display: 'none',
+        },
+        filter: {
+          addLocations: [
+            {
+              index: 2,
+              name: 'Bradford',
+            },
+          ],
+          removeLocations: [
+            {
+              index: 1,
+              name: 'Birmingham',
+            },
+          ],
+        },
       },
     });
   });
-
-
 });
