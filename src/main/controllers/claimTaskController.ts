@@ -33,7 +33,7 @@ export function claimTask(req: Request, res: Response): void {
           display: 'none',
         },
         myAvailableTasks: {
-          taskList: req.session.myAvailableTasks,
+          taskList: req.session.myFilteredAvailableTasks,
           checked: { checked: true },
           display: 'block',
         },
