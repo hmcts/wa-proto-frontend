@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Debug from 'debug';
 import { Task } from '../models/task';
 import { MyCasesPage } from '../models/myCasesPage';
+import {taskDateOrderUtils} from '../utils/order-date-utils';
 
 const claimTaskDebug = Debug('app:controller:claimTask');
 const stages = require('../data/stages');
@@ -23,13 +24,23 @@ export function claimTask(req: Request, res: Response): void {
     req.session.myTasks.push(myAvailableTasks.find(x => x.caseRef === req.query.caseRef));
     req.session.myFilteredAvailableTasks = filteredAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
     req.session.myAvailableTasks = myAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
-
+    taskDateOrderUtils(req);
     res.render('task-list', {
       tasks: {
-        'myTasks': req.session.myTasks,
-        'myAvailableTasks': req.session.myFilteredAvailableTasks,
-        'addLocations': req.session.addLocations,
-        'removeLocations': req.session.removeLocations,
+        myTasks: {
+          taskList: req.session.myTasks,
+          checked: {},
+          display: 'none',
+        },
+        myAvailableTasks: {
+          taskList: req.session.myAvailableTasks,
+          checked: { checked: true },
+          display: 'block',
+        },
+        filter: {
+          addLocations: req.session.addLocations,
+          removeLocations: req.session.removeLocations,
+        },
       },
     });
   }
