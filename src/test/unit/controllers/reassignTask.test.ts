@@ -68,10 +68,20 @@ describe('re-assign controller', () => {
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
-        'myTasks': req.session.myTasks,
-        'myAvailableTasks': req.session.myFilteredAvailableTasks,
-        'addLocations': req.session.addLocations,
-        'removeLocations': req.session.removeLocations,
+        myTasks: {
+          taskList: req.session.myTasks,
+          checked: { checked: true },
+          display: 'block',
+        },
+        myAvailableTasks: {
+          taskList: req.session.myFilteredAvailableTasks,
+          checked: {},
+          display: 'none',
+        },
+        filter: {
+          addLocations: req.session.addLocations,
+          removeLocations: req.session.removeLocations,
+        },
       },
     });
   });
@@ -86,10 +96,20 @@ describe('re-assign controller', () => {
     expect(req.session.myTasks[2].location).toEqual('New Location');
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
-        'myTasks': req.session.myTasks,
-        'myAvailableTasks': req.session.myFilteredAvailableTasks,
-        'addLocations': req.session.addLocations,
-        'removeLocations': req.session.removeLocations,
+        myTasks: {
+          taskList: req.session.myTasks,
+          checked: { checked: true },
+          display: 'block',
+        },
+        myAvailableTasks: {
+          taskList: req.session.myFilteredAvailableTasks,
+          checked: {},
+          display: 'none',
+        },
+        filter: {
+          addLocations: req.session.addLocations,
+          removeLocations: req.session.removeLocations,
+        },
       },
     });
   });
@@ -104,10 +124,20 @@ describe('re-assign controller', () => {
     expect(req.session.myTasks[2].location).toEqual('testThree');
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
-        'myTasks': req.session.myTasks,
-        'myAvailableTasks': req.session.myFilteredAvailableTasks,
-        'addLocations': req.session.addLocations,
-        'removeLocations': req.session.removeLocations,
+        myTasks: {
+          taskList: req.session.myTasks,
+          checked: { checked: true },
+          display: 'block',
+        },
+        myAvailableTasks: {
+          taskList: req.session.myFilteredAvailableTasks,
+          checked: {},
+          display: 'none',
+        },
+        filter: {
+          addLocations: req.session.addLocations,
+          removeLocations: req.session.removeLocations,
+        },
       },
     });
   });

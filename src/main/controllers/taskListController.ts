@@ -16,7 +16,7 @@ export function createTaskListPage(req: Request, res: Response): void {
         display: 'block',
       },
       myAvailableTasks: {
-        taskList: req.session.myAvailableTasks,
+        taskList: req.session.myFilteredAvailableTasks,
         checked: {},
         display: 'none',
       },

@@ -50,7 +50,7 @@ describe('filterTasksByLocations controller', () => {
           display: 'block',
         },
         myAvailableTasks: {
-          taskList: [{ location: 'Bradford' },{location: 'Birmingham'}],
+          taskList: [{location: 'Birmingham'}],
           checked: {  },
           display: 'none',
         },
