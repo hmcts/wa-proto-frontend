@@ -77,6 +77,9 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   debug(`req.session.myAvailableTasks: ${JSON.stringify(req.session.myAvailableTasks)}`);
   debug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
 
+  if (isNullOrUndefined(req.session.taskManager)) {
+    req.session.taskManager = MyModel.getTaskManagerModel();
+  }
   if (isNullOrUndefined(req.session.myAvailableTasks)) {
     req.session.myAvailableTasks = MyModel.getMyAvailableTasks();
   }
