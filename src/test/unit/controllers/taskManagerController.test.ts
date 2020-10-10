@@ -7,7 +7,9 @@ describe('taskManager controller', () => {
   let req = {} as any;
   const res = {} as Response;
 
-  const task = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
+  const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
+  const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
+  const task3 = new Task('1549-3567-7832-9735', 'Gracie-May Houston', 'EEA', 'Manchester', 'Review respondent evidence', '14 Dec', 3, 'future', 'Amanda Mc Donald');
 
   beforeEach(() => {
 
@@ -15,7 +17,14 @@ describe('taskManager controller', () => {
 
     req = {
       session: {
-        myAvailableTasks: [task],
+        myAvailableTasks: [task1, task2, task3],
+        myTasks: [],
+        myFilteredAvailableTasks: [],
+        taskManager: {
+          selectedLocation: 'Taylor House',
+          selectedCaseworker: 'All',
+        },
+        query: {},
       },
     };
 
@@ -28,7 +37,7 @@ describe('taskManager controller', () => {
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-manager', {
       tasks: {
-        myAvailableTasks: [task],
+        myAvailableTasks: [task2, task1],
       },
       locations: [
         {
@@ -60,9 +69,9 @@ describe('taskManager controller', () => {
       caseWorkers: [
         {
           text: 'All',
+          selected: true,
         },
         {
-          selected: true,
           text: 'Bisa Butler',
         },
         {
