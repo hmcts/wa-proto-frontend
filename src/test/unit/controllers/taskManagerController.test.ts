@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { createTaskManagerPage } from '../../../main/controllers/taskManagerController';
 import { Task } from '../../../main/models/task';
+import { Location } from '../../../main/models/taskManager/locations';
 
 const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
 const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
@@ -10,21 +11,24 @@ const scenarios = [
   {
     session: {
       myAvailableTasks: [task1, task2, task3],
-      myTasks: [task1],
-      myFilteredAvailableTasks: [task1],
+      myTasks: [] as Task[],
+      myFilteredAvailableTasks: [] as Task[],
       taskManager: {
         selectedLocation: 'Taylor House',
         selectedCaseworker: 'All',
       },
       query: {},
     },
+    expectedLocations: Location.getDefaultLocations(),
   },
 ];
 
-describe.each(scenarios)('taskManager controller', (session) => {
+describe.each(scenarios)('taskManager controller', (scenario) => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const req = session as any;
+  const req = {} as any;
   const res = {} as Response;
+
+  req.session = scenario.session;
   res.render = jest.fn();
 
   test('filter task manager tasks by ', () => {
@@ -36,33 +40,7 @@ describe.each(scenarios)('taskManager controller', (session) => {
       tasks: {
         myAvailableTasks: [task2, task1],
       },
-      locations: [
-        {
-          text: 'Birmingham',
-        },
-        {
-          text: 'Bradford',
-        },
-        {
-          text: 'Glasgow',
-        },
-        {
-          text: 'Hatton Cross',
-        },
-        {
-          text: 'Manchester',
-        },
-        {
-          text: 'Newcastle',
-        },
-        {
-          text: 'Newport',
-        },
-        {
-          text: 'Taylor House',
-          selected: true,
-        },
-      ],
+      locations: scenario.expectedLocations,
       caseWorkers: [
         {
           text: 'All',
