@@ -2,35 +2,32 @@ import { Response } from 'express';
 import { createTaskManagerPage } from '../../../main/controllers/taskManagerController';
 import { Task } from '../../../main/models/task';
 
-describe('taskManager controller', () => {
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  let req = {} as any;
-  const res = {} as Response;
+const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
+const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
+const task3 = new Task('1549-3567-7832-9735', 'Gracie-May Houston', 'EEA', 'Manchester', 'Review respondent evidence', '14 Dec', 3, 'future', 'Amanda Mc Donald');
 
-  const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
-  const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
-  const task3 = new Task('1549-3567-7832-9735', 'Gracie-May Houston', 'EEA', 'Manchester', 'Review respondent evidence', '14 Dec', 3, 'future', 'Amanda Mc Donald');
-
-  beforeEach(() => {
-
-    res.render = jest.fn();
-
-    req = {
-      session: {
-        myAvailableTasks: [task1, task2, task3],
-        myTasks: [],
-        myFilteredAvailableTasks: [],
-        taskManager: {
-          selectedLocation: 'Taylor House',
-          selectedCaseworker: 'All',
-        },
-        query: {},
+const scenarios = [
+  {
+    session: {
+      myAvailableTasks: [task1, task2, task3],
+      myTasks: [task1],
+      myFilteredAvailableTasks: [task1],
+      taskManager: {
+        selectedLocation: 'Taylor House',
+        selectedCaseworker: 'All',
       },
-    };
+      query: {},
+    },
+  },
+];
 
-  });
+describe.each(scenarios)('taskManager controller', (session) => {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const req = session as any;
+  const res = {} as Response;
+  res.render = jest.fn();
 
-  test('createTaskManagerPage method', () => {
+  test('filter task manager tasks by ', () => {
 
     createTaskManagerPage(req, res);
 
