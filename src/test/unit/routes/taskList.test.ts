@@ -2,10 +2,10 @@ import request from 'supertest';
 import { app } from '../../../main/app';
 import * as claimTaskController from '../../../main/controllers/claimTaskController';
 import * as unClaimTaskController from '../../../main/controllers/unClaimTaskController';
-import * as filterController from '../../../main/controllers/filterTasksByLocations';
+import * as filterController from '../../../main/controllers/filterTasksByLocationsController';
 import * as taskListController from '../../../main/controllers/taskListController';
 import * as reassignTaskController from '../../../main/controllers/reassignTaskController';
-import * as completeTaskFromMyTasks from '../../../main/controllers/completeTaskFromMyTasks';
+import * as completeTaskFromMyTasks from '../../../main/controllers/completeTaskFromMyTasksController';
 
 describe('task-list page routers', () => {
 

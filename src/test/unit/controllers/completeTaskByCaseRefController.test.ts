@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { completeTask } from '../../../main/controllers/completeTaskFromMyTasks';
+import { completeTask } from '../../../main/controllers/completeTaskFromMyTasksController';
 
 const stages = require('../../../main/data/stages');
 

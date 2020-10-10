@@ -3,8 +3,8 @@ import Debug from 'debug';
 import { createTaskListPage } from '../controllers/taskListController';
 import { claimTask } from '../controllers/claimTaskController';
 import { unClaimTask } from '../controllers/unClaimTaskController';
-import { filterTasksByLocations } from '../controllers/filterTasksByLocations';
-import { completeTask } from '../controllers/completeTaskFromMyTasks';
+import { filterTasksByLocations } from '../controllers/filterTasksByLocationsController';
+import { completeTask } from '../controllers/completeTaskFromMyTasksController';
 import {postReassignTask, reassignTask} from '../controllers/reassignTaskController';
 
 const debugFilter = Debug('app:route:filter');
