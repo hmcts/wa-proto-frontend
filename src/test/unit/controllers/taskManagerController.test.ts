@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { createTaskManagerPage } from '../../../main/controllers/taskManagerController';
 import { Task } from '../../../main/models/task';
-import { Location } from '../../../main/models/taskManager/locations';
+import { TaskManagerLocation } from '../../../main/models/taskManager/taskManagerLocation';
 
 const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
 const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
@@ -19,7 +19,7 @@ const scenarios = [
       },
       query: {},
     },
-    expectedLocations: Location.getDefaultLocations(),
+    expectedLocations: TaskManagerLocation.getDefaultLocations(),
   },
 ];
 
@@ -31,7 +31,8 @@ describe.each(scenarios)('taskManager controller', (scenario) => {
   req.session = scenario.session;
   res.render = jest.fn();
 
-  test('filter task manager tasks by ', () => {
+  test(`filter task manager tasks by location: ${scenario.session.taskManager.selectedLocation} 
+    and caseworker: ${scenario.session.taskManager.selectedCaseworker}`, () => {
 
     createTaskManagerPage(req, res);
 
