@@ -31,6 +31,9 @@
  
  document.querySelectorAll('details>summary[tasks-type=myManagerTasks]').forEach((detail, index) => {  
    detail.addEventListener('click', () => {
-     hideShowDetailForGivenId('my-task-manager-action-' + index);
+     hideShowDetailForGivenId('my-task-manager-action0-' + index);
+   });
+   detail.addEventListener('click', () => {
+     hideShowDetailForGivenId('my-task-manager-action1-' + index);
    });
  });

@@ -24,8 +24,8 @@
     }}
   {% endif %}
 
-  <div id="my-task-manager-action-{{index}}" class="wa-action-task action-button-0">
-    <a href="/unclaim-task?caseRef={{caseRef}}">Manually complete</a>
+  <div id="my-task-manager-action0-{{index}}" class="wa-action-task">
+    <a href="">Manually complete</a>
   </div>
   
 {% endmacro %}
@@ -34,7 +34,7 @@
   
   {{ rowValue }}  
   
-  <div id="my-task-manager-action-{{index}}" class="wa-action-task action-button-1">
+  <div id="my-task-manager-action1-{{index}}" class="wa-action-task">
     <a href="/reassign-task?caseRef={{caseRef}}&tasksType=myManagerTasks">Reassign task</a>
   </div>  
 
