@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
-import { getLocationsForDropDownMenu, getCaseWorkersForDropDownMenu } from '../services/taskManagerService';
 import { taskDateOrderUtils } from '../utils/order-date-utils';
 import { Task } from '../models/task';
 import _ from 'lodash';
+import { TaskManagerModel } from '../models/taskManager/taskManagerModel';
 
 const debug = Debug('app:controller:taskManagerController');
 
@@ -28,8 +28,8 @@ export function createTaskManagerPage(req: Request, res: Response): void {
     tasks: {
       myAvailableTasks: filteredManagerTasks,
     },
-    locations: getLocationsForDropDownMenu(selectedLocation),
-    caseWorkers: getCaseWorkersForDropDownMenu(selectedCaseworker),
+    locations: TaskManagerModel.getLocations(selectedLocation),
+    caseWorkers: TaskManagerModel.getCaseworkers(selectedCaseworker),
   });
 }
 

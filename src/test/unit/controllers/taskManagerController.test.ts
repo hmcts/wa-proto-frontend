@@ -21,8 +21,8 @@ const scenarios = [
       },
       query: {},
     },
-    expectedLocations: TaskManagerModel.getDefaultLocations(taylorHouse),
-    expectedCaseworkers: TaskManagerModel.getDefaultCaseworkers(),
+    expectedLocations: TaskManagerModel.getLocations(taylorHouse),
+    expectedCaseworkers: TaskManagerModel.getCaseworkers(),
   },
 ];
 
