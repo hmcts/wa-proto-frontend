@@ -1,5 +1,6 @@
 import Debug from 'debug';
 import { TaskManagerLocation } from './taskManagerLocation';
+import { TaskManagerCaseworker } from './taskManagerCaseWorker';
 
 const debug = Debug('app:model:taskManagerModel');
 
@@ -24,6 +25,16 @@ export class TaskManagerModel {
       selectedLocation: 'Taylor House',
       selectedCaseworker: 'All',
     };
+  }
+
+  static getDefaultCaseworkers(): Array<TaskManagerCaseworker> {
+    return [
+      new TaskManagerCaseworker('All', true),
+      new TaskManagerCaseworker('Bisa Butler'),
+      new TaskManagerCaseworker('Amanda Mc Donald'),
+      new TaskManagerCaseworker('Simone Harley'),
+      new TaskManagerCaseworker('Unassigned'),
+    ];
   }
 
 

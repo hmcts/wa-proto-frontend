@@ -20,6 +20,7 @@ const scenarios = [
       query: {},
     },
     expectedLocations: TaskManagerModel.getDefaultLocations(),
+    expectedCaseworkers: TaskManagerModel.getDefaultCaseworkers(),
   },
 ];
 
@@ -42,24 +43,7 @@ describe.each(scenarios)('taskManager controller', (scenario) => {
         myAvailableTasks: [task2, task1],
       },
       locations: scenario.expectedLocations,
-      caseWorkers: [
-        {
-          text: 'All',
-          selected: true,
-        },
-        {
-          text: 'Bisa Butler',
-        },
-        {
-          text: 'Amanda Mc Donald',
-        },
-        {
-          text: 'Simone Harley',
-        },
-        {
-          text: 'Unassigned',
-        },
-      ],
+      caseWorkers: scenario.expectedCaseworkers,
     });
   });
 
