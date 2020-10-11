@@ -1,23 +1,21 @@
 import Debug from 'debug';
 import { TaskManagerLocation } from './taskManagerLocation';
 import { TaskManagerCaseworker } from './taskManagerCaseWorker';
+import { MyModel } from '../myModel';
 
 const debug = Debug('app:model:taskManagerModel');
 
 export class TaskManagerModel {
 
-  static getDefaultLocations(): Array<TaskManagerLocation> {
+  static getDefaultLocations(selectedOption: string): Array<TaskManagerLocation> {
     debug('created Task Manage Location model');
-    return [
-      new TaskManagerLocation('Birmingham'),
-      new TaskManagerLocation('Bradford'),
-      new TaskManagerLocation('Glasgow'),
-      new TaskManagerLocation('Hatton Cross'),
-      new TaskManagerLocation('Manchester'),
-      new TaskManagerLocation('Newcastle'),
-      new TaskManagerLocation('Newport'),
-      new TaskManagerLocation('Taylor House', true),
-    ];
+    return MyModel.getAllLocations().map(location => {
+      if (location.name === selectedOption) {
+        return new TaskManagerLocation(location.name, true);
+      } else {
+        return new TaskManagerLocation(location.name);
+      }
+    });
   }
 
   static getDefaultSelectedOptions(): {} {
