@@ -4,9 +4,8 @@ import { Task } from '../../../main/models/task';
 import { TaskManagerModel } from '../../../main/models/taskManager/taskManagerModel';
 
 
-const taylorHouse = 'Taylor House';
-const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', taylorHouse, 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
-const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', taylorHouse, 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
+const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
+const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
 const task3 = new Task('1549-3567-7832-9735', 'Gracie-May Houston', 'EEA', 'Manchester', 'Review respondent evidence', '14 Dec', 3, 'future', 'Amanda Mc Donald');
 
 const scenarios = [
@@ -16,13 +15,13 @@ const scenarios = [
       myTasks: [] as Task[],
       myFilteredAvailableTasks: [] as Task[],
       taskManager: {
-        selectedLocation: taylorHouse,
+        selectedLocation: 'Taylor House',
         selectedCaseworker: 'All',
       },
       query: {},
     },
-    expectedLocations: TaskManagerModel.getLocations(taylorHouse),
-    expectedCaseworkers: TaskManagerModel.getCaseworkers(),
+    expectedLocations: TaskManagerModel.getLocations('Taylor House'),
+    expectedCaseworkers: TaskManagerModel.getCaseworkers('All'),
   },
 ];
 
