@@ -8,6 +8,7 @@ import favicon from 'serve-favicon';
 import { HTTPError } from 'HttpError';
 import { Nunjucks } from './modules/nunjucks';
 import { MyModel } from './models/myModel';
+import { TaskManagerModel } from './models/taskManager/taskManagerModel';
 import Debug from 'debug';
 import { isNullOrUndefined } from 'util';
 
@@ -78,7 +79,7 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   debug(`req.session.myTasks: ${JSON.stringify(req.session.myTasks)}`);
 
   if (isNullOrUndefined(req.session.taskManager)) {
-    req.session.taskManager = MyModel.getTaskManagerModel();
+    req.session.taskManager = TaskManagerModel.getDefaultSelectedOptions();
   }
   if (isNullOrUndefined(req.session.myAvailableTasks)) {
     req.session.myAvailableTasks = MyModel.getMyAvailableTasks();

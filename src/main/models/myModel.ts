@@ -177,11 +177,4 @@ export class MyModel {
 
   }
 
-  static getTaskManagerModel(): {} {
-    return {
-      selectedLocation: 'Taylor House',
-      selectedCaseworker: 'All',
-    };
-  }
-
 }

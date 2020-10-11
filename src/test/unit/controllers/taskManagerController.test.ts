@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { createTaskManagerPage } from '../../../main/controllers/taskManagerController';
 import { Task } from '../../../main/models/task';
-import { TaskManagerLocation } from '../../../main/models/taskManager/taskManagerLocation';
+import { TaskManagerModel } from '../../../main/models/taskManager/taskManagerModel';
 
 const task1 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
 const task2 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
@@ -19,7 +19,7 @@ const scenarios = [
       },
       query: {},
     },
-    expectedLocations: TaskManagerLocation.getDefaultLocations(),
+    expectedLocations: TaskManagerModel.getDefaultLocations(),
   },
 ];
 
