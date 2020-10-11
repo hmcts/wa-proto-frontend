@@ -24,12 +24,15 @@ export function createTaskManagerPage(req: Request, res: Response): void {
     filteredManagerTasks = filteredManagerTasks.filter((task: Task) => task.caseworker === selectedCaseworker);
   }
 
+  const locations = TaskManagerModel.getLocations(selectedLocation);
+  const caseworkers = TaskManagerModel.getCaseworkers(selectedCaseworker);
+  
   res.render('task-manager', {
     tasks: {
       myAvailableTasks: filteredManagerTasks,
     },
-    locations: TaskManagerModel.getLocations(selectedLocation),
-    caseWorkers: TaskManagerModel.getCaseworkers(selectedCaseworker),
+    locations: locations,
+    caseWorkers: caseworkers,
   });
 }
 
