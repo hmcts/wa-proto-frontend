@@ -5,7 +5,7 @@ import { claimTask } from '../controllers/claimTaskController';
 import { unClaimTask } from '../controllers/unClaimTaskController';
 import { filterTasksByLocations } from '../controllers/filterTasksByLocationsController';
 import { completeTask } from '../controllers/completeTaskFromMyTasksController';
-import { postReassignTask, reassignTask } from '../controllers/reassignTaskController';
+import { postReassignTask, reassignTask, postReassignTaskAndGoToTaskManager } from '../controllers/reassignTaskController';
 
 const debugFilter = Debug('app:route:filter');
 const debugClaimTask = Debug('app:route:claimTask');
@@ -49,7 +49,7 @@ router.get('/reassign-task', (req, res) => {
 router.post('/reassign-task', (req, res) => {
   debugReassignTask(`reassign-task post router with caseRef=${req.query.caseRef}...`);
   if (req.query.tasksType === 'myManagerTasks') {
-    // postReassignTaskAndGoToTaskManager(req, res);
+    postReassignTaskAndGoToTaskManager(req, res);
   } else {
     postReassignTask(req, res);
   }

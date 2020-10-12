@@ -3,6 +3,7 @@ import Debug from 'debug';
 import { Task } from '../models/task';
 import { MyModel } from '../models/myModel';
 import { taskDateOrderUtils } from '../utils/order-date-utils';
+import { createTaskManagerPage } from '../controllers/taskManagerController';
 
 const debugReassignTask = Debug('app:controller:reassignTask');
 
@@ -56,4 +57,22 @@ export function postReassignTask(req: Request, res: Response): void {
       },
     },
   });
+}
+export function postReassignTaskAndGoToTaskManager(req: Request, res: Response): void {
+  debugReassignTask(`postReassignTaskAndGoToTaskManager controller with caseRef=${req.query.caseRef}...`);
+  const { locations, caseworkers } = req.body;
+
+  if (caseworkers && locations) {
+    req.session.myAvailableTasks = req.session.myAvailableTasks.map((task: Task) => {
+      if (task.caseRef === req.query.caseRef) {
+        task.caseworker = caseworkers;
+        task.location = locations;
+        return task;
+      } else {
+        return task;
+      }
+    });
+  }
+  req.query = {};
+  createTaskManagerPage(req, res);
 }
