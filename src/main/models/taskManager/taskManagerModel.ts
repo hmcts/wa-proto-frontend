@@ -8,13 +8,21 @@ export class TaskManagerModel {
 
   static getLocations(selectedOption: string): Array<TaskManagerLocation> {
     debug('created Task Manage Location model');
-    return MyModel.getAllLocations().map(location => {
-      if (location.name === selectedOption) {
-        return new TaskManagerLocation(location.name, true);
+    const locations = MyModel.getAllLocations().map(location => new TaskManagerLocation(location.name));
+    const addAllLocations = [
+      {
+        text: 'All',
+      },
+      ...locations,
+    ];
+    const addSelectedLocation = addAllLocations.map((location) => {
+      if (location.text === selectedOption) {
+        return new TaskManagerLocation(location.text, true);
       } else {
-        return new TaskManagerLocation(location.name);
+        return new TaskManagerLocation(location.text);
       }
     });
+    return addSelectedLocation;
   }
 
   static getDefaultSelectedOptions(): {} {

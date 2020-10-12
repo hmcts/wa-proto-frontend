@@ -20,7 +20,7 @@ const scenarios = [
     query: {},
     expectedLocations: TaskManagerModel.getLocations('Taylor House'),
     expectedCaseworkers: TaskManagerModel.getCaseworkers('All'),
-    expectedFilteredTasks: MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House'),
+    expectedFilteredTasks: MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All'),
   },
   {
     session: {
@@ -39,6 +39,24 @@ const scenarios = [
     expectedLocations: TaskManagerModel.getLocations('Birmingham'),
     expectedCaseworkers: TaskManagerModel.getCaseworkers('Bisa Butler'),
     expectedFilteredTasks: MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Birmingham', 'Bisa Butler'),
+  },
+  {
+    session: {
+      myAvailableTasks: MyModel.getMyAvailableTasks(),
+      myTasks: [] as Task[],
+      myFilteredAvailableTasks: [] as Task[],
+      taskManager: {
+        selectedLocation: 'Taylor House',
+        selectedCaseworker: 'All',
+      },
+    },
+    query: {
+      location: 'All',
+      caseworker: 'All',
+    },
+    expectedLocations: TaskManagerModel.getLocations('All'),
+    expectedCaseworkers: TaskManagerModel.getCaseworkers('All'),
+    expectedFilteredTasks: MyModel.getMyAvailableTasks(),
   },
 ];
 
@@ -72,7 +90,7 @@ describe.each(scenarios)('taskManager controller', (scenario) => {
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-manager', {
       tasks: {
-        myAvailableTasks: scenario.expectedFilteredTasks,
+        myAvailableTasks: expect.arrayContaining(scenario.expectedFilteredTasks),
       },
       locations: scenario.expectedLocations,
       caseWorkers: scenario.expectedCaseworkers,
