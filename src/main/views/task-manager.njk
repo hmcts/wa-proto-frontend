@@ -1,0 +1,107 @@
+{% extends "template.njk" %}
+
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "macros/task-manager-tasks.njk" import taskManagerTasks %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Manage cases",
+    serviceUrl: "/",
+    navigation: [
+      {
+        href: "/task-list",
+        text: "Task list"
+      },
+      {
+        href: "/task-manager",
+        text: "Task manager",
+        active: true
+      },
+      {
+        href: "/",
+        text: "Case list"
+      },
+      {
+        href: "#",
+        text: "Create case"
+      },
+      {
+        href: "/",
+        text: "Sign Out",
+        attributes: {
+          "id": "sign-out-button"
+          }
+      }  
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">Task manager</h1>
+      <span class="govuk-hint">
+        View tasks by location and caseworker
+      </span>
+    </div>    
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      {{ govukSelect({
+        id: "location",
+        name: "location",
+        label: {
+          text: "Location"
+        },
+        items: locations
+      }) }} 
+      </div>     
+    <div class="govuk-grid-column-two-third">
+      {{ govukSelect({
+        id: "caseworker",
+        name: "caseworker",
+        label: {
+          text: "Caseworker"
+        },
+        items: caseWorkers
+      }) }}      
+    </div>    
+</div>
+
+{{ taskManagerTasks(tasks.myAvailableTasks, "myManagerTasks") }}         
+
+{% endblock %}
+
+{% block pageScripts %}
+  {% include "includes/sortable-table-scripts.njk" %}
+  {% include "includes/detail-actions-scripts.njk" %}
+
+  <script>
+    new MOJFrontend.SortableTable({
+      table: $('table')[0]
+    });
+    new MOJFrontend.SortableTable({
+      table: $('table')[1]
+    });
+
+    document.querySelectorAll('select').forEach((select) => {
+      select.addEventListener('change', () => {
+
+        const locationSelect = document.querySelector('#location');
+        const location = locationSelect.options[locationSelect.selectedIndex].text;
+
+        const caseworkerSelect = document.querySelector('#caseworker');
+        const caseworker = caseworkerSelect.options[caseworkerSelect.selectedIndex].text
+
+        window.location.href= `/filter-task-manager?location=${location}&caseworker=${caseworker}`;
+
+      });
+      
+    });
+
+
+  </script>
+{% endblock %}

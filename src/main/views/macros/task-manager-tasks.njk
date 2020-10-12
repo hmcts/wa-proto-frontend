@@ -24,39 +24,21 @@
     }}
   {% endif %}
 
-  {% if tasksType === 'myTasks' %}
-    <div id="my-task-action-{{index}}" class="wa-action-task action-button-0">
-      <a href="/unclaim-task?caseRef={{caseRef}}">Release this task</a>
-    </div>
-  {% else %}
-    <div id="my-available-task-action-{{index}}" class="wa-action-task action-button-0">
-      <a href="/claim-task?caseRef={{caseRef}}&complete=true">Assign to me and go to case</a>
-    </div>
-  {% endif %}
+  <div id="my-task-manager-action0-{{index}}" class="wa-action-task">
+    <a href="/complete-task/{{caseRef}}?tasksType=myManagerTasks">Manually complete</a>
+  </div>
+  
 {% endmacro %}
 
 {% macro addActionToTask(rowValue, taskId, tasksType, index, caseRef) %}
-  {{ rowValue }}
-  {% if tasksType === 'myAvailableTasks' %}
-    <div id="my-available-{{taskId}}-action-{{index}}" class="wa-action-task action-button-1">
-      <a href="/claim-task?caseRef={{caseRef}}&complete=false">Assign to me</a>
-    </div>
-  {% elseif tasksType === 'myTasks' %}
-    <div id="my-task-action2-{{index}}" class="wa-action-task action-button-1">
-      <a href="/reassign-task?caseRef={{caseRef}}">Reassign task</a>
-    </div>
-  {% endif %}
-{% endmacro %}
+  
+  {{ rowValue }}  
+  
+  <div id="my-task-manager-action1-{{index}}" class="wa-action-task">
+    <a href="/reassign-task?caseRef={{caseRef}}&tasksType=myManagerTasks">Reassign task</a>
+  </div>  
 
-{% macro addActionToLocation(rowValue, taskId, actionName, tasksType, index, caseRef) %}
-  {{ rowValue }}
-  {% if tasksType === 'myAvailableTasks' %}
-    <div id="my-available-{{taskId}}-action-{{index}}" class="wa-action-task action-button-2">
-      <a href="#">{{ actionName }}</a>
-    </div>
-  {% endif %}
 {% endmacro %}
-
 
 {% macro setDetails(caseRef, tasksType) %}
   <details class="govuk-details">
@@ -66,24 +48,14 @@
   </details>
 {% endmacro %}
 
-{% macro setLink(caseRef,taskT) %}
-  {% if taskT === "myTasks" %}
-  <a href="/complete-task/{{ caseRef }}">{{ caseRef }}</a>
-  {% elseif taskT === "myAvailableTasks" %}
-  <div>{{ caseRef }}</div>
-  {% endif %}
-{% endmacro %}
-
-{# tasks: list of tasks either myTasks or myAvailableTasks. #}
-{# tasksType: type of the tasks, either myTasks or myAvailableTasks. It's used to set the claim/unclaim component correctly. #}
-{% macro myTasks(tasks, tasksType) %}
+{% macro taskManagerTasks(tasks, tasksType) %}
 
 {% set dynamicRows = [] %}
 {% for task in tasks %}
 
     {% set row = [
       {
-        text: setLink(task.caseRef,tasksType)
+        text: task.caseRef
       },
       {
         text: task.caseName,
@@ -93,7 +65,7 @@
         text: task.caseCategory
       },
       {
-        html: addActionToLocation(task.location, "task3", "Go to case", tasksType, loop.index0, task.caseRef)
+        html: task.location
       },
       {
         html: addActionToTask(task.taskName, "task2", tasksType, loop.index0, task.caseRef)
@@ -104,6 +76,9 @@
         attributes: {
           "data-sort-value": task.dateOrder
         }
+      },
+      {
+        text: task.caseworker
       },
       {
         html: setDetails(task.caseRef, tasksType)
@@ -158,6 +133,13 @@
         "aria-sort": "descending"
       },
       classes: "my-task-header govuk-!-font-weight-bold"
+    },
+    {
+      text: "Caseworker",
+      attributes: {
+        "aria-sort": "none"
+      },
+      classes: "my-task-header govuk-!-font-weight-regular"
     },
     {
       classes: "my-task-header"

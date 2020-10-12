@@ -42,7 +42,7 @@
         active: true
       },
       {
-        href: "#",
+        href: "/task-manager",
         text: "Task manager"
       },
       {
@@ -66,9 +66,21 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-l">Re-assign a Task</h1>
-  <span class="govuk-caption-m">Reassign a task to another tribunal caseworker</span>
-  <h1 class="govuk-heading-m">Case Summary</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">Re-assign a Task</h1>
+      <span class="govuk-hint">
+        Reassign a task to another tribunal caseworker
+      </span>
+    </div>    
+  </div>
+  
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h3 class="govuk-heading-m">Case Summary</h3>
+    </div>    
+  </div>
+  
   {{ govukTable({
     firstCellIsHeader: true,
     head: [
@@ -127,7 +139,7 @@
     ]
   }) }}
 
-  <form method="post" type="submit" action='/reassign-task?caseRef={{ task[0].caseRef }}'>
+  <form method="post" type="submit" action='/reassign-task?caseRef={{ task[0].caseRef }}&tasksType={{ tasksType }}'>
   <h1 class="govuk-heading-m">Find a colleague</h1>
   {{ generateDropDown(locations,'location', 'locations', 'Location') }}
   {{ generateDropDown(caseworker,'caseworker', 'caseworkers', 'Caseworker') }}

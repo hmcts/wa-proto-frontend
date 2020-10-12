@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createMyCasesPage } from '../../../main/controllers/myCases';
+import { createMyCasesPage } from '../../../main/controllers/myCasesController';
 
 const stages = require('../../../main/data/stages');
 

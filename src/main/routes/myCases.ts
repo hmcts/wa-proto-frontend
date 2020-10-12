@@ -1,6 +1,6 @@
 import * as express from 'express';
 import Debug from 'debug';
-import { createMyCasesPage } from '../controllers/myCases';
+import { createMyCasesPage } from '../controllers/myCasesController';
 
 const debug = Debug('app:route:myCases');
 
