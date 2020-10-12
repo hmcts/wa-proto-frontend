@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
 import { Task } from '../models/task';
-import { MyCaseWorkModel } from '../models/myCaseWorkModel';
+import { MyModel } from '../models/myModel';
 
 const debugReassignTask = Debug('app:controller:reassignTask');
 
@@ -9,8 +9,8 @@ export function reassignTask(req: Request, res: Response): void {
   debugReassignTask(`reassignTask controller with caseRef=${req.query.caseRef}...`);
   const myTasks: Array<Task> = req.session.myTasks;
   const task = myTasks.filter( i => i.caseRef === req.query.caseRef);
-  const locations = MyCaseWorkModel.getAllLocations();
-  const caseworker = MyCaseWorkModel.getAllCaseworker();
+  const locations = MyModel.getAllLocations();
+  const caseworker = MyModel.getAllCaseworker();
 
   res.render('reassign-task', {
     'task': task,
@@ -24,19 +24,14 @@ export function postReassignTask(req: Request, res: Response): void {
   debugReassignTask(`postReassignTask controller with caseRef=${req.query.caseRef}...`);
   const myTasks: Array<Task> = req.session.myTasks;
 
-  const task = myTasks.filter((i: Task) => i.caseRef === req.query.caseRef);
   const {locations, caseworkers} = req.body;
   const NewList = myTasks.filter((i: Task) => i.caseRef !== req.query.caseRef);
 
-  if (caseworkers) {
-    task[0].caseworker = caseworkers;
+  if(!caseworkers && !locations) {
+    req.session.myTasks = myTasks;
+  } else {
+    req.session.myTasks = NewList;
   }
-  if (locations) {
-    task[0].location = locations;
-  }
-  NewList.push(task[0]);
-  req.session.myTasks = NewList;
-
 
   res.render('task-list', {
     tasks: {

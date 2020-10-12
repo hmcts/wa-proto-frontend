@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Debug from 'debug';
-import { MyCaseWorkModel as model } from '../models/myCaseWorkModel';
-import {taskDateOrderUtils} from '../utils/order-date-utils';
+import { MyModel as model } from '../models/myModel';
+import { taskDateOrderUtils } from '../utils/order-date-utils';
 
 const filterDebug = Debug('app:controller:filterTasksByLocations');
 
