@@ -7,10 +7,8 @@ import { TaskManagerModel } from '../models/taskManager/taskManagerModel';
 
 const debug = Debug('app:controller:taskManagerController');
 
-export function createTaskManagerPage(req: Request, res: Response): void {
-  debug(`createTaskManagerPage controller with query: ${JSON.stringify(req.query)}`);
-  taskDateOrderUtils(req);
 
+function buildTaskManagerModel(req: Request): {} {
   if (!_.isEmpty(req.query)) {
     req.session.taskManager.selectedLocation = req.query.location;
     req.session.taskManager.selectedCaseworker = req.query.caseworker;
@@ -30,6 +28,14 @@ export function createTaskManagerPage(req: Request, res: Response): void {
 
   const locations = TaskManagerModel.getLocations(selectedLocation);
   const caseworkers = TaskManagerModel.getCaseworkers(selectedCaseworker);
+  return { filteredManagerTasks, locations, caseworkers };
+}
+
+export function createTaskManagerPage(req: Request, res: Response): void {
+  debug(`createTaskManagerPage controller with query: ${JSON.stringify(req.query)}`);
+  taskDateOrderUtils(req);
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const { filteredManagerTasks, locations, caseworkers }: any = buildTaskManagerModel(req);
 
   res.render('task-manager', {
     tasks: {
@@ -39,5 +45,3 @@ export function createTaskManagerPage(req: Request, res: Response): void {
     caseWorkers: caseworkers,
   });
 }
-
-
