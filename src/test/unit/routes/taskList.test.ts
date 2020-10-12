@@ -48,7 +48,7 @@ describe('task-list page routers', () => {
   test('get /complete-task/caseRef router', async () => {
     const mock = jest.spyOn(completeTaskFromMyTasks, 'completeTask');
     const caseRef = 'dkfkgf';
-    const response = await request(app).get('/complete-task/'+caseRef);
+    const response = await request(app).get('/complete-task/' + caseRef);
 
     expect(response.status).toBe(200);
     expect(mock).toHaveBeenCalledTimes(1);
@@ -63,10 +63,20 @@ describe('task-list page routers', () => {
     expect(mock).toHaveBeenCalledTimes(1);
   });
 
-  test('post /reassign-task router', async () => {
-    const mock = jest.spyOn(reassignTaskController, 'postReassignTask');
+  const scenarios = [
+    {
+      path: '/reassign-task?caseRef=34',
+      mock: jest.spyOn(reassignTaskController, 'postReassignTask'),
+    },
+    {
+      path: '/reassign-task?caseRef=34&tasksType=myManagerTasks',
+      mock: jest.spyOn(reassignTaskController, 'postReassignTaskAndGoToTaskManager'),
+    },
+  ];
+  test.each(scenarios)('post /reassign-task router', async (scenario) => {
+    const mock = scenario.mock;
 
-    const response = await request(app).post('/reassign-task?caseRef=34');
+    const response = await request(app).post(scenario.path);
 
     expect(response.status).toBe(200);
     expect(mock).toHaveBeenCalledTimes(1);
