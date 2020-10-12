@@ -7,26 +7,40 @@ const debugReassignTask = Debug('app:controller:reassignTask');
 
 export function reassignTask(req: Request, res: Response): void {
   debugReassignTask(`reassignTask controller with caseRef=${req.query.caseRef}...`);
-  const myTasks: Array<Task> = req.session.myTasks;
-  const task = myTasks.filter( i => i.caseRef === req.query.caseRef);
   const locations = MyModel.getAllLocations();
   const caseworker = MyModel.getAllCaseworker();
+  let taskList: Array<Task> = null;
+
+  if (req.query.tasksType === 'myManagerTasks') {
+    taskList = req.session.myAvailableTasks;
+  } else {
+    taskList = req.session.myTasks;
+  }
+
+  const task = taskList.filter(i => i.caseRef === req.query.caseRef);
 
   res.render('reassign-task', {
     'task': task,
     'locations': locations,
     'caseworker': caseworker,
+    'tasksType': req.query.tasksType,
   });
 
 }
 
 export function postReassignTask(req: Request, res: Response): void {
   debugReassignTask(`postReassignTask controller with caseRef=${req.query.caseRef}...`);
-  const myTasks: Array<Task> = req.session.myTasks;
+  let taskList: Array<Task> = null;
 
-  const task = myTasks.filter((i: Task) => i.caseRef === req.query.caseRef);
-  const {locations, caseworkers} = req.body;
-  const NewList = myTasks.filter((i: Task) => i.caseRef !== req.query.caseRef);
+  if (req.query.tasksType === 'myManagerTasks') {
+    taskList = req.session.myAvailableTasks;
+  } else {
+    taskList = req.session.myTasks;
+  }
+
+  const task = taskList.filter((i: Task) => i.caseRef === req.query.caseRef);
+  const { locations, caseworkers } = req.body;
+  const newList = taskList.filter((i: Task) => i.caseRef !== req.query.caseRef);
 
   if (caseworkers) {
     task[0].caseworker = caseworkers;
@@ -34,9 +48,12 @@ export function postReassignTask(req: Request, res: Response): void {
   if (locations) {
     task[0].location = locations;
   }
-  NewList.push(task[0]);
-  req.session.myTasks = NewList;
-
+  newList.push(task[0]);
+  if (req.query.tasksType === 'myManagerTasks') {
+    req.session.myAvailableTasks = newList;
+  } else {
+    req.session.myTasks = newList;
+  }
 
   res.render('task-list', {
     tasks: {

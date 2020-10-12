@@ -25,6 +25,7 @@ const task12 = new Task('1549-2245-2345-9745', 'Phebe Tanner', 'Revocation', 'Gl
 const task13 = new Task('1549-6534-7532-9771', 'Johnny Hickman', 'EEA', 'Hatton Cross', 'Review appellant case', '+5 days', 10, 'past', 'Simone Harley');
 const task22 = new Task('1549-2345-7834-9756', 'Max Carter', 'Protection', 'Newport', 'Review appellant case', '+3 days', 8, 'past', 'Bisa Butler');
 const task18 = new Task('1549-2345-7888-9721', 'Penny Palacios', 'Protection', 'Newcastle', 'Review appellant case', '+4 days', 9, 'past', 'Amanda Mc Donald');
+const task23 = new Task('1234-2345-7888-9721', 'Jack Bishop', 'Protection', 'Newcastle', 'Review appellant case', '+4 days', 9, 'past', 'Unassigned');
 
 
 export class MyModel {
@@ -56,7 +57,6 @@ export class MyModel {
     tasks.push(task11);
     tasks.push(task12);
     tasks.push(task17);
-    tasks.push(task18);
     tasks.push(task19);
     tasks.push(task20);
     tasks.push(task16);
@@ -64,6 +64,7 @@ export class MyModel {
     tasks.push(task8);
     tasks.push(task21);
     tasks.push(task14);
+    tasks.push(task23);
 
     return tasks;
   }

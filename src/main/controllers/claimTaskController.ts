@@ -13,7 +13,7 @@ export function claimTask(req: Request, res: Response): void {
   const myAvailableTasks: Array<Task> = req.session.myAvailableTasks;
   const complete = req.query.complete;
   if (complete === 'true') {
-    req.session.myTasks = req.session.myTasks.filter((task: Task) => task.caseRef !== req.query.caseRef);
+    req.session.myTasks = req.session.myTasks.filter((task: Task) => task.caseRef !== req.query.caseRef); //TODO: is this line really needed? Review it, please. 
     req.session.myFilteredAvailableTasks = filteredAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
     req.session.myAvailableTasks = myAvailableTasks.filter(x => x.caseRef !== req.query.caseRef);
 

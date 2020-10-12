@@ -6,8 +6,7 @@
    } else {
      detail.style.display = "none";
    }
- }
-
+ };
 
  document.querySelectorAll('details>summary[tasks-type=myTasks]').forEach((detail, index) => {
    detail.addEventListener('click', () => {
@@ -27,5 +26,14 @@
    });
    detail.addEventListener('click', () => {
      hideShowDetailForGivenId('my-available-task3-action-' + index);
+   });
+ });
+ 
+ document.querySelectorAll('details>summary[tasks-type=myManagerTasks]').forEach((detail, index) => {  
+   detail.addEventListener('click', () => {
+     hideShowDetailForGivenId('my-task-manager-action0-' + index);
+   });
+   detail.addEventListener('click', () => {
+     hideShowDetailForGivenId('my-task-manager-action1-' + index);
    });
  });
