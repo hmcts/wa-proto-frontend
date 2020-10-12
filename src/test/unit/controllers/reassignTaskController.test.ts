@@ -62,6 +62,8 @@ describe('re-assign controller', () => {
     req.query.caseRef = '1';
     req.body.locations = 'New Location';
     req.body.caseworkers = 'New CaseWorker';
+    req.query.tasksType = 'notManager';
+
 
     postReassignTask(req, res);
 
@@ -69,7 +71,8 @@ describe('re-assign controller', () => {
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: req.session.myTasks,
+          taskList: [   { caseRef: '2', location: 'testTwo', caseworker: 'caseworkerTwo' },
+            { caseRef: '3', location: 'testThree', caseworker: 'caseworkerThree' }],
           checked: { checked: true },
           display: 'block',
         },
@@ -89,15 +92,16 @@ describe('re-assign controller', () => {
   test('re-assign post method only location', () => {
     req.query.caseRef = '2';
     req.body.locations = 'New Location';
+    req.query.tasksType = 'notManager';
+
     postReassignTask(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
-    expect(req.session.myTasks[2].caseworker).toEqual('caseworkerTwo');
-    expect(req.session.myTasks[2].location).toEqual('New Location');
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: req.session.myTasks,
+          taskList: [   { caseRef: '1', location: 'test', caseworker: 'caseworker' },
+            { caseRef: '3', location: 'testThree', caseworker: 'caseworkerThree' }],
           checked: { checked: true },
           display: 'block',
         },
@@ -120,12 +124,39 @@ describe('re-assign controller', () => {
 
     postReassignTask(req, res);
     expect(res.render).toHaveBeenCalledTimes(1);
-    expect(req.session.myTasks[2].caseworker).toEqual('New CaseWorker');
-    expect(req.session.myTasks[2].location).toEqual('testThree');
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: req.session.myTasks,
+          taskList: [  { caseRef: '1', location: 'test', caseworker: 'caseworker' },
+            { caseRef: '2', location: 'testTwo', caseworker: 'caseworkerTwo' }],
+          checked: { checked: true },
+          display: 'block',
+        },
+        myAvailableTasks: {
+          taskList: req.session.myFilteredAvailableTasks,
+          checked: {},
+          display: 'none',
+        },
+        filter: {
+          addLocations: req.session.addLocations,
+          removeLocations: req.session.removeLocations,
+        },
+      },
+    });
+  });
+
+  test('re-assign post method shouldn\'t remove any task', () => {
+    req.query.caseRef = '3';
+
+    postReassignTask(req, res);
+    expect(res.render).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledWith('task-list', {
+      tasks: {
+        myTasks: {
+          taskList: [
+            { caseRef: '1', location: 'test', caseworker: 'caseworker' },
+            { caseRef: '2', location: 'testTwo', caseworker: 'caseworkerTwo' },
+            { caseRef: '3', location: 'testThree', caseworker: 'caseworkerThree' }],
           checked: { checked: true },
           display: 'block',
         },
@@ -143,3 +174,4 @@ describe('re-assign controller', () => {
   });
 
 });
+

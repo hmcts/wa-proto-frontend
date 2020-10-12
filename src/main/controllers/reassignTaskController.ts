@@ -31,7 +31,7 @@ export function reassignTask(req: Request, res: Response): void {
 export function postReassignTask(req: Request, res: Response): void {
   debugReassignTask(`postReassignTask controller with caseRef=${req.query.caseRef}...`);
   let taskList: Array<Task> = null;
-
+  const myTasks: Array<Task> = req.session.myTasks;
   if (req.query.tasksType === 'myManagerTasks') {
     taskList = req.session.myAvailableTasks;
   } else {
@@ -42,18 +42,21 @@ export function postReassignTask(req: Request, res: Response): void {
   const { locations, caseworkers } = req.body;
   const newList = taskList.filter((i: Task) => i.caseRef !== req.query.caseRef);
 
-  if (caseworkers) {
-    task[0].caseworker = caseworkers;
-  }
-  if (locations) {
-    task[0].location = locations;
-  }
-  newList.push(task[0]);
-  if (req.query.tasksType === 'myManagerTasks') {
+  if(req.query.tasksType === 'myManagerTasks') {
+    newList.push(task[0]);
     req.session.myAvailableTasks = newList;
   } else {
     req.session.myTasks = newList;
   }
+
+  if(req.query.tasksType !== 'myManagerTasks') {
+    if (!caseworkers && !locations) {
+      req.session.myTasks = myTasks;
+    } else {
+      req.session.myTasks = newList;
+    }
+  }
+
 
   res.render('task-list', {
     tasks: {
