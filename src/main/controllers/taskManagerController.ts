@@ -42,6 +42,6 @@ export function createTaskManagerPage(req: Request, res: Response): void {
       myAvailableTasks: filteredManagerTasks,
     },
     locations: locations,
-    caseWorkers: caseworkers,
+    caseworkers: caseworkers,
   });
 }

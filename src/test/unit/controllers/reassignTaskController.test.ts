@@ -1,7 +1,9 @@
 import { Response } from 'express';
-import { reassignTask, postReassignTask } from '../../../main/controllers/reassignTaskController';
+import { reassignTask, postReassignTask, postReassignTaskAndGoToTaskManager } from '../../../main/controllers/reassignTaskController';
 import { MyModel } from '../../../main/models/myModel';
 import { Task } from '../../../main/models/task';
+import * as taskManagerController from '../../../main/controllers/taskManagerController';
+import { TaskManagerModel } from '../../../main/models/taskManager/taskManagerModel';
 
 describe('re-assign controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -152,6 +154,44 @@ describe('re-assign controller', () => {
           removeLocations: MyModel.getRemoveLocations(),
         },
       },
+    });
+  });
+
+  test('re-assign and go to task manage page post method', () => {
+
+    const task0 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 7, 'today', 'Amanda Mc Donald');
+    req.query.caseRef = task0.caseRef;
+    req.session.taskManager = {
+      selectedLocation: 'Taylor House',
+      selectedCaseworker: 'All',
+    };
+    req.body = {
+      caseworkers: 'Bisa Butler',
+      locations: 'Birmingham',
+    };
+
+    const mock = jest.spyOn(taskManagerController, 'createTaskManagerPage');
+
+    postReassignTaskAndGoToTaskManager(req, res);
+
+    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All').map((task) => {
+      if (task.caseRef === task0.caseRef) {
+        task.caseworker = req.body.caseworkers;
+        task.location = req.body.locations;
+        return task;
+      } else {
+        return task;
+      }
+    });
+
+    expect(mock).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledWith('task-manager', {
+      tasks: {
+        myAvailableTasks: expect.arrayContaining(expectedMyAvailableTasks),
+      },
+      locations: TaskManagerModel.getLocations(req.session.taskManager.selectedLocation),
+      caseworkers: TaskManagerModel.getCaseworkers(req.session.taskManager.selectedCaseworker),
     });
   });
 

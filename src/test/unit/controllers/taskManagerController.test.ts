@@ -93,7 +93,7 @@ describe.each(scenarios)('taskManager controller', (scenario) => {
         myAvailableTasks: expect.arrayContaining(scenario.expectedFilteredTasks),
       },
       locations: scenario.expectedLocations,
-      caseWorkers: scenario.expectedCaseworkers,
+      caseworkers: scenario.expectedCaseworkers,
     });
   });
 
