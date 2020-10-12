@@ -1,80 +1,81 @@
 import { Response } from 'express';
 import { createTaskManagerPage } from '../../../main/controllers/taskManagerController';
 import { Task } from '../../../main/models/task';
+import { TaskManagerModel } from '../../../main/models/taskManager/taskManagerModel';
+import { MyModel } from '../../../main/models/myModel';
+import _ from 'lodash';
 
-describe('taskManager controller', () => {
+
+const scenarios = [
+  {
+    session: {
+      myAvailableTasks: MyModel.getMyAvailableTasks(),
+      myTasks: [] as Task[],
+      myFilteredAvailableTasks: [] as Task[],
+      taskManager: {
+        selectedLocation: 'Taylor House',
+        selectedCaseworker: 'All',
+      },
+    },
+    query: {},
+    expectedLocations: TaskManagerModel.getLocations('Taylor House'),
+    expectedCaseworkers: TaskManagerModel.getCaseworkers('All'),
+    expectedFilteredTasks: MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House'),
+  },
+  {
+    session: {
+      myAvailableTasks: MyModel.getMyAvailableTasks(),
+      myTasks: [] as Task[],
+      myFilteredAvailableTasks: [] as Task[],
+      taskManager: {
+        selectedLocation: 'Taylor House',
+        selectedCaseworker: 'All',
+      },
+    },
+    query: {
+      location: 'Birmingham',
+      caseworker: 'Bisa Butler',
+    },
+    expectedLocations: TaskManagerModel.getLocations('Birmingham'),
+    expectedCaseworkers: TaskManagerModel.getCaseworkers('Bisa Butler'),
+    expectedFilteredTasks: MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Birmingham', 'Bisa Butler'),
+  },
+];
+
+describe.each(scenarios)('taskManager controller', (scenario) => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  let req = {} as any;
+  const req = {} as any;
   const res = {} as Response;
 
-  const task = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 3, 'today', 'Amanda Mc Donald');
+  let location = null;
+  let caseworker = null;
 
-  beforeEach(() => {
+  if (!_.isEmpty(scenario.query)) {
+    location = scenario.query.location;
+    caseworker = scenario.query.caseworker;
+  } else {
+    location = scenario.session.taskManager.selectedLocation;
+    caseworker = scenario.session.taskManager.selectedCaseworker;
+  }
 
-    res.render = jest.fn();
+  req.session = scenario.session;
+  req.query = scenario.query;
+  res.render = jest.fn();
 
-    req = {
-      session: {
-        myAvailableTasks: [task],
-      },
-    };
 
-  });
-
-  test('createTaskManagerPage method', () => {
+  test(`filter task manager tasks by \n
+    location: ${location} \n
+    and caseworker: ${caseworker}`, () => {
 
     createTaskManagerPage(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-manager', {
       tasks: {
-        myAvailableTasks: [task],
+        myAvailableTasks: scenario.expectedFilteredTasks,
       },
-      locations: [
-        {
-          text: 'Birmingham',
-        },
-        {
-          text: 'Bradford',
-        },
-        {
-          text: 'Glasgow',
-        },
-        {
-          text: 'Hatton Cross',
-        },
-        {
-          text: 'Manchester',
-        },
-        {
-          text: 'Newcastle',
-        },
-        {
-          text: 'Newport',
-        },
-        {
-          text: 'Taylor House',
-          selected: true,
-        },
-      ],
-      caseWorkers: [
-        {
-          text: 'All',
-        },
-        {
-          selected: true,
-          text: 'Bisa Butler',
-        },
-        {
-          text: 'Amanda Mc Donald',
-        },
-        {
-          text: 'Simone Harley',
-        },
-        {
-          text: 'Unassigned',
-        },
-      ],
+      locations: scenario.expectedLocations,
+      caseWorkers: scenario.expectedCaseworkers,
     });
   });
 

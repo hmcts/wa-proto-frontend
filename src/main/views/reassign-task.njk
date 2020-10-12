@@ -139,7 +139,7 @@
     ]
   }) }}
 
-  <form method="post" type="submit" action='/reassign-task?caseRef={{ task[0].caseRef }}'>
+  <form method="post" type="submit" action='/reassign-task?caseRef={{ task[0].caseRef }}&tasksType={{ tasksType }}'>
   <h1 class="govuk-heading-m">Find a colleague</h1>
   {{ generateDropDown(locations,'location', 'locations', 'Location') }}
   {{ generateDropDown(caseworker,'caseworker', 'caseworkers', 'Caseworker') }}

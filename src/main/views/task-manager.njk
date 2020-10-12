@@ -1,7 +1,7 @@
 {% extends "template.njk" %}
 
 {% from "govuk/components/select/macro.njk" import govukSelect %}
-{% from "macros/my-tasks.njk" import myTasks %}
+{% from "macros/task-manager-tasks.njk" import taskManagerTasks %}
 
 {% block header %}
   {{ govukHeader({
@@ -61,8 +61,8 @@
       </div>     
     <div class="govuk-grid-column-two-third">
       {{ govukSelect({
-        id: "caseWorker",
-        name: "caseWorker",
+        id: "caseworker",
+        name: "caseworker",
         label: {
           text: "Caseworker"
         },
@@ -71,7 +71,7 @@
     </div>    
 </div>
 
-{{ myTasks(tasks.myAvailableTasks, "myAvailableTasks") }}         
+{{ taskManagerTasks(tasks.myAvailableTasks, "myManagerTasks") }}         
 
 {% endblock %}
 
@@ -86,6 +86,22 @@
     new MOJFrontend.SortableTable({
       table: $('table')[1]
     });
+
+    document.querySelectorAll('select').forEach((select) => {
+      select.addEventListener('change', () => {
+
+        const locationSelect = document.querySelector('#location');
+        const location = locationSelect.options[locationSelect.selectedIndex].text;
+
+        const caseworkerSelect = document.querySelector('#caseworker');
+        const caseworker = caseworkerSelect.options[caseworkerSelect.selectedIndex].text
+
+        window.location.href= `/filter-task-manager?location=${location}&caseworker=${caseworker}`;
+
+      });
+      
+    });
+
 
   </script>
 {% endblock %}

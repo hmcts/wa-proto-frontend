@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../../main/app';
-import * as controller from '../../../main/controllers/myCases';
+import * as controller from '../../../main/controllers/myCasesController';
 
 
 describe('myCases router', () => {

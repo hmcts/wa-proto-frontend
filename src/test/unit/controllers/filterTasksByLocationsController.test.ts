@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { filterTasksByLocations } from '../../../main/controllers/filterTasksByLocations';
+import { filterTasksByLocations } from '../../../main/controllers/filterTasksByLocationsController';
 import { MyModel as model } from '../../../main/models/myModel';
 
 describe('filterTasksByLocations controller', () => {
