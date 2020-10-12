@@ -19,14 +19,18 @@ export function createTaskManagerPage(req: Request, res: Response): void {
   const selectedLocation = req.session.taskManager.selectedLocation;
   const selectedCaseworker = req.session.taskManager.selectedCaseworker;
 
-  let filteredManagerTasks = req.session.myAvailableTasks.filter((task: Task) => task.location === selectedLocation);
+  let filteredManagerTasks = req.session.myAvailableTasks;
+
+  if (selectedLocation !== 'All') {
+    filteredManagerTasks = filteredManagerTasks.filter((task: Task) => task.location === selectedLocation);
+  }
   if (selectedCaseworker !== 'All') {
     filteredManagerTasks = filteredManagerTasks.filter((task: Task) => task.caseworker === selectedCaseworker);
   }
 
   const locations = TaskManagerModel.getLocations(selectedLocation);
   const caseworkers = TaskManagerModel.getCaseworkers(selectedCaseworker);
-  
+
   res.render('task-manager', {
     tasks: {
       myAvailableTasks: filteredManagerTasks,

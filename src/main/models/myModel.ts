@@ -31,11 +31,11 @@ const task23 = new Task('1234-2345-7888-9721', 'Jack Bishop', 'Protection', 'New
 export class MyModel {
 
   static getMyAvailableTasksFilteredByOptionalLocationAndCaseworker(location?: string, caseworker?: string): Array<Task> {
-    let filteredTasks = null;
-    if (location) {
-      filteredTasks = this.getMyAvailableTasks().filter((task: Task) => task.location === location);
+    let filteredTasks = this.getMyAvailableTasks();
+    if (location !== 'All') {
+      filteredTasks = filteredTasks.filter((task: Task) => task.location === location);
     }
-    if (caseworker) {
+    if (caseworker !== 'All') {
       filteredTasks = filteredTasks.filter((task: Task) => task.caseworker === caseworker);
     }
     return filteredTasks;
