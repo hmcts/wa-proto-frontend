@@ -1,37 +1,31 @@
 import { Response } from 'express';
-import { reassignTask , postReassignTask } from '../../../main/controllers/reassignTaskController';
-import {MyModel} from '../../../main/models/myModel';
+import { reassignTask, postReassignTask, postReassignTaskAndGoToTaskManager } from '../../../main/controllers/reassignTaskController';
+import { MyModel } from '../../../main/models/myModel';
+import { Task } from '../../../main/models/task';
+import * as taskManagerController from '../../../main/controllers/taskManagerController';
+import { TaskManagerModel } from '../../../main/models/taskManager/taskManagerModel';
 
 describe('re-assign controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   let req = {} as any;
   const res = {} as Response;
 
+  const task4 = new Task('1549-4765-3206-5586', 'Kili Muso', 'Protection', 'Taylor House', 'Review respondent evidence', 'Today', 7, 'today', 'Amanda Mc Donald');
+
   beforeEach(() => {
     req = (
       {
         query: {
-          caseRef: '3',
+          caseRef: task4.caseRef,
         },
         body: {
         },
         session: {
-          myTasks: [
-            { caseRef: '1', location: 'test', caseworker: 'caseworker' },
-            { caseRef: '2', location: 'testTwo', caseworker: 'caseworkerTwo' },
-            { caseRef: '3', location: 'testThree', caseworker: 'caseworkerThree' },
-
-          ],
-
-          myAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
-          myFilteredAvailableTasks: [{ caseRef: '3' }, { caseRef: '4' }],
-          addLocations: [
-            {
-              index: 1,
-              name: 'Birmingham',
-            },
-          ],
-          removeLocations: [],
+          myTasks: MyModel.getMyTasks(),
+          myAvailableTasks: MyModel.getMyAvailableTasks(),
+          myFilteredAvailableTasks: MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All'),
+          addLocations: MyModel.getAddLocations(),
+          removeLocations: MyModel.getRemoveLocations(),
         },
         /* eslint-disable  @typescript-eslint/no-explicit-any */
       } as any);
@@ -41,43 +35,34 @@ describe('re-assign controller', () => {
   });
 
   test('get re-assign method', () => {
-    const locations = MyModel.getAllLocations();
-    const caseworker = MyModel.getAllCaseworker();
-    req.query.caseRef = '1';
+
     reassignTask(req, res);
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('reassign-task', {
-      'task': [{
-        'caseRef': '1',
-        'caseworker': 'caseworker',
-        'location': 'test',
-      }],
-      'locations': locations,
-      'caseworker': caseworker,
+      'task': [task4],
+      'locations': MyModel.getAllLocations(),
+      'caseworker': MyModel.getAllCaseworker(),
     });
   });
 
   test('re-assign post method', () => {
-    req.query.caseRef = '1';
-    req.body.locations = 'New Location';
-    req.body.caseworkers = 'New CaseWorker';
-    req.query.tasksType = 'notManager';
-
 
     postReassignTask(req, res);
+
+    const expectedMyTasks: Array<Task> = MyModel.getMyTasks().filter((task) => task.caseRef !== req.query.caseRef);
+    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: [   { caseRef: '2', location: 'testTwo', caseworker: 'caseworkerTwo' },
-            { caseRef: '3', location: 'testThree', caseworker: 'caseworkerThree' }],
+          taskList: expect.arrayContaining(expectedMyTasks),
           checked: { checked: true },
           display: 'block',
         },
         myAvailableTasks: {
-          taskList: req.session.myFilteredAvailableTasks,
+          taskList: expect.arrayContaining(expectedMyAvailableTasks),
           checked: {},
           display: 'none',
         },
@@ -90,86 +75,123 @@ describe('re-assign controller', () => {
   });
 
   test('re-assign post method only location', () => {
-    req.query.caseRef = '2';
-    req.body.locations = 'New Location';
-    req.query.tasksType = 'notManager';
+    req.body.locations = 'Birmingham';
 
     postReassignTask(req, res);
+
+    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: [   { caseRef: '1', location: 'test', caseworker: 'caseworker' },
-            { caseRef: '3', location: 'testThree', caseworker: 'caseworkerThree' }],
+          taskList: expect.arrayContaining(MyModel.getMyTasks()),
           checked: { checked: true },
           display: 'block',
         },
         myAvailableTasks: {
-          taskList: req.session.myFilteredAvailableTasks,
+          taskList: expect.arrayContaining(expectedMyAvailableTasks),
           checked: {},
           display: 'none',
         },
         filter: {
-          addLocations: req.session.addLocations,
-          removeLocations: req.session.removeLocations,
+          addLocations: MyModel.getAddLocations(),
+          removeLocations: MyModel.getRemoveLocations(),
         },
       },
     });
   });
 
   test('re-assign post method only caseworker', () => {
-    req.query.caseRef = '3';
-    req.body.caseworkers = 'New CaseWorker';
+    req.body.caseworkers = 'Bisa Butler';
 
     postReassignTask(req, res);
+
+    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
+
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: [  { caseRef: '1', location: 'test', caseworker: 'caseworker' },
-            { caseRef: '2', location: 'testTwo', caseworker: 'caseworkerTwo' }],
+          taskList: expect.arrayContaining(MyModel.getMyTasks()),
           checked: { checked: true },
           display: 'block',
         },
         myAvailableTasks: {
-          taskList: req.session.myFilteredAvailableTasks,
+          taskList: expect.arrayContaining(expectedMyAvailableTasks),
           checked: {},
           display: 'none',
         },
         filter: {
-          addLocations: req.session.addLocations,
-          removeLocations: req.session.removeLocations,
+          addLocations: MyModel.getAddLocations(),
+          removeLocations: MyModel.getRemoveLocations(),
         },
       },
     });
   });
 
-  test('re-assign post method shouldn\'t remove any task', () => {
-    req.query.caseRef = '3';
+  test('re-assign post method with no caseworker and no location shouldn\'t remove any task', () => {
 
     postReassignTask(req, res);
+
+    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
+
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: [
-            { caseRef: '1', location: 'test', caseworker: 'caseworker' },
-            { caseRef: '2', location: 'testTwo', caseworker: 'caseworkerTwo' },
-            { caseRef: '3', location: 'testThree', caseworker: 'caseworkerThree' }],
+          taskList: expect.arrayContaining(MyModel.getMyTasks()),
           checked: { checked: true },
           display: 'block',
         },
         myAvailableTasks: {
-          taskList: req.session.myFilteredAvailableTasks,
+          taskList: expect.arrayContaining(expectedMyAvailableTasks),
           checked: {},
           display: 'none',
         },
         filter: {
-          addLocations: req.session.addLocations,
-          removeLocations: req.session.removeLocations,
+          addLocations: MyModel.getAddLocations(),
+          removeLocations: MyModel.getRemoveLocations(),
         },
       },
+    });
+  });
+
+  test('re-assign and go to task manage page post method', () => {
+
+    const task0 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 7, 'today', 'Amanda Mc Donald');
+    req.query.caseRef = task0.caseRef;
+    req.session.taskManager = {
+      selectedLocation: 'Taylor House',
+      selectedCaseworker: 'All',
+    };
+    req.body = {
+      caseworkers: 'Bisa Butler',
+      locations: 'Birmingham',
+    };
+
+    const mock = jest.spyOn(taskManagerController, 'createTaskManagerPage');
+
+    postReassignTaskAndGoToTaskManager(req, res);
+
+    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All').map((task) => {
+      if (task.caseRef === task0.caseRef) {
+        task.caseworker = req.body.caseworkers;
+        task.location = req.body.locations;
+        return task;
+      } else {
+        return task;
+      }
+    });
+
+    expect(mock).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledTimes(1);
+    expect(res.render).toHaveBeenCalledWith('task-manager', {
+      tasks: {
+        myAvailableTasks: expect.arrayContaining(expectedMyAvailableTasks),
+      },
+      locations: TaskManagerModel.getLocations(req.session.taskManager.selectedLocation),
+      caseworkers: TaskManagerModel.getCaseworkers(req.session.taskManager.selectedCaseworker),
     });
   });
 

@@ -4,7 +4,6 @@ import { Caseworker } from '../models/caseworker';
 
 const task5 = new Task('1549-5366-1108-0150', 'Mankay Lit', 'Revocation', 'Taylor House', 'Review appellant case', '14 Dec', 3, 'future', 'Simone Harley');
 const task2 = new Task('1549-9061-9513-0004', 'Nonasky Pecki', 'EEA', 'Taylor House', 'Create case summary', '04 Dec', 4, 'future', 'Amanda Mc Donald');
-const task3 = new Task('1549-9083-5480-6960', 'Wauanda Jik', 'Human Rights', 'Taylor House', 'Review appellant case', '20 Dec', 2, 'future', 'Amanda Mc Donald');
 const task16 = new Task('1549-3567-7832-9735', 'Gracie-May Houston', 'EEA', 'Manchester', 'Review respondent evidence', '14 Dec', 3, 'future', 'Amanda Mc Donald');
 const task19 = new Task('1549-2345-7845-9723', 'Ellouise Wagstaff', 'Human', 'Newport', 'Review appellant case', '7 Nov', 5, 'future', 'Simone Harley');
 const task20 = new Task('1549-2345-7833-9739', 'Griff Oakley', 'Human', 'Newport', 'Review appellant case', '5 Sept', 6, 'future', 'Bisa Butler');
@@ -69,25 +68,13 @@ export class MyModel {
     return tasks;
   }
 
-  static getMyFilteredAvailableTasks(): Array<Task> {
-    const tasks: Array<Task> = [];
-
-    tasks.push(task0);
-    tasks.push(task2);
-    tasks.push(task3);
-
-    return tasks;
-  }
-
   static getMyTasks(): Array<Task> {
     const tasks: Array<Task> = [];
     tasks.push(task4);
     tasks.push(task5);
     tasks.push(task6);
 
-
     return tasks;
-
   }
 
   static getAllLocations(): Array<Location> {

@@ -86,7 +86,7 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   }
 
   if (isNullOrUndefined(req.session.myFilteredAvailableTasks)) {
-    req.session.myFilteredAvailableTasks = MyModel.getMyFilteredAvailableTasks();
+    req.session.myFilteredAvailableTasks = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
   }
 
   if (isNullOrUndefined(req.session.myTasks)) {
