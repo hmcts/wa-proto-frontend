@@ -19,7 +19,7 @@ describe('completeTaskFromMyTasks controller', () => {
       session: {
         myTasks: MyModel.getMyTasks(),
         myAvailableTasks: MyModel.getMyAvailableTasks(),
-        myFilteredAvailableTasks: MyModel.getMyFilteredAvailableTasks(),
+        myFilteredAvailableTasks: MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All'),
       },
       query: {},
     };
