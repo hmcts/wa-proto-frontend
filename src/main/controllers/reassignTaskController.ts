@@ -33,9 +33,9 @@ export function reassignTask(req: Request, res: Response): void {
 export function postReassignTask(req: Request, res: Response): void {
   debugReassignTask(`postReassignTask controller with caseRef=${req.query.caseRef}...`);
   taskDateOrderUtils(req);
-  const { locations, caseworkers } = req.body;
+  const { caseworkers } = req.body;
 
-  if (caseworkers && locations) {
+  if (caseworkers) {
     req.session.myTasks = req.session.myTasks.filter((i: Task) => i.caseRef !== req.query.caseRef);
   }
 
@@ -60,13 +60,12 @@ export function postReassignTask(req: Request, res: Response): void {
 }
 export function postReassignTaskAndGoToTaskManager(req: Request, res: Response): void {
   debugReassignTask(`postReassignTaskAndGoToTaskManager controller with caseRef=${req.query.caseRef}...`);
-  const { locations, caseworkers } = req.body;
+  const {  caseworkers } = req.body;
 
-  if (caseworkers && locations) {
+  if (caseworkers) {
     req.session.myAvailableTasks = req.session.myAvailableTasks.map((task: Task) => {
       if (task.caseRef === req.query.caseRef) {
         task.caseworker = caseworkers;
-        task.location = locations;
         return task;
       } else {
         return task;
