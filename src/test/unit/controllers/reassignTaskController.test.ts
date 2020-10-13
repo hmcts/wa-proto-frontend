@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import { reassignTask, postReassignTask, postReassignTaskAndGoToTaskManager } from '../../../main/controllers/reassignTaskController';
 import { MyModel } from '../../../main/models/myModel';
 import { Task } from '../../../main/models/task';
@@ -8,7 +7,8 @@ import { TaskManagerModel } from '../../../main/models/taskManager/taskManagerMo
 describe('re-assign controller', () => {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   let req = {} as any;
-  const res = {} as Response;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  let res = {} as any;
 
   const task4 = new Task('1549-4765-3206-5586', 'Kili Muso', 'Protection', 'Taylor House', 'Review respondent evidence', 'Today', 7, 'today', 'Amanda Mc Donald');
 
@@ -30,6 +30,7 @@ describe('re-assign controller', () => {
         /* eslint-disable  @typescript-eslint/no-explicit-any */
       } as any);
 
+    res = jest.fn();
     res.render = jest.fn();
 
   });
@@ -168,6 +169,7 @@ describe('re-assign controller', () => {
   test('re-assign and go to task manage page post method', () => {
 
     const task0 = new Task('1549-6338-2756-6773', 'Lala Joji', 'Human', 'Taylor House', 'Review respondent evidence', 'Today', 7, 'today', 'Amanda Mc Donald');
+
     req.query.caseRef = task0.caseRef;
     req.session.taskManager = {
       selectedLocation: 'Taylor House',
@@ -182,7 +184,7 @@ describe('re-assign controller', () => {
 
     postReassignTaskAndGoToTaskManager(req, res);
 
-    let expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All').map((task) => {
+    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All').map((task) => {
       if (task.caseRef === task0.caseRef) {
         task.caseworker = req.body.caseworkers;
         return task;
@@ -190,10 +192,15 @@ describe('re-assign controller', () => {
         return task;
       }
     });
-    expectedMyAvailableTasks = expectedMyAvailableTasks.sort((a: Task, b: Task) => a.dateOrder - b.dateOrder).reverse();
 
     expect(mock).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledTimes(1);
+
+    const actualMyAvailableTasks = res.render.mock.calls[0][1].tasks.myAvailableTasks;
+    const taskExpected = task0;
+    taskExpected.caseworker = 'Bisa Butler';
+    expect(actualMyAvailableTasks).toContainEqual(taskExpected);
+
     expect(res.render).toHaveBeenCalledWith('task-manager', {
       tasks: {
         myAvailableTasks: expectedMyAvailableTasks,
