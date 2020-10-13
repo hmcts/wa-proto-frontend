@@ -48,21 +48,28 @@ describe('re-assign controller', () => {
 
   test('re-assign post method', () => {
 
+    req.body = {
+      caseworkers: 'Simone Harley',
+    };
+
     postReassignTask(req, res);
 
-    const expectedMyTasks: Array<Task> = MyModel.getMyTasks().filter((task) => task.caseRef !== req.query.caseRef);
-    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
+    let expectedMyTasks: Array<Task> = MyModel.getMyTasks().filter((task) => task.caseRef !== req.query.caseRef);
+    expectedMyTasks = expectedMyTasks.sort((a: Task, b: Task) => a.dateOrder - b.dateOrder).reverse();
+    let expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
+    expectedMyAvailableTasks = expectedMyAvailableTasks.sort((a: Task, b: Task) => a.dateOrder - b.dateOrder).reverse();
+
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: expect.arrayContaining(expectedMyTasks),
+          taskList: expectedMyTasks,
           checked: { checked: true },
           display: 'block',
         },
         myAvailableTasks: {
-          taskList: expect.arrayContaining(expectedMyAvailableTasks),
+          taskList: expectedMyAvailableTasks,
           checked: {},
           display: 'none',
         },
@@ -107,13 +114,14 @@ describe('re-assign controller', () => {
 
     postReassignTask(req, res);
 
+    const expectedMyTasks: Array<Task> = MyModel.getMyTasks().filter((task) => task.caseRef !== req.query.caseRef);
     const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All');
 
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-list', {
       tasks: {
         myTasks: {
-          taskList: expect.arrayContaining(MyModel.getMyTasks()),
+          taskList: expect.arrayContaining(expectedMyTasks),
           checked: { checked: true },
           display: 'block',
         },
@@ -174,21 +182,21 @@ describe('re-assign controller', () => {
 
     postReassignTaskAndGoToTaskManager(req, res);
 
-    const expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All').map((task) => {
+    let expectedMyAvailableTasks: Array<Task> = MyModel.getMyAvailableTasksFilteredByOptionalLocationAndCaseworker('Taylor House', 'All').map((task) => {
       if (task.caseRef === task0.caseRef) {
         task.caseworker = req.body.caseworkers;
-        task.location = req.body.locations;
         return task;
       } else {
         return task;
       }
     });
+    expectedMyAvailableTasks = expectedMyAvailableTasks.sort((a: Task, b: Task) => a.dateOrder - b.dateOrder).reverse();
 
     expect(mock).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledTimes(1);
     expect(res.render).toHaveBeenCalledWith('task-manager', {
       tasks: {
-        myAvailableTasks: expect.arrayContaining(expectedMyAvailableTasks),
+        myAvailableTasks: expectedMyAvailableTasks,
       },
       locations: TaskManagerModel.getLocations(req.session.taskManager.selectedLocation),
       caseworkers: TaskManagerModel.getCaseworkers(req.session.taskManager.selectedCaseworker),
