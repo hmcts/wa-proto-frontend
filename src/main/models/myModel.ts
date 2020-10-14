@@ -53,7 +53,6 @@ export class MyModel {
     tasks.push(task15);
     tasks.push(task11);
     tasks.push(task13);
-    tasks.push(task11);
     tasks.push(task12);
     tasks.push(task17);
     tasks.push(task19);
